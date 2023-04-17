@@ -21,37 +21,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get( '/', function () {
+    return view( 'welcome' );
+} );
 
-Route::get('/registers', function () {
-    return view('registers');
-});
+Route::get( '/registers', function () {
+    return view( 'registers' );
+} );
 
-Route::get('/registers', function () {
+Route::get( '/registers', function () {
     $foodTypes = FoodType::all();
     $priceRanges = PriceRange::all();
     $schedules = Schedule::all();
-    return view('registers', compact('foodTypes', 'priceRanges', 'schedules'));
-});
 
-Route::get('/user-data', [UserController::class, 'edit'])->name('user.edit')->middleware('auth');
-Route::put('/user-data', [UserController::class, 'update'])->name('user.update')->middleware('auth');
-Route::delete('/user-data', [UserController::class, 'destroy'])->name('user.destroy')->middleware('auth');
+    return view( 'registers', compact( 'foodTypes', 'priceRanges', 'schedules' ) );
+} );
 
-Route::get('/user-preferences', [UserFoodPreferenceController::class, 'edit'])->name('user.edit')->middleware('auth');
-Route::put('/user-preferences', [UserFoodPreferenceController::class, 'update'])->name('user-preferences.update')->middleware('auth');
+Route::get( '/user-data', [ UserController::class, 'edit' ] )->name( 'user.edit' )->middleware( 'auth' );
+Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.update' )->middleware( 'auth' );
+Route::delete( '/user-data', [ UserController::class, 'destroy' ] )->name( 'user.destroy' )->middleware( 'auth' );
 
-Route::post('/registers', [UserController::class, 'create']);
+Route::get( '/user-preferences', [
+    UserFoodPreferenceController::class,
+    'edit',
+] )->name( 'user.edit' )->middleware( 'auth' );
+Route::put( '/user-preferences', [
+    UserFoodPreferenceController::class,
+    'update',
+] )->name( 'user-preferences.update' )->middleware( 'auth' );
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post( '/registers', [ UserController::class, 'create' ] );
 
-Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' );
+
+Route::get( '/search', [ SearchController::class, 'search' ] )->name( 'search' );
 
 //Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 //Route::post('/register', 'Auth\RegisterController@register');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->name( 'home' );

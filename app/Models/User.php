@@ -43,7 +43,6 @@ class User extends Authenticatable {
     ];
 
     public function user_food_preferences(): \Illuminate\Database\Eloquent\Relations\BelongsTo {
-        return $this->belongsTo(UserFoodPreference::class, 'user_food_preferences_id');
+        return $this->belongsTo( UserFoodPreference::class, 'user_food_preferences_id' );
     }
-
 }

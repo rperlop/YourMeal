@@ -66,7 +66,6 @@ class RegisterController extends Controller {
      * @return RedirectResponse
      */
     protected function create( array $data ) {
-
         //Creamos nuevo usuario
         $user = User::create( [
             'first_name' => $data['first_name'],
@@ -77,9 +76,9 @@ class RegisterController extends Controller {
 
         //Buscamos latitud y longitud de la ciudad
         $location = $data['location'];
-        $latLong = $this->getLatLong($location);
-        if($latLong == null) {
-            return back()->withErrors(['city' => 'No se pudo encontrar la ciudad o pueblo ingresado']);
+        $latLong  = $this->getLatLong( $location );
+        if ( $latLong == null ) {
+            return back()->withErrors( [ 'city' => 'No se pudo encontrar la ciudad o pueblo ingresado' ] );
         }
 
         $userFoodPreference = new UserFoodPreference;
@@ -89,16 +88,16 @@ class RegisterController extends Controller {
         $userFoodPreference->setAttribute( 'longitude', $latLong['long'] );
         $user->userFoodPreference()->save( $userFoodPreference );
 
-        if (isset($validatedData['price_ranges'])) {
-            $user->price_ranges()->sync($data['price_ranges']);
+        if ( isset( $validatedData['price_ranges'] ) ) {
+            $user->price_ranges()->sync( $data['price_ranges'] );
         }
 
-        if (isset($validatedData['food_types'])) {
-            $user->food_types()->sync($data['food_types']);
+        if ( isset( $validatedData['food_types'] ) ) {
+            $user->food_types()->sync( $data['food_types'] );
         }
 
-        if (isset($validatedData['schedules'])) {
-            $user->schedules()->sync($data['schedules']);
+        if ( isset( $validatedData['schedules'] ) ) {
+            $user->schedules()->sync( $data['schedules'] );
         }
 
         return $user;

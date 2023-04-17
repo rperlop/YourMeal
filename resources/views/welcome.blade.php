@@ -397,7 +397,7 @@
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
-                              <i class="fa fa-3x text-primary mb-4">3</i>
+                            <i class="fa fa-3x text-primary mb-4">3</i>
                             <h5>Recommendations page</h5>
                             <p>Access to your customized recommendations page.</p>
                         </div>
