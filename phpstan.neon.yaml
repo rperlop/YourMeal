@@ -1,0 +1,8 @@
+# phpstan.neon
+
+parameters:
+  autoload_directories:
+    - app
+  includes:
+    - public
+    - resources
