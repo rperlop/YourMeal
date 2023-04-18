@@ -28,15 +28,14 @@ Route::get( '/', function () {
 
 Route::get( '/registers', function () {
     return view( 'registers' );
-} );
+} )->name('registers');;
 
 Route::get( '/registers', function () {
     $foodTypes = FoodType::all();
     $priceRanges = PriceRange::all();
     $schedules = Schedule::all();
-
     return view( 'registers', compact( 'foodTypes', 'priceRanges', 'schedules' ) );
-} );
+} )->name('registers');;
 
 Route::get( '/user-data', [ UserController::class, 'edit' ] )->name( 'user.edit' )->middleware( 'auth' );
 Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.update' )->middleware( 'auth' );
@@ -51,7 +50,7 @@ Route::put( '/user-preferences', [
     'update',
 ] )->name( 'user-preferences.update' )->middleware( 'auth' );
 
-Route::post( '/registers', [ UserController::class, 'create' ] );
+Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers');;
 
 Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' );
 

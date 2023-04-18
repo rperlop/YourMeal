@@ -12,7 +12,7 @@
 
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-0">
-            <form method="POST" action="/registers" id="signUpForm">
+            <form method="POST" action="{{ route('registers') }}" id="signUpForm">
             @csrf
             <!-- start step indicators -->
                 <div class="form-header d-flex mb-4">
