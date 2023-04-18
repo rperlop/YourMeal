@@ -49,7 +49,9 @@ class UserController extends Controller {
             $userFoodPreference->schedules()->sync( $requestData['schedules'] );
         }
 
-        return $user;
+        Auth::login($user);
+
+        return redirect('/')->with('user');
     }
 
     public function edit() {
