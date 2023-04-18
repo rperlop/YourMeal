@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_food_prefences', function (Blueprint $table) {
+        Schema::create('user_food_preferences', function (Blueprint $table) {
             $table->id();
             $table->decimal('latitude');
             $table->decimal('longitude');
