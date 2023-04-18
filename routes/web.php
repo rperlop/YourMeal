@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFoodPreferenceController;
@@ -62,3 +63,5 @@ Route::get( '/search', [ SearchController::class, 'search' ] )->name( 'search' )
 Auth::routes();
 
 Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->name( 'home' );
+
+Route::get('/restaurant', [RestaurantController::class, 'show'])->name('restaurant.show');
