@@ -38,25 +38,34 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <div class="card">
-                    <img src="{{asset('img/menu-1.jpg')}}" class="card-img-top" alt="Foto del restaurante">
-                    <div class="card-body">
-                        <h5 class="card-title">Happy Burger</h5>
-                        <p class="card-text">Happy Burger es un restaurante muy bonito</p>
-                        <p class="card-text"><strong>Dirección:</strong> C/Mairena</p>
-                        <p class="card-text"><strong>Teléfono:</strong> 955444333</p>
-                        <p class="card-text"><strong>Página web:</strong> <a href="http://www.google.es" target="_blank">Web</a></p>
-                        <p class="card-text"><strong>Nota media:</strong> 4.5</p>
-                        <p class="card-text"><strong>Tipo de comida:</strong> Mexican</p>
-                        <p class="card-text"><strong>Horario:</strong> Noche</p>
-                        <p class="card-text"><strong>Terraza:</strong> Sí</p>
-                        <h5 class="card-title">Comentarios de usuarios:</h5>
-                        <ul class="list-group">
-                            <li>Hola soy Paco y no me gusta este sitio</li>
-                        </ul>
-                    </div>
-                </div>
+                @if($restaurants->isEmpty())
+                    <p>There are no results.</p>
+                @else
+                <!-- Aquí va tu código de la vista actual -->
+                    @foreach($restaurants as $result)
+                        <div class="col-md-6 offset-md-3">
+                            <div class="card">
+                                <img src="{{asset('img/menu-1.jpg')}}" class="card-img-top" alt="Restaurant picture">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{$result->name}}</h5>
+                                    <p class="card-text"><strong>Address:</strong> </p>
+                                    <p class="card-text"><strong>Phone:</strong> </p>
+                                    <p class="card-text"><strong>Web:</strong> </p>
+                                    <p class="card-text"><strong>Schedule:</strong> </p>
+                                    <p class="card-text"><strong>Terrace:</strong> </p>
+                                    <p class="card-text"><strong>Nota media:</strong> </p>
+                                    <p class="card-text"><strong>Food Type:</strong> </p>
+                                    <h5 class="card-title">Reviews:</h5>
+                                    <ul class="list-group">
+                                        <li>Hola soy Paco y no me gusta este sitio</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
+
 @endsection

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller {
     public function search( Request $request ) {
-        $search      = $request->get( 'search' );
-        $restaurants = Restaurant::where( 'name', 'LIKE', '%' . $search . '%' )->get();
+        $search = $request->get('search');
+        $restaurants = Restaurant::where('name', 'LIKE', '%' . $search . '%')->get();
 
-        return response()->json( $restaurants );
+        return view('restaurant')->with('restaurants', $restaurants);
     }
 }
