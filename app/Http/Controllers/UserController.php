@@ -5,22 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserFoodPreference;
 use GuzzleHttp\Client;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
-    protected function create( Request $request ): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse {
+    protected function create( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         $requestData = $request->all();
 
-        // Buscamos latitud y longitud de la ciudad
         $location = $requestData['location'];
         $latLong  = $this->getLatLong( $location );
         if ( $latLong == null ) {
             return back()->withErrors( [ 'city' => 'No se pudo encontrar la ciudad o pueblo ingresado' ] );
         }
 
-        // Creamos nuevo registro en la tabla user_food_preferences
         $userFoodPreference = new UserFoodPreference;
         $userFoodPreference->setAttribute( 'terrace', $requestData['terrace'] );
         $userFoodPreference->setAttribute( 'latitude', $latLong['lat'] );
@@ -28,7 +29,6 @@ class UserController extends Controller {
         $userFoodPreference->save();
         $userFoodPreferenceId = $userFoodPreference->id;
 
-        // Creamos nuevo usuario y lo vinculamos con el registro en la tabla user_food_preferences
         $user = new User;
         $user->setAttribute( 'first_name', $requestData['first_name'] );
         $user->setAttribute( 'last_name', $requestData['last_name'] );
@@ -54,13 +54,13 @@ class UserController extends Controller {
         return redirect('/')->with('user');
     }
 
-    public function edit(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application {
+    public function edit(): \Illuminate\Contracts\View\Factory|Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application {
         $user = Auth::user(); // Obtener el usuario autenticado
 
         return view( 'user-data', compact( 'user' ) );
     }
 
-    public function update( Request $request ): \Illuminate\Http\RedirectResponse {
+    public function update( Request $request ): RedirectResponse {
         $user = Auth::user(); // Obtener el usuario autenticado
         $user->fill( $request->all() );
         $user->save();
@@ -68,27 +68,32 @@ class UserController extends Controller {
         return redirect()->route( 'user.edit' )->with( 'success', 'Los cambios han sido guardados.' );
     }
 
-    public function destroy(): \Illuminate\Http\RedirectResponse {
-        $user = Auth::user(); // Obtener el usuario autenticado
+    /**
+     * Remove a user and all his food preferences
+     *
+     * @return RedirectResponse
+     */
+    public function remove_user(): RedirectResponse {
+        $user = Auth::user();
 
-        // Obtén la instancia del modelo UserFoodPreference asociada al usuario
         $userFoodPreference = $user->user_food_preferences;
 
-        // Elimina los registros asociados a través de las relaciones muchos a muchos
         $userFoodPreference->schedules()->detach();
         $userFoodPreference->food_types()->detach();
         $userFoodPreference->price_ranges()->detach();
 
-        // Borra el registro de preferencias de comida del usuario
+        $user->user_food_preferences_id = null;
+        $user->save();
+
         $userFoodPreference->delete();
 
-        // Borra el registro del usuario autenticado
         $user->delete();
 
         Auth::logout();
 
-        return redirect()->route('login')->with('success', 'Tu cuenta ha sido eliminada.');
+        return redirect()->route('login')->with('success', 'User removed');
     }
+
 
 
     public function getLatLong( $location ): ?array {
