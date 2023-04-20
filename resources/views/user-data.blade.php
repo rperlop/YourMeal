@@ -15,29 +15,63 @@
             <form method="POST" action="{{ route('user.update') }}" id="signUpForm">
                 @csrf
                 @method('PUT')
-                <div>
-                    <label for="first_name">First name:</label>
-                    <input type="text" name="first_name" value="{{ $user->first_name }}">
+                <div class="row mb-3">
+                    <label for="first_name" class="col-md-4 col-form-label text-md-end">First name:</label>
+                    <div class="col-md-6">
+                        <input class="form-control @error('first_name') is-invalid @enderror" type="text" name="first_name" value="{{ $user->first_name }}">
+                    </div>
                 </div>
-                <div>
-                    <label for="last_name">Last name:</label>
-                    <input type="text" name="last_name" value="{{ $user->last_name }}">
+                <div class="row mb-3">
+                    <label for="last_name" class="col-md-4 col-form-label text-md-end">Last name:</label>
+                    <div class="col-md-6">
+                        <input class="form-control @error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{ $user->last_name }}">
+                    </div>
                 </div>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" value="{{ $user->email }}">
+                <div class="row mb-3">
+                    <label for="email" class="col-md-4 col-form-label text-md-end">Email:</label>
+                    <div class="col-md-6">
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autofocus>
+
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                 </div>
-                <div>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" required>
+                <div class="row mb-3">
+                    <label for="password" class="col-md-4 col-form-label text-md-end">Password:</label>
+                    <div class="col-md-6">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Update data</button>
+                <div class="row mb-0">
+                    <div class="col-md-8 offset-md-4">
+                        <button class="btn btn-primary" type="submit">Update data</button>
+                    </div>
+                </div>
             </form>
-            <form method="POST" action="{{ route('user.destroy') }}" onsubmit="return confirm('Are you sure? You will not be able to recover your account')">
+        </div>
+
+        <div class="row mb-0">
+            <form method="POST" action="{{ route('user.destroy') }}" id="signUpForm" onsubmit="return confirm('Are you sure? You will not be able to recover your account')">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-primary" type="submit">Delete account</button>
+                <div class="row mb-0">
+                    <p class="text-md">Do you want to remove your account? You won't get back it.</p>
+                </div>
+
+                <div class="col-md-8 offset-md-4">
+                    <button class="btn btn-primary" type="submit">Delete account</button>
+                </div>
             </form>
+
         </div>
     </div>
 

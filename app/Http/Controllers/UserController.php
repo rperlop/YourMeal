@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
-    protected function create( Request $request ) {
+    protected function create( Request $request ): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse {
         $requestData = $request->all();
 
         // Buscamos latitud y longitud de la ciudad
@@ -54,13 +54,13 @@ class UserController extends Controller {
         return redirect('/')->with('user');
     }
 
-    public function edit() {
+    public function edit(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application {
         $user = Auth::user(); // Obtener el usuario autenticado
 
         return view( 'user-data', compact( 'user' ) );
     }
 
-    public function update( Request $request ) {
+    public function update( Request $request ): \Illuminate\Http\RedirectResponse {
         $user = Auth::user(); // Obtener el usuario autenticado
         $user->fill( $request->all() );
         $user->save();
@@ -68,13 +68,28 @@ class UserController extends Controller {
         return redirect()->route( 'user.edit' )->with( 'success', 'Los cambios han sido guardados.' );
     }
 
-    public function destroy() {
+    public function destroy(): \Illuminate\Http\RedirectResponse {
         $user = Auth::user(); // Obtener el usuario autenticado
+
+        // Obtén la instancia del modelo UserFoodPreference asociada al usuario
+        $userFoodPreference = $user->user_food_preferences;
+
+        // Elimina los registros asociados a través de las relaciones muchos a muchos
+        $userFoodPreference->schedules()->detach();
+        $userFoodPreference->food_types()->detach();
+        $userFoodPreference->price_ranges()->detach();
+
+        // Borra el registro de preferencias de comida del usuario
+        $userFoodPreference->delete();
+
+        // Borra el registro del usuario autenticado
         $user->delete();
+
         Auth::logout();
 
-        return redirect()->route( 'login' )->with( 'success', 'Tu cuenta ha sido eliminada.' );
+        return redirect()->route('login')->with('success', 'Tu cuenta ha sido eliminada.');
     }
+
 
     public function getLatLong( $location ): ?array {
         $apiKey   = 'a82c53d8a743452e9323753bab52a057';

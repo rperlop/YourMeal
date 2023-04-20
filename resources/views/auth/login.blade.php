@@ -59,7 +59,6 @@
                         <button type="submit" class="btn btn-primary">
                             {{ __('Login') }}
                         </button>
-
                     </div>
                 </div>
             </form>

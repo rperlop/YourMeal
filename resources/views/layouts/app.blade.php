@@ -10,8 +10,9 @@
     <title>@yield('title') - YourMeal</title>
 
     <!-- Fonts -->
+    <script src="https://kit.fontawesome.com/9872be4a49.js" crossorigin="anonymous"></script>
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link href="{{asset('img/favicon.ico')}}" rel="icon">
+    <link href="{{asset('favicon.ico')}}" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
@@ -45,7 +46,7 @@
 <div class="container-xxl position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
         <a href="" class="navbar-brand p-0">
-            <h1 class="text-primary m-0"><i class="fa fa-pizza-slice me-3"></i>YourMeal</h1>
+            <h1 class="text-primary m-0"><i class="fa fa-bowl-food me-3"></i>YourMeal</h1>
         <!-- <img src="{{asset('img/logo.png" alt="Logo')}}"> -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

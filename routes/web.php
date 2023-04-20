@@ -43,7 +43,7 @@ Route::delete( '/user-data', [ UserController::class, 'destroy' ] )->name( 'user
 
 Route::get( '/user-preferences', [
     UserFoodPreferenceController::class,
-    'edit',
+    'show_user_food_preferences',
 ] )->name( 'user.edit' )->middleware( 'auth' );
 Route::put( '/user-preferences', [
     UserFoodPreferenceController::class,

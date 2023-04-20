@@ -11,53 +11,73 @@
     </div>
 
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
-
-        <form method="POST" action="{{ route('user-preferences.update') }}">
-            @csrf
-            @method('PUT')
-
-            <label for="latitude">Latitude:</label>
-            <input type="text" name="latitude" value="{{ $user->user_food_preferences->latitude }}">
-
-            <label for="longitude">Longitude:</label>
-            <input type="text" name="longitude" value="{{ $user->user_food_preferences->location }}">
-
-            <label for="terrace">Terrace:</label>
-            <input type="checkbox" name="terrace" value="1" {{ $user->user_food_preferences->terrace ? 'checked' : '' }}>
-
-            <label for="schedules">Schedules:</label>
-            <select name="schedules[]" multiple>
-                @foreach($user->user_food_preferences->schedules as $schedule)
-                    <option value="{{ $schedule->id }}" selected>{{ $schedule->name }}</option>
-                @endforeach
-                @foreach($schedules as $schedule)
-                    <option value="{{ $schedule->id }}">{{ $schedule->name }}</option>
-                @endforeach
-            </select>
-
-            <label for="food_types">Food Types:</label>
-            <select name="food_types[]" multiple>
-                @foreach($user->user_food_preferences->food_types as $food_type)
-                    <option value="{{ $food_type->id }}" selected>{{ $food_type->name }}</option>
-                @endforeach
-                @foreach($food_types as $food_type)
-                    <option value="{{ $food_type->id }}">{{ $food_type->name }}</option>
-                @endforeach
-            </select>
-
-            <label for="price_ranges">Price Ranges:</label>
-            <select name="price_ranges[]" multiple>
-                @foreach($user->user_food_preferences->price_ranges as $price_range)
-                    <option value="{{ $price_range->id }}" selected>{{ $price_range->name }}</option>
-                @endforeach
-                @foreach($price_ranges as $price_range)
-                    <option value="{{ $price_range->id }}">{{ $price_range->name }}</option>
-                @endforeach
-            </select>
-
-            <button type="submit">Save</button>
-        </form>
+        <div class="row g-0">
+            <form method="POST" action="{{ route('user-preferences.update') }}" id="signUpForm">
+                @csrf
+                @method('PUT')
+                <div class="row mb-3">
+                    <label for="location" class="col-md-4 col-form-label text-md-end">City:</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="location" value="{{ $location }}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="terrace" class="col-md-4 col-form-label text-md-end">Terrace:</label>
+                    <div class="col-md-6">
+                        <select class="form-select" id="terrace" name="terrace">
+                            <option value="2" {{ $terrace ? 'selected' : '' }}>Yes, I love it</option>
+                            <option value="1" {{ !$terrace ? 'selected' : '' }}>No, please, let me inside</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="schedules" class="col-md-4 col-form-label text-md-end">Schedules:</label>
+                    <div class="col-md-6">
+                        @foreach ($schedules as $schedule)
+                            <input type="checkbox" id="{{ 'schedule_' . $schedule->id }}" name="schedules[]" value="{{ $schedule->id }}"
+                                   @if ($user_food_preferences && $user_food_preferences->schedules->contains($schedule))
+                                   checked
+                                @endif
+                            >
+                            <label for="{{ 'schedule_' . $schedule->id }}">{{ $schedule->schedule_type }}</label><br>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="food_types" class="col-md-4 col-form-label text-md-end">Food Types:</label>
+                    <div class="col-md-6">
+                        @foreach ($food_types as $food_type)
+                            <input type="checkbox" id="{{ 'food_type_' . $food_type->id }}" name="food_types[]" value="{{ $food_type->id }}"
+                                   @if ($user_food_preferences && $user_food_preferences->food_types->contains($food_type))
+                                   checked
+                                @endif
+                            >
+                            <label for="{{ 'food_type_' . $food_type->id }}">{{ $food_type->name }}</label><br>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="price_ranges" class="col-md-4 col-form-label text-md-end">Price Ranges:</label>
+                    <div class="col-md-6">
+                        @foreach ($price_ranges as $price_range)
+                            <input type="checkbox" id="{{ 'price_range_' . $price_range->id }}" name="price_ranges[]" value="{{ $price_range->id }}"
+                                   @if ($user_food_preferences && $user_food_preferences->price_ranges->contains($price_range))
+                                   checked
+                                @endif
+                            >
+                            <label for="{{ 'price_range_' . $price_range->id }}">{{ $price_range->range }}</label><br>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="row mb-0">
+                    <div class="col-md-8 offset-md-4">
+                        <button type="submit" class="btn btn-primary">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-
 
 @endsection

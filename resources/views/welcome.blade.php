@@ -42,10 +42,10 @@
                 <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
                     <li class="nav-item">
                         <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
-                            <i class="fa fa-coffee fa-2x text-primary"></i>
+                            <i class="fa fa-hotdog fa-2x text-primary"></i>
                             <div class="ps-3">
                                 <small class="text-body">Top</small>
-                                <h6 class="mt-n1 mb-0">Breakfast</h6>
+                                <h6 class="mt-n1 mb-0">Hot dogs</h6>
                             </div>
                         </a>
                     </li>
@@ -60,10 +60,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-3">
-                            <i class="fa fa-utensils fa-2x text-primary"></i>
+                            <i class="fa fa-pepper-hot fa-2x text-primary"></i>
                             <div class="ps-3">
                                 <small class="text-body">Top</small>
-                                <h6 class="mt-n1 mb-0">French</h6>
+                                <h6 class="mt-n1 mb-0">Mexican</h6>
                             </div>
                         </a>
                     </li>
@@ -78,10 +78,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-5">
-                            <i class="fa fa-pizza-slice fa-2x text-primary"></i>
+                            <i class="fa fa-carrot fa-2x text-primary"></i>
                             <div class="ps-3">
                                 <small class="text-body">Top</small>
-                                <h6 class="mt-n1 mb-0">Spanish</h6>
+                                <h6 class="mt-n1 mb-0">Vegan</h6>
                             </div>
                         </a>
                     </li>
@@ -380,7 +380,7 @@
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x text-primary mb-4">1</i>
-                            <h5>Create your</h5>
+                            <h5>Create your user</h5>
                             <p>Register your personal data and join us.</p>
                         </div>
                     </div>

@@ -114,7 +114,7 @@
 
                 <!-- step four -->
                 <div class="step">
-                    <p class="text-center mb-4">Location</p>
+                    <p class="text-center mb-4">Confirm</p>
                     <div class="mb-3">
                         <div class="col-md-6">
                         </div>
