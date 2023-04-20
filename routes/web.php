@@ -59,3 +59,7 @@ Auth::routes();
 Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->name( 'home' );
 
 Route::get('/restaurant', [RestaurantController::class, 'show'])->name('restaurant.show');
+
+Route::middleware(['redirectIfRegistered'])->group(function () {
+    Route::get('/registers', [ UserController::class, 'create' ] )->name('registers');
+});

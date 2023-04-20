@@ -78,34 +78,34 @@ class UserFoodPreferenceController extends Controller {
             $user_food_preferences->longitude = $existingLocation->longitude;
         }
 
-            if ( isset( $validatedData['terrace'] ) ) {
-                $user_food_preferences->terrace = $validatedData['terrace'];
-            } else {
-                $user_food_preferences->terrace = $existingTerrace;
-            }
-
-            if ( isset( $validatedData['schedules'] ) ) {
-                $user_food_preferences->schedules()->sync( $validatedData['schedules'] );
-            } else {
-                $user_food_preferences->schedules()->sync( $existingSchedules );
-            }
-
-            if ( isset( $validatedData['food_types'] ) ) {
-                $user_food_preferences->food_types()->sync( $validatedData['food_types'] );
-            } else {
-                $user_food_preferences->food_types()->sync( $existingFoodTypes );
-            }
-
-            if ( isset( $validatedData['price_ranges'] ) ) {
-                $user_food_preferences->price_ranges()->sync( $validatedData['price_ranges'] );
-            } else {
-                $user_food_preferences->price_ranges()->sync( $existingPriceRanges );
-            }
-
-            $user_food_preferences->save();
-
-            return redirect()->back()->with( 'success', 'Successful update' );
+        if ( isset( $validatedData['terrace'] ) ) {
+            $user_food_preferences->terrace = $validatedData['terrace'];
+        } else {
+            $user_food_preferences->terrace = $existingTerrace;
         }
+
+        if ( isset( $validatedData['schedules'] ) ) {
+            $user_food_preferences->schedules()->sync( $validatedData['schedules'] );
+        } else {
+            $user_food_preferences->schedules()->sync( $existingSchedules );
+        }
+
+        if ( isset( $validatedData['food_types'] ) ) {
+            $user_food_preferences->food_types()->sync( $validatedData['food_types'] );
+        } else {
+            $user_food_preferences->food_types()->sync( $existingFoodTypes );
+        }
+
+        if ( isset( $validatedData['price_ranges'] ) ) {
+            $user_food_preferences->price_ranges()->sync( $validatedData['price_ranges'] );
+        } else {
+            $user_food_preferences->price_ranges()->sync( $existingPriceRanges );
+        }
+
+        $user_food_preferences->save();
+
+        return redirect()->back()->with( 'success', 'Successful update' );
+    }
 
     /**
      * @throws GuzzleException
