@@ -14,7 +14,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
     protected function create( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
-        $requestData = $request->all();
+        $validatedData = $request->validate([
+            'location' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'price_ranges' => 'array',
+            'food_types' => 'array',
+            'schedules' => 'array',
+        ]);
+
+        $requestData = $validatedData;
 
         $location = $requestData['location'];
         $latLong  = $this->getLatLong( $location );

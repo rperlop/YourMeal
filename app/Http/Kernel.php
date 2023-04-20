@@ -65,8 +65,4 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
-    protected $routeMiddleware = [
-        // ...
-        'redirectIfRegistered' => \App\Http\Middleware\RedirectIfRegistered::class,
-    ];
 }

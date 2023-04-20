@@ -35,7 +35,7 @@ Route::get( '/registers', function () {
     $price_ranges = PriceRange::all();
     $schedules = Schedule::all();
     return view( 'registers', compact( 'food_types', 'price_ranges', 'schedules' ) );
-} )->name('registers');
+} )->name('registers')->middleware('guest');;
 
 Route::get( '/user-data', [ UserController::class, 'edit' ] )->name( 'user.edit' )->middleware( 'auth' );
 Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.update' )->middleware( 'auth' );
@@ -45,7 +45,7 @@ Route::get('/user-preferences', [ UserFoodPreferenceController::class, 'show_use
 Route::put('/user-preferences', [ UserFoodPreferenceController::class, 'update'])->name('user-preferences.update')->middleware( 'auth' );
 
 
-Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers');
+Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers')->middleware('guest');;
 
 Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' );
 
@@ -60,6 +60,4 @@ Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->
 
 Route::get('/restaurant', [RestaurantController::class, 'show'])->name('restaurant.show');
 
-Route::middleware(['redirectIfRegistered'])->group(function () {
-    Route::get('/registers', [ UserController::class, 'create' ] )->name('registers');
-});
+
