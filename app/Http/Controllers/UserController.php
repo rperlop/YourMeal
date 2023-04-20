@@ -19,7 +19,7 @@ class UserController extends Controller {
         $location = $requestData['location'];
         $latLong  = $this->getLatLong( $location );
         if ( $latLong == null ) {
-            return back()->withErrors( [ 'city' => 'No se pudo encontrar la ciudad o pueblo ingresado' ] );
+            return back()->withErrors( [ 'location' => 'It does not exist the city' ] );
         }
 
         $userFoodPreference = new UserFoodPreference;

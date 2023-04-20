@@ -7,6 +7,7 @@ use App\Models\PriceRange;
 use App\Models\Schedule;
 use App\Models\UserFoodPreference;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -16,9 +17,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserFoodPreferenceController extends Controller {
     /**
-     * Show user food preferences on preferences food view
+     * Show user food preferences on preferences' food view
      *
      * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     * @throws GuzzleException
      */
     public function show_user_food_preferences(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $user      = Auth::user();
@@ -43,30 +45,71 @@ class UserFoodPreferenceController extends Controller {
      * @param Request $request
      *
      * @return RedirectResponse
+     * @throws GuzzleException
      */
     public function update( Request $request ): RedirectResponse {
         $user                  = Auth::user();
         $user_food_preferences = $user->user_food_preferences;
 
-        $location = $request->input( 'location' );
-        $latLong  = $this->getLatLong( $location );
+        $existingLocation    = $user_food_preferences->location;
+        $existingTerrace     = $user_food_preferences->terrace;
+        $existingSchedules   = $user_food_preferences->schedules;
+        $existingFoodTypes   = $user_food_preferences->food_types;
+        $existingPriceRanges = $user_food_preferences->price_ranges;
 
-        if ( $latLong ) {
-            $user_food_preferences->latitude  = $latLong['latitude'];
-            $user_food_preferences->longitude = $latLong['longitude'];
+        $validatedData = $request->validate( [
+            'location'       => 'nullable|string|max:255',
+            'terrace'        => 'nullable|boolean',
+            'schedules'      => 'nullable|array',
+            'schedules.*'    => 'sometimes|exists:schedules,id',
+            'food_types'     => 'nullable|array',
+            'food_types.*'   => 'sometimes|exists:food_types,id',
+            'price_ranges'   => 'nullable|array',
+            'price_ranges.*' => 'sometimes|exists:price_ranges,id',
+        ] );
+
+        if ( isset( $validatedData['location'] ) ) {
+            $newLocation                      = $validatedData['location'];
+            $newLocationLatLong               = $this->getLatLong( $newLocation );
+            $user_food_preferences->latitude  = $newLocationLatLong['latitude'];
+            $user_food_preferences->longitude = $newLocationLatLong['longitude'];
+        } else {
+            $user_food_preferences->latitude  = $existingLocation->latitude;
+            $user_food_preferences->longitude = $existingLocation->longitude;
         }
 
-        $user_food_preferences->terrace = $request->has( 'terrace' );
+            if ( isset( $validatedData['terrace'] ) ) {
+                $user_food_preferences->terrace = $validatedData['terrace'];
+            } else {
+                $user_food_preferences->terrace = $existingTerrace;
+            }
 
-        $user_food_preferences->save();
+            if ( isset( $validatedData['schedules'] ) ) {
+                $user_food_preferences->schedules()->sync( $validatedData['schedules'] );
+            } else {
+                $user_food_preferences->schedules()->sync( $existingSchedules );
+            }
 
-        $user_food_preferences->schedules()->sync( $request->input( 'schedules' ) );
-        $user_food_preferences->food_types()->sync( $request->input( 'food_types' ) );
-        $user_food_preferences->price_ranges()->sync( $request->input( 'price_ranges' ) );
+            if ( isset( $validatedData['food_types'] ) ) {
+                $user_food_preferences->food_types()->sync( $validatedData['food_types'] );
+            } else {
+                $user_food_preferences->food_types()->sync( $existingFoodTypes );
+            }
 
-        return redirect()->route( 'user-preferences' )->with( 'success', 'Your preferences have been updated!' );
-    }
+            if ( isset( $validatedData['price_ranges'] ) ) {
+                $user_food_preferences->price_ranges()->sync( $validatedData['price_ranges'] );
+            } else {
+                $user_food_preferences->price_ranges()->sync( $existingPriceRanges );
+            }
 
+            $user_food_preferences->save();
+
+            return redirect()->back()->with( 'success', 'Successful update' );
+        }
+
+    /**
+     * @throws GuzzleException
+     */
     public function getCityName( $lat, $long ): ?string {
         $apiKey   = 'a82c53d8a743452e9323753bab52a057';
         $client   = new Client();
@@ -75,14 +118,15 @@ class UserFoodPreferenceController extends Controller {
         $body     = json_decode( $response->getBody() );
 
         if ( $body->total_results > 0 ) {
-            $cityName = $body->results[0]->components->city ?? null;
-
-            return $cityName;
+            return $body->results[0]->components->city ?? null;
         } else {
             return null;
         }
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getLatLong( $location ): ?array {
         $apiKey   = 'a82c53d8a743452e9323753bab52a057';
         $client   = new Client();

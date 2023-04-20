@@ -39,7 +39,7 @@ Route::get( '/registers', function () {
 
 Route::get( '/user-data', [ UserController::class, 'edit' ] )->name( 'user.edit' )->middleware( 'auth' );
 Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.update' )->middleware( 'auth' );
-Route::delete( '/user-data', [ UserController::class, 'destroy' ] )->name( 'user.destroy' )->middleware( 'auth' );
+Route::delete( '/user-data', [ UserController::class, 'remove_user' ] )->name( 'user.destroy' )->middleware( 'auth' );
 
 Route::get('/user-preferences', [ UserFoodPreferenceController::class, 'show_user_food_preferences'])->name('user-preferences')->middleware( 'auth' );
 Route::put('/user-preferences', [ UserFoodPreferenceController::class, 'update'])->name('user-preferences.update')->middleware( 'auth' );

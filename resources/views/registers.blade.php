@@ -56,11 +56,11 @@
                 <div class="step">
                     <p class="text-center mb-4">Food types</p>
                     <div class="mb-3">
-                        @foreach($foodTypes as $foodType)
+                        @foreach($food_types as $food_type)
                             <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="food_types[]" value="{{ $foodType->id }}" id="{{ $foodType->name }}">
-                                <label class="form-check-label" for="{{ $foodType->name }}">
-                                    {{ $foodType->name }}
+                                <input class="form-check-input" type="checkbox" name="food_types[]" value="{{ $food_type->id }}" id="{{ $food_type->name }}">
+                                <label class="form-check-label" for="{{ $food_type->name }}">
+                                    {{ $food_type->name }}
                                 </label>
                             </div>
                         @endforeach
@@ -71,11 +71,11 @@
                 <div class="step">
                     <p class="text-center mb-4">Price range</p>
                     <div class="mb-3">
-                        @foreach($priceRanges as $priceRange)
+                        @foreach($price_ranges as $price_range)
                             <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="price_ranges[]" value="{{ $priceRange->id }}" id="{{ $priceRange->range }}">
-                                <label class="form-check-label" for="{{ $priceRange->range }}">
-                                    {{ $priceRange->range }}
+                                <input class="form-check-input" type="checkbox" name="price_ranges[]" value="{{ $price_range->id }}" id="{{ $price_range->range }}">
+                                <label class="form-check-label" for="{{ $price_range->range }}">
+                                    {{ $price_range->range }}
                                 </label>
                             </div>
                         @endforeach
