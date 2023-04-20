@@ -28,29 +28,24 @@ Route::get( '/', function () {
 
 Route::get( '/registers', function () {
     return view( 'registers' );
-} )->name('registers');;
+} )->name('registers');
 
 Route::get( '/registers', function () {
-    $foodTypes = FoodType::all();
-    $priceRanges = PriceRange::all();
+    $food_types = FoodType::all();
+    $price_ranges = PriceRange::all();
     $schedules = Schedule::all();
-    return view( 'registers', compact( 'foodTypes', 'priceRanges', 'schedules' ) );
-} )->name('registers');;
+    return view( 'registers', compact( 'food_types', 'price_ranges', 'schedules' ) );
+} )->name('registers');
 
 Route::get( '/user-data', [ UserController::class, 'edit' ] )->name( 'user.edit' )->middleware( 'auth' );
 Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.update' )->middleware( 'auth' );
 Route::delete( '/user-data', [ UserController::class, 'destroy' ] )->name( 'user.destroy' )->middleware( 'auth' );
 
-Route::get( '/user-preferences', [
-    UserFoodPreferenceController::class,
-    'show_user_food_preferences',
-] )->name( 'user.edit' )->middleware( 'auth' );
-Route::put( '/user-preferences', [
-    UserFoodPreferenceController::class,
-    'update',
-] )->name( 'user-preferences.update' )->middleware( 'auth' );
+Route::get('/user-preferences', [ UserFoodPreferenceController::class, 'show_user_food_preferences'])->name('user-preferences')->middleware( 'auth' );
+Route::put('/user-preferences', [ UserFoodPreferenceController::class, 'update'])->name('user-preferences.update')->middleware( 'auth' );
 
-Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers');;
+
+Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers');
 
 Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' );
 
