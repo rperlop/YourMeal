@@ -119,6 +119,8 @@ class UserFoodPreferenceController extends Controller {
 
         if ( $body->total_results > 0 ) {
             return $body->results[0]->components->city ?? null;
+        } else if ($body->results[0]->components->city == null) {
+            return $body->results[0]->components->town ?? null;
         } else {
             return null;
         }

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller {
     protected function create( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
@@ -23,6 +24,7 @@ class UserController extends Controller {
             'price_ranges' => 'array',
             'food_types' => 'array',
             'schedules' => 'array',
+            'terrace' => 'boolean'
         ]);
 
         $requestData = $validatedData;
@@ -66,17 +68,40 @@ class UserController extends Controller {
     }
 
     public function edit(): \Illuminate\Contracts\View\Factory|Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application {
-        $user = Auth::user(); // Obtener el usuario autenticado
+        $user = Auth::user();
 
         return view( 'user-data', compact( 'user' ) );
     }
 
     public function update( Request $request ): RedirectResponse {
-        $user = Auth::user(); // Obtener el usuario autenticado
-        $user->fill( $request->all() );
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,' . Auth::user()->id,
+            'password' => 'required|min:8',
+        ], [
+            'first_name.required' => 'The first name field is mandatory.',
+            'first_name.max' => 'The first name can not have more than 255 characters.',
+            'last_name.required' => 'The last name field is mandatory.',
+            'last_name.max' => 'The last name can not have more than 255 characters.',
+            'email.required' => 'The email field is mandatory.',
+            'email.email' => 'The email has to have an email format.',
+            'email.unique' => 'This email is already used.',
+            'password.required' => 'The password field is mandatory.',
+            'password.min' => 'Password has to have 8 characters.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('user.edit')
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+
+        $user = Auth::user();
+        $user->fill($request->all());
         $user->save();
 
-        return redirect()->route( 'user.edit' )->with( 'success', 'Los cambios han sido guardados.' );
+        return redirect()->route('user.edit')->with('success', 'Changes are saved.');
     }
 
     /**
