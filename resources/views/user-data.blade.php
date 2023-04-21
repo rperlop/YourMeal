@@ -51,6 +51,15 @@
                         @enderror
                     </div>
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="row mb-0">
                     <div class="col-md-8 offset-md-4">
                         <button class="btn btn-primary" type="submit">Update data</button>

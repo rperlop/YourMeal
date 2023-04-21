@@ -37,7 +37,7 @@ Route::get( '/registers', function () {
     return view( 'registers', compact( 'food_types', 'price_ranges', 'schedules' ) );
 } )->name('registers')->middleware('guest');;
 
-Route::get( '/user-data', [ UserController::class, 'edit' ] )->name( 'user.edit' )->middleware( 'auth' );
+Route::get( '/user-data', [ UserController::class, 'show_user_data' ] )->name( 'user.edit' )->middleware( 'auth' );
 Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.update' )->middleware( 'auth' );
 Route::delete( '/user-data', [ UserController::class, 'remove_user' ] )->name( 'user.destroy' )->middleware( 'auth' );
 

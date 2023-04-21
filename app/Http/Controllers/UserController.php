@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserFoodPreference;
-use GuzzleHttp\Client;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller {
+    /**
+     * Create a new user
+     *
+     * @param Request $request
+     *
+     * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+     */
     protected function create( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         $validatedData = $request->validate([
             'location' => 'required',
@@ -30,7 +38,7 @@ class UserController extends Controller {
         $requestData = $validatedData;
 
         $location = $requestData['location'];
-        $latLong  = $this->getLatLong( $location );
+        $latLong  = Utils::class->getLatLong( $location );
         if ( $latLong == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the city' ] );
         }
@@ -67,12 +75,24 @@ class UserController extends Controller {
         return redirect('/')->with('user');
     }
 
-    public function edit(): \Illuminate\Contracts\View\Factory|Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application {
+    /**
+     * Show user data
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
+    public function show_user_data(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $user = Auth::user();
 
         return view( 'user-data', compact( 'user' ) );
     }
 
+    /**
+     * Update user data
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
     public function update( Request $request ): RedirectResponse {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:255',
@@ -88,7 +108,7 @@ class UserController extends Controller {
             'email.email' => 'The email has to have an email format.',
             'email.unique' => 'This email is already used.',
             'password.required' => 'The password field is mandatory.',
-            'password.min' => 'Password has to have 8 characters.',
+            'password.min' => 'Password must be at least 8 characters long.',
         ]);
 
         if ($validator->fails()) {
@@ -99,6 +119,11 @@ class UserController extends Controller {
 
         $user = Auth::user();
         $user->fill($request->all());
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
         $user->save();
 
         return redirect()->route('user.edit')->with('success', 'Changes are saved.');
@@ -130,21 +155,4 @@ class UserController extends Controller {
         return redirect()->route('login')->with('success', 'User removed');
     }
 
-
-
-    public function getLatLong( $location ): ?array {
-        $apiKey   = 'a82c53d8a743452e9323753bab52a057';
-        $client   = new Client();
-        $url      = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode( $location ) . "&key=" . $apiKey . "&language=en&pretty=1";
-        $response = $client->request( 'GET', $url );
-        $body     = json_decode( $response->getBody() );
-        if ( $body->total_results > 0 ) {
-            $lat  = $body->results[0]->geometry->lat;
-            $long = $body->results[0]->geometry->lng;
-
-            return [ 'lat' => $lat, 'long' => $long ];
-        } else {
-            return null;
-        }
-    }
 }

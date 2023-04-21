@@ -6,7 +6,6 @@ use App\Models\FoodType;
 use App\Models\PriceRange;
 use App\Models\Schedule;
 use App\Models\UserFoodPreference;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -27,7 +26,7 @@ class UserFoodPreferenceController extends Controller {
         $latitude  = $user->user_food_preferences->latitude;
         $longitude = $user->user_food_preferences->longitude;
         $terrace   = $user->user_food_preferences->terrace;
-        $location  = $this->getCityName( $latitude, $longitude );
+        $location  = Utils::class->getCityName( $latitude, $longitude );
 
         $user_food_preferences_id = $user->user_food_preferences_id;
         $user_food_preferences    = UserFoodPreference::find( $user_food_preferences_id );
@@ -70,7 +69,7 @@ class UserFoodPreferenceController extends Controller {
 
         if ( isset( $validatedData['location'] ) ) {
             $newLocation                      = $validatedData['location'];
-            $newLocationLatLong               = $this->getLatLong( $newLocation );
+            $newLocationLatLong               = Utils::class->getLatLong( $newLocation );
             $user_food_preferences->latitude  = $newLocationLatLong['latitude'];
             $user_food_preferences->longitude = $newLocationLatLong['longitude'];
         } else {
@@ -107,41 +106,4 @@ class UserFoodPreferenceController extends Controller {
         return redirect()->back()->with( 'success', 'Successful update' );
     }
 
-    /**
-     * @throws GuzzleException
-     */
-    public function getCityName( $lat, $long ): ?string {
-        $apiKey   = 'a82c53d8a743452e9323753bab52a057';
-        $client   = new Client();
-        $url      = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode( $lat . ',' . $long ) . "&key=" . $apiKey . "&language=en&pretty=1";
-        $response = $client->request( 'GET', $url );
-        $body     = json_decode( $response->getBody() );
-
-        if ( $body->total_results > 0 ) {
-            return $body->results[0]->components->city ?? null;
-        } else if ($body->results[0]->components->city == null) {
-            return $body->results[0]->components->town ?? null;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @throws GuzzleException
-     */
-    public function getLatLong( $location ): ?array {
-        $apiKey   = 'a82c53d8a743452e9323753bab52a057';
-        $client   = new Client();
-        $url      = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode( $location ) . "&key=" . $apiKey . "&language=en&pretty=1";
-        $response = $client->request( 'GET', $url );
-        $body     = json_decode( $response->getBody() );
-        if ( $body->total_results > 0 ) {
-            $latitude  = $body->results[0]->geometry->lat;
-            $longitude = $body->results[0]->geometry->lng;
-
-            return [ 'latitude' => $latitude, 'longitude' => $longitude ];
-        } else {
-            return null;
-        }
-    }
 }
