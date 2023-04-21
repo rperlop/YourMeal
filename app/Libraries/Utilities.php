@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Libraries;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class Utils {
+class Utilities {
 
     /**
      * Get a city/town name from latitude and longitude

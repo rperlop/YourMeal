@@ -12,9 +12,9 @@
 
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-0">
-            <form method="POST" action="{{ route('user-preferences.update') }}" id="signUpForm">
+            <form method="POST" action="{{ route('user_preferences.update') }}" id="signUpForm">
                 @csrf
-                @method('PUT')
+                @method('PATCH')
                 <div class="row mb-3">
                     <label for="location" class="col-md-4 col-form-label text-md-end">City:</label>
                     <div class="col-md-6">

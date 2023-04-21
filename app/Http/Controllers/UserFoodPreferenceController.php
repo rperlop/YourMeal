@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\Utilities;
 use App\Models\FoodType;
 use App\Models\PriceRange;
 use App\Models\Schedule;
@@ -26,7 +27,7 @@ class UserFoodPreferenceController extends Controller {
         $latitude  = $user->user_food_preferences->latitude;
         $longitude = $user->user_food_preferences->longitude;
         $terrace   = $user->user_food_preferences->terrace;
-        $location  = Utils::class->getCityName( $latitude, $longitude );
+        $location  = ( new Utilities )->getCityName( $latitude, $longitude );
 
         $user_food_preferences_id = $user->user_food_preferences_id;
         $user_food_preferences    = UserFoodPreference::find( $user_food_preferences_id );
@@ -46,7 +47,7 @@ class UserFoodPreferenceController extends Controller {
      * @return RedirectResponse
      * @throws GuzzleException
      */
-    public function update( Request $request ): RedirectResponse {
+    public function update_user_preferences( Request $request ): RedirectResponse {
         $user                  = Auth::user();
         $user_food_preferences = $user->user_food_preferences;
 
@@ -69,7 +70,7 @@ class UserFoodPreferenceController extends Controller {
 
         if ( isset( $validatedData['location'] ) ) {
             $newLocation                      = $validatedData['location'];
-            $newLocationLatLong               = Utils::class->getLatLong( $newLocation );
+            $newLocationLatLong               = ( new Utilities )->getLatLong( $newLocation );
             $user_food_preferences->latitude  = $newLocationLatLong['latitude'];
             $user_food_preferences->longitude = $newLocationLatLong['longitude'];
         } else {
@@ -103,7 +104,7 @@ class UserFoodPreferenceController extends Controller {
 
         $user_food_preferences->save();
 
-        return redirect()->back()->with( 'success', 'Successful update' );
+        return redirect()->route('user-preferences')->with( 'success', 'Successful update' );
     }
 
 }

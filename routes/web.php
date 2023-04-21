@@ -42,10 +42,13 @@ Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.upd
 Route::delete( '/user-data', [ UserController::class, 'remove_user' ] )->name( 'user.destroy' )->middleware( 'auth' );
 
 Route::get('/user-preferences', [ UserFoodPreferenceController::class, 'show_user_food_preferences'])->name('user-preferences')->middleware( 'auth' );
-Route::put('/user-preferences', [ UserFoodPreferenceController::class, 'update'])->name('user-preferences.update')->middleware( 'auth' );
+Route::patch('/user-preferences', [ UserFoodPreferenceController::class,
+    'update_user_preferences'
+])->name('user_preferences.update')->middleware( 'auth' );
 
 
-Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers')->middleware('guest');;
+
+Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers')->middleware('guest');
 
 Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' );
 

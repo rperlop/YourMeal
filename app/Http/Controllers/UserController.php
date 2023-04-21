@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\Utilities;
 use App\Models\User;
 use App\Models\UserFoodPreference;
+
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -21,6 +23,7 @@ class UserController extends Controller {
      * @param Request $request
      *
      * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function create( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         $validatedData = $request->validate([
@@ -38,15 +41,15 @@ class UserController extends Controller {
         $requestData = $validatedData;
 
         $location = $requestData['location'];
-        $latLong  = Utils::class->getLatLong( $location );
+        $latLong  = ( new \App\Libraries\Utilities )->getLatLong( $location );
         if ( $latLong == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the city' ] );
         }
 
         $userFoodPreference = new UserFoodPreference;
         $userFoodPreference->setAttribute( 'terrace', $requestData['terrace'] );
-        $userFoodPreference->setAttribute( 'latitude', $latLong['lat'] );
-        $userFoodPreference->setAttribute( 'longitude', $latLong['long'] );
+        $userFoodPreference->setAttribute( 'latitude', $latLong['latitude'] );
+        $userFoodPreference->setAttribute( 'longitude', $latLong['longitude'] );
         $userFoodPreference->save();
         $userFoodPreferenceId = $userFoodPreference->id;
 

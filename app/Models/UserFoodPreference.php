@@ -10,6 +10,12 @@ class UserFoodPreference extends Model {
 
     protected $table = 'user_food_preferences';
 
+    protected $fillable = [
+        'terrace',
+        'latitude',
+        'longitude',
+    ];
+
     public function food_types(): \Illuminate\Database\Eloquent\Relations\BelongsToMany {
         return $this->belongsToMany( FoodType::class, 'user_food_preferences_has_food_types', 'user_food_preference_id', 'food_type_id' );
     }
