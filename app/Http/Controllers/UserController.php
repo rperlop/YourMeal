@@ -6,6 +6,7 @@ use App\Libraries\Utilities;
 use App\Models\User;
 use App\Models\UserFoodPreference;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -23,60 +24,50 @@ class UserController extends Controller {
      * @param Request $request
      *
      * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
-    protected function create( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
-        $validatedData = $request->validate([
-            'location' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'price_ranges' => 'array',
-            'food_types' => 'array',
-            'schedules' => 'array',
-            'terrace' => 'boolean'
-        ]);
+    protected function create(Request $request): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+    {
+        $request_data = $request->all();
 
-        $requestData = $validatedData;
-
-        $location = $requestData['location'];
-        $latLong  = ( new \App\Libraries\Utilities )->getLatLong( $location );
-        if ( $latLong == null ) {
-            return back()->withErrors( [ 'location' => 'It does not exist the city' ] );
+        $location = $request_data['location'];
+        $lat_long = (new Utilities)->getLatLong($location);
+        if ($lat_long == null) {
+            return back()->withErrors(['location' => 'It does not exist the city']);
         }
 
-        $userFoodPreference = new UserFoodPreference;
-        $userFoodPreference->setAttribute( 'terrace', $requestData['terrace'] );
-        $userFoodPreference->setAttribute( 'latitude', $latLong['latitude'] );
-        $userFoodPreference->setAttribute( 'longitude', $latLong['longitude'] );
-        $userFoodPreference->save();
-        $userFoodPreferenceId = $userFoodPreference->id;
+        $user_food_preferences = new UserFoodPreference;
+        $user_food_preferences->setAttribute('terrace', $request_data['terrace']);
+        $user_food_preferences->setAttribute('latitude', $lat_long['latitude']);
+        $user_food_preferences->setAttribute('longitude', $lat_long['longitude']);
+        $user_food_preferences->save();
+        $user_food_preferences_id = $user_food_preferences->id;
 
         $user = new User;
-        $user->setAttribute( 'first_name', $requestData['first_name'] );
-        $user->setAttribute( 'last_name', $requestData['last_name'] );
-        $user->setAttribute( 'email', $requestData['email'] );
-        $user->setAttribute( 'password', Hash::make( $requestData['password'] ) );
-        $user->user_food_preferences_id = $userFoodPreferenceId;
+        $user->setAttribute('first_name', $request_data['first_name']);
+        $user->setAttribute('last_name', $request_data['last_name']);
+        $user->setAttribute('email', $request_data['email']);
+        $user->setAttribute('password', Hash::make($request_data['password']));
+        $user->user_food_preferences_id = $user_food_preferences_id;
         $user->save();
 
-        if ( isset( $requestData['price_ranges'] ) ) {
-            $userFoodPreference->price_ranges()->sync( $requestData['price_ranges'] );
+        if (isset($request_data['price_ranges'])) {
+            $user_food_preferences->price_ranges()->sync($request_data['price_ranges']);
         }
 
-        if ( isset( $requestData['food_types'] ) ) {
-            $userFoodPreference->food_types()->sync( $requestData['food_types'] );
+        if (isset($request_data['food_types'])) {
+            $user_food_preferences->food_types()->sync($request_data['food_types']);
         }
 
-        if ( isset( $requestData['schedules'] ) ) {
-            $userFoodPreference->schedules()->sync( $requestData['schedules'] );
+        if (isset($request_data['schedules'])) {
+            $user_food_preferences->schedules()->sync($request_data['schedules']);
         }
 
         Auth::login($user);
 
         return redirect('/')->with('user');
     }
+
 
     /**
      * Show user data
@@ -140,16 +131,16 @@ class UserController extends Controller {
     public function remove_user(): RedirectResponse {
         $user = Auth::user();
 
-        $userFoodPreference = $user->user_food_preferences;
+        $user_food_preferences = $user->user_food_preferences;
 
-        $userFoodPreference->schedules()->detach();
-        $userFoodPreference->food_types()->detach();
-        $userFoodPreference->price_ranges()->detach();
+        $user_food_preferences->schedules()->detach();
+        $user_food_preferences->food_types()->detach();
+        $user_food_preferences->price_ranges()->detach();
 
         $user->user_food_preferences_id = null;
         $user->save();
 
-        $userFoodPreference->delete();
+        $user_food_preferences->delete();
 
         $user->delete();
 

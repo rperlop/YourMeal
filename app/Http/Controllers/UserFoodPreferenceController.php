@@ -51,49 +51,49 @@ class UserFoodPreferenceController extends Controller {
         $user = Auth::user();
         $user_food_preferences = $user->user_food_preferences;
 
-        $existingLocation = $user_food_preferences->location;
-        $existingTerrace = $user_food_preferences->terrace;
-        $existingSchedules = $user_food_preferences->schedules;
-        $existingFoodTypes = $user_food_preferences->food_types;
-        $existingPriceRanges = $user_food_preferences->price_ranges;
+        $location = $user_food_preferences->location;
+        $terrace = $user_food_preferences->terrace;
+        $schedules = $user_food_preferences->schedules;
+        $food_types = $user_food_preferences->food_types;
+        $price_ranges = $user_food_preferences->price_ranges;
 
-        $newLocation = $request->input('location');
-        $newTerrace = $request->input('terrace');
-        $newSchedules = $request->input('schedules');
-        $newFoodTypes = $request->input('food_types');
-        $newPriceRanges = $request->input('price_ranges');
+        $new_location = $request->input('location');
+        $new_terrace = $request->input('terrace');
+        $new_schedules = $request->input('schedules');
+        $new_food_types = $request->input('food_types');
+        $new_price_ranges = $request->input('price_ranges');
 
-        if (isset($newLocation)) {
-            $newLocationLatLong = (new Utilities)->getLatLong($newLocation);
-            $user_food_preferences->latitude = $newLocationLatLong['latitude'];
-            $user_food_preferences->longitude = $newLocationLatLong['longitude'];
+        if (isset($new_location)) {
+            $new_location_lat_long = (new Utilities)->getLatLong($new_location);
+            $user_food_preferences->latitude = $new_location_lat_long['latitude'];
+            $user_food_preferences->longitude = $new_location_lat_long['longitude'];
         } else {
-            $user_food_preferences->latitude = $existingLocation->latitude;
-            $user_food_preferences->longitude = $existingLocation->longitude;
+            $user_food_preferences->latitude = $location->latitude;
+            $user_food_preferences->longitude = $location->longitude;
         }
 
-        if (isset($newTerrace)) {
-            $user_food_preferences->terrace = $newTerrace;
+        if (isset($new_terrace)) {
+            $user_food_preferences->terrace = $new_terrace;
         } else {
-            $user_food_preferences->terrace = $existingTerrace;
+            $user_food_preferences->terrace = $terrace;
         }
 
-        if (isset($newSchedules)) {
-            $user_food_preferences->schedules()->sync($newSchedules);
+        if (isset($new_schedules)) {
+            $user_food_preferences->schedules()->sync($new_schedules);
         } else {
-            $user_food_preferences->schedules()->sync($existingSchedules);
+            $user_food_preferences->schedules()->sync($schedules);
         }
 
-        if (isset($newFoodTypes)) {
-            $user_food_preferences->food_types()->sync($newFoodTypes);
+        if (isset($new_food_types)) {
+            $user_food_preferences->food_types()->sync($new_food_types);
         } else {
-            $user_food_preferences->food_types()->sync($existingFoodTypes);
+            $user_food_preferences->food_types()->sync($food_types);
         }
 
-        if (isset($newPriceRanges)) {
-            $user_food_preferences->price_ranges()->sync($newPriceRanges);
+        if (isset($new_price_ranges)) {
+            $user_food_preferences->price_ranges()->sync($new_price_ranges);
         } else {
-            $user_food_preferences->price_ranges()->sync($existingPriceRanges);
+            $user_food_preferences->price_ranges()->sync($price_ranges);
         }
 
         $user_food_preferences->save();
