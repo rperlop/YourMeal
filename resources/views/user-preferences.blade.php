@@ -14,7 +14,7 @@
         <div class="row g-0">
             <form method="POST" action="{{ route('user_preferences.update') }}" id="signUpForm">
                 @csrf
-                @method('PATCH')
+                @method('PUT')
                 <div class="row mb-3">
                     <label for="location" class="col-md-4 col-form-label text-md-end">City:</label>
                     <div class="col-md-6">
@@ -25,8 +25,8 @@
                     <label for="terrace" class="col-md-4 col-form-label text-md-end">Terrace:</label>
                     <div class="col-md-6">
                         <select class="form-select" id="terrace" name="terrace">
-                            <option value="2" {{ $terrace ? 'selected' : '' }}>Yes, I love it</option>
-                            <option value="1" {{ !$terrace ? 'selected' : '' }}>No, please, let me inside</option>
+                            <option value="1" {{ $terrace ? 'selected' : '' }}>Yes, I love it</option>
+                            <option value="0" {{ !$terrace ? 'selected' : '' }}>No, please, let me inside</option>
                         </select>
                     </div>
                 </div>

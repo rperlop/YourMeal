@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class UserFoodPreferenceHasPriceRange extends Model {
     use HasFactory;
 
-    protected $table = 'user_food_preferences_has_price_ranges';
+    protected $fillable = [
+        'terrace',
+        'latitude',
+        'longitude',
+    ];
 
     public function priceRanges(): \Illuminate\Database\Eloquent\Relations\BelongsToMany {
         return $this->belongsToMany( PriceRange::class, 'user_food_preferences_has_price_ranges' );

@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserFoodPreference extends Model {
     use HasFactory;
 
-    protected $table = 'user_food_preferences';
-
     protected $fillable = [
         'terrace',
         'latitude',

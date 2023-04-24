@@ -47,64 +47,58 @@ class UserFoodPreferenceController extends Controller {
      * @return RedirectResponse
      * @throws GuzzleException
      */
-    public function update_user_preferences( Request $request ): RedirectResponse {
-        $user                  = Auth::user();
+    public function update_user_preferences(Request $request): RedirectResponse {
+        $user = Auth::user();
         $user_food_preferences = $user->user_food_preferences;
 
-        $existingLocation    = $user_food_preferences->location;
-        $existingTerrace     = $user_food_preferences->terrace;
-        $existingSchedules   = $user_food_preferences->schedules;
-        $existingFoodTypes   = $user_food_preferences->food_types;
+        $existingLocation = $user_food_preferences->location;
+        $existingTerrace = $user_food_preferences->terrace;
+        $existingSchedules = $user_food_preferences->schedules;
+        $existingFoodTypes = $user_food_preferences->food_types;
         $existingPriceRanges = $user_food_preferences->price_ranges;
 
-        $validatedData = $request->validate( [
-            'location'       => 'nullable|string|max:255',
-            'terrace'        => 'nullable|boolean',
-            'schedules'      => 'nullable|array',
-            'schedules.*'    => 'sometimes|exists:schedules,id',
-            'food_types'     => 'nullable|array',
-            'food_types.*'   => 'sometimes|exists:food_types,id',
-            'price_ranges'   => 'nullable|array',
-            'price_ranges.*' => 'sometimes|exists:price_ranges,id',
-        ] );
+        $newLocation = $request->input('location');
+        $newTerrace = $request->input('terrace');
+        $newSchedules = $request->input('schedules');
+        $newFoodTypes = $request->input('food_types');
+        $newPriceRanges = $request->input('price_ranges');
 
-        if ( isset( $validatedData['location'] ) ) {
-            $newLocation                      = $validatedData['location'];
-            $newLocationLatLong               = ( new Utilities )->getLatLong( $newLocation );
-            $user_food_preferences->latitude  = $newLocationLatLong['latitude'];
+        if (isset($newLocation)) {
+            $newLocationLatLong = (new Utilities)->getLatLong($newLocation);
+            $user_food_preferences->latitude = $newLocationLatLong['latitude'];
             $user_food_preferences->longitude = $newLocationLatLong['longitude'];
         } else {
-            $user_food_preferences->latitude  = $existingLocation->latitude;
+            $user_food_preferences->latitude = $existingLocation->latitude;
             $user_food_preferences->longitude = $existingLocation->longitude;
         }
 
-        if ( isset( $validatedData['terrace'] ) ) {
-            $user_food_preferences->terrace = $validatedData['terrace'];
+        if (isset($newTerrace)) {
+            $user_food_preferences->terrace = $newTerrace;
         } else {
             $user_food_preferences->terrace = $existingTerrace;
         }
 
-        if ( isset( $validatedData['schedules'] ) ) {
-            $user_food_preferences->schedules()->sync( $validatedData['schedules'] );
+        if (isset($newSchedules)) {
+            $user_food_preferences->schedules()->sync($newSchedules);
         } else {
-            $user_food_preferences->schedules()->sync( $existingSchedules );
+            $user_food_preferences->schedules()->sync($existingSchedules);
         }
 
-        if ( isset( $validatedData['food_types'] ) ) {
-            $user_food_preferences->food_types()->sync( $validatedData['food_types'] );
+        if (isset($newFoodTypes)) {
+            $user_food_preferences->food_types()->sync($newFoodTypes);
         } else {
-            $user_food_preferences->food_types()->sync( $existingFoodTypes );
+            $user_food_preferences->food_types()->sync($existingFoodTypes);
         }
 
-        if ( isset( $validatedData['price_ranges'] ) ) {
-            $user_food_preferences->price_ranges()->sync( $validatedData['price_ranges'] );
+        if (isset($newPriceRanges)) {
+            $user_food_preferences->price_ranges()->sync($newPriceRanges);
         } else {
-            $user_food_preferences->price_ranges()->sync( $existingPriceRanges );
+            $user_food_preferences->price_ranges()->sync($existingPriceRanges);
         }
 
         $user_food_preferences->save();
 
-        return redirect()->route('user-preferences')->with( 'success', 'Successful update' );
+        return redirect()->route('user-preferences')->with('success', 'Successful update');
     }
 
 }
