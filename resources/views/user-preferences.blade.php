@@ -18,7 +18,12 @@
                 <div class="row mb-3">
                     <label for="location" class="col-md-4 col-form-label text-md-end">City:</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" name="location" value="{{ $location }}">
+                        <input type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ $location }}">
+                        @error('location')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -31,7 +36,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="schedules" class="col-md-4 col-form-label text-md-end">Schedules:</label>
+                    <label for="schedules" class="col-md-4 col-form-label text-md-end @error('schedules') is-invalid @enderror">Schedules:</label>
                     <div class="col-md-6">
                         @foreach ($schedules as $schedule)
                             <input type="checkbox" id="{{ 'schedule_' . $schedule->id }}" name="schedules[]" value="{{ $schedule->id }}"
@@ -42,9 +47,14 @@
                             <label for="{{ 'schedule_' . $schedule->id }}">{{ $schedule->schedule_type }}</label><br>
                         @endforeach
                     </div>
+                    @error('schedules')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="row mb-3">
-                    <label for="food_types" class="col-md-4 col-form-label text-md-end">Food Types:</label>
+                    <label for="food_types" class="col-md-4 col-form-label text-md-end @error('food_types') is-invalid @enderror">Food Types:</label>
                     <div class="col-md-6">
                         @foreach ($food_types as $food_type)
                             <input type="checkbox" id="{{ 'food_type_' . $food_type->id }}" name="food_types[]" value="{{ $food_type->id }}"
@@ -55,9 +65,14 @@
                             <label for="{{ 'food_type_' . $food_type->id }}">{{ $food_type->name }}</label><br>
                         @endforeach
                     </div>
+                    @error('food_types')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="row mb-3">
-                    <label for="price_ranges" class="col-md-4 col-form-label text-md-end">Price Ranges:</label>
+                    <label for="price_ranges" class="col-md-4 col-form-label text-md-end @error('price_ranges') is-invalid @enderror">Price Ranges:</label>
                     <div class="col-md-6">
                         @foreach ($price_ranges as $price_range)
                             <input type="checkbox" id="{{ 'price_range_' . $price_range->id }}" name="price_ranges[]" value="{{ $price_range->id }}"
@@ -68,7 +83,21 @@
                             <label for="{{ 'price_range_' . $price_range->id }}">{{ $price_range->range }}</label><br>
                         @endforeach
                     </div>
+                    @error('price_ranges')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="row mb-0">
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="btn btn-primary">
