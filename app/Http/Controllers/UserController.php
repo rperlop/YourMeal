@@ -137,12 +137,11 @@ class UserController extends Controller {
         $user_food_preferences->food_types()->detach();
         $user_food_preferences->price_ranges()->detach();
 
-        $user->user_food_preferences_id = null;
         $user->save();
 
-        $user_food_preferences->delete();
-
         $user->delete();
+
+        $user_food_preferences->delete();
 
         Auth::logout();
 
