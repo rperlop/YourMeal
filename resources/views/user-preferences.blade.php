@@ -27,13 +27,18 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="terrace" class="col-md-4 col-form-label text-md-end">Terrace:</label>
+                    <label for="terrace" class="col-md-4 col-form-label text-md-en @error('terrace') is-invalid @enderror">Terrace:</label>
                     <div class="col-md-6">
                         <select class="form-select" id="terrace" name="terrace">
                             <option value="1" {{ $terrace ? 'selected' : '' }}>Yes, I love it</option>
                             <option value="0" {{ !$terrace ? 'selected' : '' }}>No, please, let me inside</option>
                         </select>
                     </div>
+                    @error('terrace')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="row mb-3">
                     <label for="schedules" class="col-md-4 col-form-label text-md-end @error('schedules') is-invalid @enderror">Schedules:</label>
