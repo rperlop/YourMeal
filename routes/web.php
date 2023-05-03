@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFoodPreferenceController;
@@ -35,7 +36,7 @@ Route::get( '/registers', function () {
     $price_ranges = PriceRange::all();
     $schedules = Schedule::all();
     return view( 'registers', compact( 'food_types', 'price_ranges', 'schedules' ) );
-} )->name('registers')->middleware('guest');;
+} )->name('registers')->middleware('guest');
 
 Route::get( '/user-data', [ UserController::class, 'show_user_data' ] )->name( 'user.edit' )->middleware( 'auth' );
 Route::put( '/user-data', [ UserController::class, 'update' ] )->name( 'user.update' )->middleware( 'auth' );
@@ -46,13 +47,11 @@ Route::put('/user-preferences', [ UserFoodPreferenceController::class,
     'update_user_preferences'
 ])->name('user_preferences.update')->middleware( 'auth' );
 
-
+Route::get('/welcome', [SearchController::class,'search_location'])->name('search_location');
 
 Route::post( '/registers', [ UserController::class, 'create' ] )->name('registers')->middleware('guest');
 
 Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' );
-
-Route::get( '/search', [ SearchController::class, 'search' ] )->name( 'search' );
 
 //Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 //Route::post('/register', 'Auth\RegisterController@register');
@@ -61,6 +60,8 @@ Auth::routes();
 
 Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->name( 'home' );
 
-Route::get('/restaurant', [RestaurantController::class, 'show'])->name('restaurant.show');
+Route::get('/restaurant/{id}', [RestaurantController::class, 'show'])->name('restaurant');
 
+Route::get('/searcher', [SearchController::class, 'search'])->name( 'searcher' );
 
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');

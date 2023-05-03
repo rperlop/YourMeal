@@ -10,21 +10,19 @@
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6 text-center text-lg-start">
                         <h1 class="display-3 text-white animated slideInLeft">Find your<br>perfect restaurant</h1>
-                        <p class="text-white animated slideInLeft mb-4 pb-2">Every restaurant you didn't know it exist is here. Just try our searcher</p>
-                        <form action="{{ route('search') }}" method="GET" role="search">
+                        <p class="text-white animated slideInLeft mb-4 pb-2">Every restaurant you didn't know it exists is here. Just try our searcher</p>
+                        <form action="{{ route('search_location') }}" method="GET" role="search">
                             <div class="input-group">
-                                <input type="text" id="restaurant-search" class="form-control ui-autocomplete-input" placeholder="Search restaurants">
+                                <label for="restaurant-search"></label><input type="text" id="search-location-input" class="form-control ui-autocomplete-input" placeholder="Search restaurants">
                                 <span class="input-group-btn">
-            <button type="submit" class="btn btn-default">
-                <span class="glyphicon glyphicon-search"></span>
-            </button>
-        </span>
+                                    <button type="submit" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                                <ul id="search-location-results"></ul>
                             </div>
                         </form>
-
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -337,9 +335,9 @@
                                     <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
                                     <div class="w-100 d-flex flex-column text-start ps-4">
                                         <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant/span>
+                                            <span>Vegan Restaurant</span>
                                         </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future./small>
+                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
                                     </div>
                                 </div>
                             </div>
@@ -398,6 +396,39 @@
         </div>
     </div>
     <!-- Service End -->
+
+    <script>
+        const searchLocationInput = document.getElementById('search-location-input');
+        const searchLocationResults = document.getElementById('search-location-results');
+
+        searchLocationInput.addEventListener('input', function () {
+            const query = searchLocationInput.value;
+
+            if (query.length < 3) {
+                searchLocationResults.innerHTML = '';
+                return;
+            }
+
+            axios.get('{{ route('search_location') }}', {params: {query: query}})
+                .then(function (response) {
+                    const predictions = response.data;
+
+                    searchLocationResults.innerHTML = '';
+                    predictions.forEach(function (prediction) {
+                        const li = document.createElement('li');
+                        li.innerText = prediction;
+                        li.addEventListener('click', function () {
+                            searchLocationInput.value = prediction;
+                            searchLocationResults.innerHTML = '';
+                        });
+                        searchLocationResults.appendChild(li);
+                    });
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        });
+    </script>
 
 @endsection
 
