@@ -64,4 +64,4 @@ Route::get('/restaurant/{id}', [RestaurantController::class, 'show'])->name('res
 
 Route::get('/searcher', [SearchController::class, 'search'])->name( 'searcher' );
 
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('/restaurant/{restaurant}/review', [ReviewController::class, 'store'])->name('review.store');
