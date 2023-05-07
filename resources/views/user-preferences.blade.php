@@ -12,7 +12,7 @@
 
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-0">
-            <form method="POST" action="{{ route('user_preferences.update') }}" id="signUpForm">
+            <form method="POST" action="{{ route('user_preferences.update') }}" id="signUpForm" class="login-sign-up-form">
                 @csrf
                 @method('PUT')
                 <div class="row mb-3">

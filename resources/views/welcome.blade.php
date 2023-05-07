@@ -12,14 +12,9 @@
                         <h1 class="display-3 text-white animated slideInLeft">Find your<br>perfect restaurant</h1>
                         <p class="text-white animated slideInLeft mb-4 pb-2">Every restaurant you didn't know it exists is here. Just try our searcher</p>
                         <form action="{{ route('search_location') }}" method="GET" role="search">
-                            <div class="input-group">
-                                <label for="restaurant-search"></label><input type="text" id="search-location-input" class="form-control ui-autocomplete-input" placeholder="Search restaurants">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-search"></span>
-                                    </button>
-                                </span>
-                                <ul id="search-location-results"></ul>
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" id="search-location-input" class="form-control ui-autocomplete-input" placeholder="Search restaurants">
                             </div>
                         </form>
                     </div>
@@ -398,35 +393,22 @@
     <!-- Service End -->
 
     <script>
-        const searchLocationInput = document.getElementById('search-location-input');
-        const searchLocationResults = document.getElementById('search-location-results');
 
-        searchLocationInput.addEventListener('input', function () {
-            const query = searchLocationInput.value;
-
-            if (query.length < 3) {
-                searchLocationResults.innerHTML = '';
-                return;
-            }
-
-            axios.get('{{ route('search_location') }}', {params: {query: query}})
-                .then(function (response) {
-                    const predictions = response.data;
-
-                    searchLocationResults.innerHTML = '';
-                    predictions.forEach(function (prediction) {
-                        const li = document.createElement('li');
-                        li.innerText = prediction;
-                        li.addEventListener('click', function () {
-                            searchLocationInput.value = prediction;
-                            searchLocationResults.innerHTML = '';
-                        });
-                        searchLocationResults.appendChild(li);
-                    });
-                })
-                .catch(function (error) {
-                    console.error(error);
+        $('#search-location-input').autocomplete({
+            source: function(request, response){
+                $.ajax({
+                    url: "{{route('search_location')}}",
+                    dataType: 'json',
+                    data: {
+                        query: request.term
+                    },
+                    success: function(data){
+                        response(data)
+                    }
                 });
+            },
+            minLength: 3,
+            delay: 250
         });
     </script>
 

@@ -11,7 +11,7 @@
 
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-0">
-            <form method="POST" action="{{ route('login') }}" id="signUpForm">
+            <form method="POST" action="{{ route('login') }}" id="signUpForm" class="login-sign-up-form">
                 @csrf
 
                 <div class="row mb-3">
@@ -63,7 +63,6 @@
                 </div>
             </form>
         </div>
-    </div>
     </div>
 
 @endsection

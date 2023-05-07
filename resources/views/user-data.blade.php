@@ -12,7 +12,7 @@
 
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-0">
-            <form method="POST" action="{{ route('user.update') }}" id="signUpForm">
+            <form method="POST" action="{{ route('user.update') }}" id="signUpForm" class="login-sign-up-form">
                 @csrf
                 @method('PUT')
                 <div class="row mb-3">
@@ -78,7 +78,7 @@
         </div>
 
         <div class="row mb-0">
-            <form method="POST" action="{{ route('user.destroy') }}" id="signUpForm" onsubmit="return confirm('Are you sure? You will not be able to recover your account')">
+            <form method="POST" action="{{ route('user.destroy') }}" id="signUpForm" class="login-sign-up-form" onsubmit="return confirm('Are you sure? You will not be able to recover your account')">
                 @csrf
                 @method('DELETE')
                 <div class="row mb-0">

@@ -307,7 +307,7 @@
 
 /** register **/
 
-#signUpForm {
+.login-sign-up-form  {
     max-width: 500px;
     background-color: #ffffff;
     margin: 40px auto;
@@ -315,24 +315,24 @@
     box-shadow: 0px 6px 18px rgb(0 0 0 / 9%);
     border-radius: 12px;
 }
-#signUpForm .form-header {
+.login-sign-up-form  .form-header {
     gap: 5px;
     text-align: center;
     font-size: .9em;
 }
-#signUpForm .form-header .stepIndicator {
+.login-sign-up-form .form-header .stepIndicator {
     position: relative;
     flex: 1;
     padding-bottom: 30px;
 }
-#signUpForm .form-header .stepIndicator.active {
+.login-sign-up-form  .form-header .stepIndicator.active {
     font-weight: 600;
     color: var(--primary);
 }
-#signUpForm .form-header .stepIndicator.finish {
-     color: var(--primary);
+.login-sign-up-form  .form-header .stepIndicator.finish {
+    color: var(--primary);
 }
-#signUpForm .form-header .stepIndicator::before {
+.login-sign-up-form  .form-header .stepIndicator::before {
     content: "";
     position: absolute;
     left: 50%;
@@ -341,19 +341,19 @@
     z-index: 9;
     width: 20px;
     height: 20px;
-    background-color: #d5efed;
+    background-color: #efdfd5;
     border-radius: 50%;
-    border: 3px solid #ecf5f4;
+    border: 3px solid #f5f1ec;
 }
-#signUpForm .form-header .stepIndicator.active::before {
+.login-sign-up-form  .form-header .stepIndicator.active::before {
     background-color: var(--primary);
     border: 3px solid var(--primary);
 }
-#signUpForm .form-header .stepIndicator.finish::before {
+.login-sign-up-form .form-header .stepIndicator.finish::before {
     background-color: var(--primary);
     border: 3px solid;
 }
-#signUpForm .form-header .stepIndicator::after {
+.login-sign-up-form .form-header .stepIndicator::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -362,30 +362,30 @@
     height: 3px;
     background-color: #f3f3f3;
 }
-#signUpForm .form-header .stepIndicator.active::after {
+.login-sign-up-form  .form-header .stepIndicator.active::after {
     background-color: var(--primary);
 }
-#signUpForm .form-header .stepIndicator.finish::after {
+.login-sign-up-form  .form-header .stepIndicator.finish::after {
     background-color: var(--primary);
 }
-#signUpForm .form-header .stepIndicator:last-child:after {
+.login-sign-up-form .form-header .stepIndicator:last-child:after {
     display: none;
 }
-#signUpForm input {
+.login-sign-up-form  input {
     border-radius: 5px;
 }
 
-#signUpForm input.invalid {
+.login-sign-up-form  input.invalid {
     border: 1px solid #ffaba5;
 }
-#signUpForm .step {
+.login-sign-up-form  .step {
     display: none;
 }
-#signUpForm .form-footer{
+.login-sign-up-form  .form-footer{
     overflow:auto;
     gap: 20px;
 }
-/*#signUpForm .form-footer button{
+/*.login-sign-up-form .form-footer button{
     background-color: #009688;
     border: 1px solid #009688 !important;
     color: #ffffff;
@@ -397,11 +397,11 @@
     flex: 1;
     margin-top: 5px;
 }*/
-#signUpForm .form-footer button:hover {
+.login-sign-up-form .form-footer button:hover {
     opacity: 0.8;
 }
 
-#signUpForm .form-footer #prevBtn {
+.login-sign-up-form  .form-footer #prevBtn {
     font-family: 'Merriweather Sans', sans-serif;
     font-weight: 500;
     text-transform: uppercase;
@@ -409,5 +409,131 @@
     border-radius: 5px;
 }
 
+.checkbox-error{
+    margin-top: -1em;
+    font-size: .875em;
+    color: #dc3545;
+    margin-bottom: 1em;
+}
+
+#registerForm .row {
+    --bs-gutter-x: 0 !important;
+}
 /** fin registro **/
 
+
+/* buscador */
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.ui-menu .ui-menu-item-wrapper:hover, .ui-menu .ui-menu-item-wrapper.ui-state-active {
+    background-color: var(--primary);
+    border-color: transparent;
+}
+
+/* fin buscador */
+
+
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    display: none;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rated:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+.star-rating-complete{
+    color: #c59b08;
+}
+.rating-container .form-control:hover, .rating-container .form-control:focus{
+    background: #fff;
+    border: 1px solid #ced4da;
+}
+.rating-container textarea:focus, .rating-container input:focus {
+    color: #000;
+}         .rated {
+              float: left;
+              height: 46px;
+              padding: 0 10px;
+          }
+.rated:not(:checked) > input {
+    position:absolute;
+    display: none;
+}
+.rated:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ffc700;
+}
+.rated:not(:checked) > label:before {
+    content: '★ ';
+}
+.rated > input:checked ~ label {
+    color: #ffc700;
+}
+.rated:not(:checked) > label:hover,
+.rated:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rated > input:checked + label:hover,
+.rated > input:checked + label:hover ~ label,
+.rated > input:checked ~ label:hover,
+.rated > input:checked ~ label:hover ~ label,
+.rated > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}

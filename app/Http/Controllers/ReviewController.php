@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Restaurant;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -19,16 +20,20 @@ class ReviewController extends Controller
         $review->rate = $request->input('rating');
         $review->comment = $request->input('comment');
 
-        $images = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $path = $file->store('reviews');
-                $images[] = $path;
-            }
-            $review->image = json_encode($images);
-        }
-
         $review->save();
+
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                $filename = time() . '-' . $image->getClientOriginalName();
+                $path = $image->storeAs('public/img', $filename);
+                $image = new Image;
+                $image->review_id = $review->id;
+                $image->name = $filename;
+                $image->url = $path;
+                $image->save();
+            }
+        }
 
         return redirect()->back()->with('success', 'Reseña agregada correctamente');
     }
