@@ -7,6 +7,7 @@ use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
@@ -22,7 +23,14 @@ class RestaurantController extends Controller
         $schedules = $restaurant->schedules()->get();
 
         $reviews = Review::where('restaurant_id', $restaurant->id)->get();
-        $avg_rating = round($reviews->avg('rate'), 1);
+
+        $count = $reviews->count();
+
+        if ($count > 0) {
+            $avg_rating = round($reviews->avg('rate'), 1);
+        } else {
+            $avg_rating = 0;
+        }
 
         $reviews = Review::where('restaurant_id', $restaurant->id)->get();
 
@@ -39,4 +47,13 @@ class RestaurantController extends Controller
         return view('restaurant', $data);
     }
 
+    public function averageRate(): float|int {
+        $reviews = $this->reviews;
+        $count = $reviews->count();
+        if ($count > 0) {
+            $sum = $reviews->sum('rate');
+            return round($sum / $count, 1);
+        }
+        return 0;
+    }
 }
