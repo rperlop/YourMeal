@@ -37,4 +37,24 @@ class ReviewController extends Controller
 
         return redirect()->back()->with('success', 'Reseña agregada correctamente');
     }
+
+    public function update(Request $request, $id)
+    {
+        $review = Review::findOrFail($id);
+        $review->comment = $request->input('comment');
+
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->storeAs('public/img', $imageName);
+                $images[] = $imageName;
+            }
+            $review->images = $images;
+        }
+
+        $review->save();
+
+        return redirect()->back();
+    }
 }

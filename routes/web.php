@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
@@ -65,5 +64,6 @@ Route::get('/restaurant/{id}', [RestaurantController::class, 'show'])->name('res
 
 Route::get('/searcher', [SearchController::class, 'search'])->name( 'searcher' );
 
-Route::post('/restaurant/{restaurant}/review', [ReviewController::class, 'store'])->name('review.store');
+Route::post('/restaurant/{restaurant}/review', [ReviewController::class, 'store'])->name('review.store')->middleware('auth');
 
+Route::put('/reviews/{id}', [ReviewController::class, 'update'])->name('reviews.update')->middleware('auth');

@@ -45,7 +45,10 @@
                             <div class="col mt-6">
                                 <div>
                                     <p class="font-weight-bold ">
-                                        <strong> {{ $review->user->first_name }} {{ $review->user->last_name }}</strong>
+                                        <strong> {{ $review->user->first_name }} {{ $review->user->last_name }} </strong>
+                                    </p>
+                                    <p class="font-weight-bold ">
+                                        <strong> {{ $review->created_at }}</strong>
                                     </p>
                                     <div class="form-group row">
                                         <input type="hidden" name="rating" value="{{ $review->rate }}">
@@ -72,6 +75,92 @@
                 </div>
             </div>
 
+            <div class="container">
+                @foreach($reviews as $review)
+                <div class="row">
+                        <div class="media g-mb-30 media-comment">
+                            <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                                <div class="g-mb-15">
+                                    <h5 class="h5 g-color-gray-dark-v1 mb-0">{{ $review->user->first_name }} {{ $review->user->last_name }} </h5>
+                                    <span class="g-color-gray-dark-v4 g-font-size-12">{{ $review->created_at }}</span>
+                                </div>
+                                <br>
+                                <p>{{ $review->comment }}</p>
+
+                                <div class="container">
+                                    @foreach ($review->images as $image)
+                                    <div class="superbox">
+                                        <div class="superbox-list">
+                                            <img src="{{ asset('storage/img/' . $image->name) }}"  alt="{{ $image->name }}" class="superbox-img">
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="modal fade" id="showPhoto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                            </div>
+                                            <div class="modal-body">
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <ul class="list-inline d-sm-flex my-0">
+                                    @if($review->user_id == auth()->user()->id)
+                                        <li class="list-inline-item g-mr-20">
+                                            <button class="btn btn-primary edit-button" data-comment-id="{{ $review->id }}" data-toggle="modal" data-target="#editModal-{{ $review->id }}">Editar</button>
+                                        </li>
+                                    @else
+                                    <li class="list-inline-item ml-auto">
+                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                            <i class="fa fa-report g-pos-rel g-top-1 g-mr-3"></i>
+                                            Report
+                                        </a>
+                                    </li>
+                                        @endif
+                                </ul>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="modal fade" id="editModal-{{ $review->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-{{ $review->id }}">                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel-{{ $review->id }}">Editar comentario</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('reviews.update', ['id' => $review->id]) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="form-group">
+                                        <label for="comment">Comentario</label>
+                                        <textarea class="form-control" id="comment" name="comment" rows="3">{{ $review->comment }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="images">Imágenes</label>
+                                        <input type="file" class="form-control-file" id="images" name="images[]" multiple>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
             @if (auth()->check() && !$restaurant->reviews()->where('user_id', auth()->user()->id)->exists())
             <div class="container">
                 <div class="row">
@@ -82,17 +171,12 @@
                             <div class="form-group row">
                                 <input type="hidden" name="rating" id="rating-input" value="{{ $review->rate }}">
                                 <div class="col">
-                                    <div class="rate">
-                                        <input type="radio" id="star5" class="rate" name="rate" value="5" onclick="updateRating(5)" {{ old('rate') == 5 ? 'checked' : '' }}/>
-                                        <label for="star5" title="text">5 stars</label>
-                                        <input type="radio" id="star4" class="rate" name="rate" value="4" onclick="updateRating(4)" {{ old('rate') == 4 ? 'checked' : '' }}/>
-                                        <label for="star4" title="text">4 stars</label>
-                                        <input type="radio" id="star3" class="rate" name="rate" value="3" onclick="updateRating(3)" {{ old('rate') == 3 ? 'checked' : '' }}/>
-                                        <label for="star3" title="text">3 stars</label>
-                                        <input type="radio" id="star2" class="rate" name="rate" value="2" onclick="updateRating(2)" {{ old('rate') == 2 ? 'checked' : '' }}/>
-                                        <label for="star2" title="text">2 stars</label>
-                                        <input type="radio" id="star1" class="rate" name="rate" value="1" onclick="updateRating(1)" {{ old('rate') == 1 ? 'checked' : '' }}/>
-                                        <label for="star1" title="text">1 star</label>
+                                        <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+                                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star">5</label>
+                                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star">4</label>
+                                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star">3</label>
+                                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star">2</label>
+                                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">1</label>
                                     </div>
                                 </div>
                             </div>
@@ -118,10 +202,31 @@
             @endif
         </div>
 
-        <script>
+
+
+            <script>
             function updateRating(rating) {
                 document.getElementById("rating-input").value = rating;
             }
+
+            $(function(){
+                $('.superbox-img').click(function(){
+                    $('#showPhoto .modal-body').html($(this).clone());
+                    $('#showPhoto').modal('show');
+                })
+            })
+
+            $(document).ready(function() {
+                // Obtener el botón de editar y el modal
+                var editButton = $('#edit-button');
+                var editModal = $('#edit-modal');
+
+                // Asignar evento click al botón de editar
+                editButton.click(function() {
+                    // Mostrar el modal
+                    editModal.modal('show');
+                });
+            });
         </script>
 
 @endsection

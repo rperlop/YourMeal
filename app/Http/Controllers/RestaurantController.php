@@ -47,13 +47,4 @@ class RestaurantController extends Controller
         return view('restaurant', $data);
     }
 
-    public function averageRate(): float|int {
-        $reviews = $this->reviews;
-        $count = $reviews->count();
-        if ($count > 0) {
-            $sum = $reviews->sum('rate');
-            return round($sum / $count, 1);
-        }
-        return 0;
-    }
 }
