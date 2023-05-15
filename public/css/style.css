@@ -1,5 +1,3 @@
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
 :root {
     --primary: #FEA116;
     --light: #F1F8FF;
@@ -214,19 +212,6 @@
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
     transition: .5s;
 }
-
-.service-item:hover {
-    background: var(--primary);
-}
-
-.service-item * {
-    transition: .5s;
-}
-
-.service-item:hover * {
-    color: var(--light) !important;
-}
-
 
 /*** Food Menu ***/
 .nav-pills .nav-item .active {
@@ -446,176 +431,90 @@
     border-color: transparent;
 }
 
-/* fin buscador */
+/* End searcher */
 
+/* Restaurant */
 
-
-.rate {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-}
-.rate:not(:checked) > input {
-    position:absolute;
-    display: none;
-}
-.rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
-}
-.rated:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
-}
-.rate:not(:checked) > label:before {
-    content: '★ ';
-}
-.rate > input:checked ~ label {
-    color: #ffc700;
-}
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-    color: #deb217;
-}
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-    color: #c59b08;
-}
-.star-rating-complete{
-    color: #c59b08;
-}
-.rating-container .form-control:hover, .rating-container .form-control:focus{
-    background: #fff;
-    border: 1px solid #ced4da;
-}
-.rating-container textarea:focus, .rating-container input:focus {
-    color: #000;
-}         .rated {
-              float: left;
-              height: 46px;
-              padding: 0 10px;
-          }
-.rated:not(:checked) > input {
-    position:absolute;
-    display: none;
-}
-.rated:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ffc700;
-}
-.rated:not(:checked) > label:before {
-    content: '★ ';
-}
-.rated > input:checked ~ label {
-    color: #ffc700;
-}
-.rated:not(:checked) > label:hover,
-.rated:not(:checked) > label:hover ~ label {
-    color: #deb217;
-}
-.rated > input:checked + label:hover,
-.rated > input:checked + label:hover ~ label,
-.rated > input:checked ~ label:hover,
-.rated > input:checked ~ label:hover ~ label,
-.rated > label:hover ~ input:checked ~ label {
-    color: #c59b08;
-}
-
-
-
-.superbox {
-    font-size: 0
-}
-
-.superbox-list {
-    display: inline-block;
-    width: 12.5%;
-    margin: 0;
-    position: relative
-}
-
-.superbox-list.active:after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    border: 10px solid transparent;
-    border-bottom-color: #2d353c;
-    margin-left: -10px
-}
-
-.superbox-show {
-    text-align: center;
-    position: relative;
-    background: #2d353c;
-    width: 100%;
-    float: left;
-    padding: 25px;
-    display: none
-}
-
-.superbox-img {
-    max-width: 100%;
-    width: 100%;
-    cursor: pointer
-}
-
-.superbox-current-img {
-    -webkit-box-shadow: 0 5px 35px rgba(0, 0, 0, .65);
-    box-shadow: 0 5px 35px rgba(0, 0, 0, .65);
-    max-width: 100%
-}
-
-.superbox-img:hover {
-    opacity: .8
-}
-
-.superbox-close {
-    opacity: .7;
-    cursor: pointer;
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    width: 35px;
-    height: 35px
-}
-
-
-.starrating > input {display: none;}  /* Remove radio buttons */
-
-.starrating > label:before {
-    content: "\f005"; /* Star */
-    margin: 2px;
-    font-size: 8em;
-    font-family: FontAwesome;
-    display: inline-block;
-}
-
-.starrating > label
+.food-type
 {
-    color: #222222; /* Start color when not clicked */
+    background-color: var(--primary);
+    padding: 0.75em;
+    text-align: center;
+    color: white;
 }
 
-.starrating > input:checked ~ label
-{ color: #ffca08 ; } /* Set yellow color when star checked */
+.rating {
+    color: var(--primary);
+    border-right: 1px solid lightgrey;
+    margin-right: 0.5em;
+    padding-right: 0.5em;
+}
 
-.starrating > input:hover ~ label
-{ color: #ffca08 ;  } /* Set yellow color when star hover */
+.row.restaurant-details .service-item {
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 0.5em !important;
+    padding: 1em;
+}
+
+
+.row.restaurant-details .service-item .fa-angles-right,
+.review-block-name,
+.simple-rating{
+    color: var(--primary);
+}
+
+.restaurant-container img{
+    border-radius: 3%;
+}
+
+.review-block .rating{
+    border: 0;
+}
+
+
+.img-thumbnail {
+    width: 170px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.reviews-pagination a,
+.reviews-pagination span{
+    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+}
+
+.review-block .col-sm-2{
+    position: relative;
+}
+
+@media (min-width: 767px) {
+    .review-block .review-block-report,
+    .review-block .review-block-edit{
+        position: absolute;
+        bottom: 0;
+        left: 0.75em;;
+    }
+}
+
+@media (max-width: 767px) {
+    .review-block .review-block-report,
+    .review-block .review-block-edit {
+        position: absolute;
+        right: 0.75em;
+        top: 0;
+    }
+}
+
+#reviewForm .custom-file input{
+    background-color: #fff;
+}
+
+/* End restaurant */
+
+.restaurant-description{
+    text-align: justify;
+}

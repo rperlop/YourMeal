@@ -28,7 +28,7 @@ class UserFoodPreferenceController extends Controller {
         $latitude  = $user->user_food_preferences->latitude;
         $longitude = $user->user_food_preferences->longitude;
         $terrace   = $user->user_food_preferences->terrace;
-        $location  = ( new Utilities )->getCityName( $latitude, $longitude );
+        $location  = ( new Utilities )->get_full_address( $latitude, $longitude );
 
         $user_food_preferences_id = $user->user_food_preferences_id;
         $user_food_preferences    = UserFoodPreference::find( $user_food_preferences_id );

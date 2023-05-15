@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+    <link href="{{asset('lib/lightbox/css/lightbox.css')}}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -68,7 +69,7 @@
                             <a href="{{ url('/user-data') }}" class="dropdown-item">User data</a>
                             <a href="{{ url('/user-preferences') }}" class="dropdown-item">Food preferences</a>
                             @if (Auth::check() && Auth::user()->role == 'admin')
-                                <li><a href="#" class="dropdown-item">Admin dashboard</a></li>
+                                <li><a href="{{ url('/admin/dashboard') }}" class="dropdown-item">Admin dashboard</a></li>
                             @endif
                             <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Logout
@@ -107,6 +108,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{asset('lib/wow/wow.min.js')}}"></script>
 <script src="{{asset('lib/easing/easing.min.js')}}"></script>
+<script src="{{asset('lib/lightbox/js/lightbox.js')}}"></script>
+<script src="{{asset('lib/easing/easing.min.js')}}"></script>
+<script src="{{asset('lib/simple-rating/simple-rating.js')}}"></script>
 
 <!-- Template Javascript -->
 <script src="{{asset('js/main.js')}}"></script>

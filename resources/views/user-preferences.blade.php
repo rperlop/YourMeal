@@ -16,9 +16,9 @@
                 @csrf
                 @method('PUT')
                 <div class="row mb-3">
-                    <label for="location" class="col-md-4 col-form-label text-md-end">City:</label>
+                    <label for="location" class="col-md-4 col-form-label text-md-end">Location:</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ $location }}">
+                        <input type="text" class="form-control @error('location') is-invalid @enderror" name="location" id="location" value="{{ $location }}">
                         @error('location')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -113,5 +113,24 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $('#location').autocomplete({
+            source: function(request, response){
+                $.ajax({
+                    url: "{{route('users.search.location')}}",
+                    dataType: 'json',
+                    data: {
+                        query: request.term
+                    },
+                    success: function(data){
+                        response(data)
+                    }
+                });
+            },
+            minLength: 3,
+            delay: 250
+        });
+    </script>
 
 @endsection

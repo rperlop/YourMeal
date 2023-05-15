@@ -16,21 +16,20 @@ class Utilities {
      * @return array|null
      * @throws GuzzleException
      */
-    public function getCityName( $lat, $long ): ?string {
-        $apiKey   = 'a82c53d8a743452e9323753bab52a057';
-        $client   = new Client();
-        $url      = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode( $lat . ',' . $long ) . "&key=" . $apiKey . "&language=en&pretty=1";
-        $response = $client->request( 'GET', $url );
-        $body     = json_decode( $response->getBody() );
+    public function get_full_address($lat, $long): ?string {
+        $apiKey = 'a82c53d8a743452e9323753bab52a057';
+        $client = new Client();
+        $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($lat . ',' . $long) . "&key=" . $apiKey . "&language=en&pretty=1";
+        $response = $client->request('GET', $url);
+        $body = json_decode($response->getBody());
 
-        if ( $body->total_results > 0 ) {
-            return $body->results[0]->components->city ?? null;
-        } else if ($body->results[0]->components->city == null) {
-            return $body->results[0]->components->town ?? null;
+        if ($body->total_results > 0) {
+            return $body->results[0]->formatted ?? null;
         } else {
             return null;
         }
     }
+
 
     /**
      * Get latitude and longitude from a city/town name

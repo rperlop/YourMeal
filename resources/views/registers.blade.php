@@ -233,4 +233,23 @@
 
     <!-- Registration End -->
 
+    <script>
+        $('#location').autocomplete({
+            source: function(request, response){
+                $.ajax({
+                    url: "{{route('registers.search.location')}}",
+                    dataType: 'json',
+                    data: {
+                        query: request.term
+                    },
+                    success: function(data){
+                        response(data)
+                    }
+                });
+            },
+            minLength: 3,
+            delay: 250
+        });
+    </script>
+
 @endsection

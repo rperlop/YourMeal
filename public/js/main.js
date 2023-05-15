@@ -26,31 +26,6 @@
 
 })(jQuery);
 
-
-//Searcher
-$(document).ready(function () {
-    $("#restaurant-search").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: "{{ route('search') }}",
-                data: {
-                    search: request.term
-                },
-                dataType: "json",
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return {
-                            label: item.name,
-                            value: item.name
-                        }
-                    }));
-                }
-            });
-        },
-        minLength: 2
-    });
-});
-
 /*** Register ***/
 let currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
