@@ -14,7 +14,7 @@
                         <form action="{{ route('search_location') }}" method="GET" role="search">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" id="search-location-input" class="form-control ui-autocomplete-input" placeholder="Search restaurants">
+                                <input type="text" id="search-location-input" class="form-control ui-autocomplete-input" placeholder="Search where to find your restaurant">
                             </div>
                         </form>
                     </div>
@@ -22,333 +22,39 @@
             </div>
         </div>
     </div>
-    <!-- Navbar & Hero End -->
 
-    <!-- Menu Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Top</h5>
-                <h1 class="mb-5">Most Popular Restaurants</h1>
-            </div>
-            <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.1s">
-                <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
-                    <li class="nav-item">
-                        <a class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
-                            <i class="fa fa-hotdog fa-2x text-primary"></i>
-                            <div class="ps-3">
-                                <small class="text-body">Top</small>
-                                <h6 class="mt-n1 mb-0">Hot dogs</h6>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex align-items-center text-start mx-3 pb-3" data-bs-toggle="pill" href="#tab-2">
-                            <i class="fa fa-hamburger fa-2x text-primary"></i>
-                            <div class="ps-3">
-                                <small class="text-body">Top</small>
-                                <h6 class="mt-n1 mb-0">Burger</h6>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex align-items-center text-start mx-3 me-0 pb-3" data-bs-toggle="pill" href="#tab-3">
-                            <i class="fa fa-carrot fa-2x text-primary"></i>
-                            <div class="ps-3">
-                                <small class="text-body">Top</small>
-                                <h6 class="mt-n1 mb-0">Vegan</h6>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab-1" class="tab-pane fade show p-0 active">
-                        <div class="row g-4">
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/hotdog.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Hot Dog Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Hot Dog Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    @include('top-restaurants', ['restaurants_spa' => $restaurants_spa])
+
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Top</h5>
+            <h2 class="mb-5">Restaurant of the week</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="blog-card bg-white mb-4 overflow-hidden d-lg-flex rounded-lg position-relative">
+                    <div class="blog-image overflow-hidden d-flex align-items-center">
+                        <img src="images/food2.jpg" alt="" class="blog-thumbnail">
                     </div>
-                    <div id="tab-2" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/burger.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Happy Burger</span>
-                                        </h5>
-                                        <small class="fst-italic">A burger is a flat round mass of minced meat or vegetables, which is fried and often eaten in a bread roll.</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-3" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid rounded" src="{{asset('img/vegan.jpg')}}" alt="" style="width: 80px;">
-                                    <div class="w-100 d-flex flex-column text-start ps-4">
-                                        <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                            <span>Vegan Restaurant</span>
-                                        </h5>
-                                        <small class="fst-italic">This is a description for a Vegan Restaurant. You will be able to find more info in the future.</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="p-4 blog-container">
+                        <a href="#!" class="blog-category text-uppercase py-1 px-2 rounded-lg">
+                            <small class="font-weight-bold">Food</small>
+                        </a>
+                        <h4 class="mt-2 font-weight-bold">
+                            <a href="#!" class="text-dark" title="Agriculture is good for both humans and animals">Agriculture is good for both humans and animals</a>
+                        </h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, ullam, reprehenderit? Praesentium doloribus soluta, quia.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Menu End -->
 
-    <!-- Service Start -->
-    <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-        <h1 class="mb-5">How to find your perfect restaurant?</h1>
-    </div>
+
     <div class="container-xxl py-5">
+        <div class="text-center wow fadeInUp">
+            <h1 class="mb-5">How to find your perfect restaurant?</h1>
+        </div>
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -390,7 +96,7 @@
             </div>
         </div>
     </div>
-    <!-- Service End -->
+
 
     <script>
 

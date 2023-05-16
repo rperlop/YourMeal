@@ -253,33 +253,21 @@
                 });
 
                 $(function() {
-// previsualización de imágenes al seleccionar archivos
                     $('#images').on('change', function() {
-                        // limpiar previsualización anterior
                         $('.image-preview').html('');
-
-                        // obtener archivos seleccionados
                         var files = $(this).prop('files');
-
-                        // recorrer archivos
                         for (var i = 0; i < files.length; i++) {
-                            // crear objeto FileReader
                             var reader = new FileReader();
-
-                            // función que se ejecuta al terminar de cargar el archivo
                             reader.onload = function(e) {
-                                // crear elemento img con la imagen cargada
+
                                 var img = $('<img>', {
                                     src: e.target.result,
                                     class: 'img-thumbnail',
                                     style: 'width: 150px; height: 150px;'
                                 });
 
-                                // añadir imagen a la previsualización
                                 $('.image-preview').append(img);
                             }
-
-                            // leer archivo como URL
                             reader.readAsDataURL(files[i]);
                         }
                     });
@@ -311,7 +299,6 @@
                     });
                 </script>
     @endif
-
 
     @endif
 

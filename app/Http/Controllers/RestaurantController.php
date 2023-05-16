@@ -15,6 +15,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -334,5 +335,19 @@ class RestaurantController extends Controller {
         $restaurant->delete();
 
         return redirect()->route( 'admin.index.restaurants' )->with( 'success', 'Restaurant removed' );
+    }
+
+    public function get_most_rated_restaurants(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+        $restaurants = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
+                                 ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                                 ->join('restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id')
+                                 ->join('food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id')
+                                 ->where('food_types.name', 'Spanish')
+                                 ->groupBy('restaurants.id')
+                                 ->orderByDesc('average_rate')
+                                 ->limit(4)
+                                 ->get();
+
+        return view('top-restaurants')->with('restaurants', $restaurants);
     }
 }

@@ -9,14 +9,46 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFoodPreferenceController;
 use App\Models\FoodType;
 use App\Models\PriceRange;
+use App\Models\Restaurant;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get( '/', function () {
-    return view( 'welcome' );
-} );
+Route::get('/', function () {
+    $restaurants_spa = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
+                             ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                             ->join('restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id')
+                             ->join('food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id')
+                             ->where('food_types.name', 'Spanish')
+                             ->groupBy('restaurants.id')
+                             ->orderByDesc('average_rate')
+                             ->limit(4)
+                             ->get();
+
+    $restaurants_med = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
+                                 ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                                 ->join('restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id')
+                                 ->join('food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id')
+                                 ->where('food_types.name', 'Mediterranean')
+                                 ->groupBy('restaurants.id')
+                                 ->orderByDesc('average_rate')
+                                 ->limit(4)
+                                 ->get();
+
+    $restaurants_bur = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
+                                 ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                                 ->join('restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id')
+                                 ->join('food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id')
+                                 ->where('food_types.name', 'Burger')
+                                 ->groupBy('restaurants.id')
+                                 ->orderByDesc('average_rate')
+                                 ->limit(4)
+                                 ->get();
+
+    return view('welcome', ['restaurants_spa' => $restaurants_spa, 'restaurants_med' => $restaurants_med, 'restaurants_bur' => $restaurants_bur]);
+});
 
 Route::get( '/registers', function () {
     return view( 'registers' );
@@ -43,6 +75,7 @@ Route::put( '/user-preferences', [
 ] )->name( 'user_preferences.update' )->middleware( 'auth' );
 
 Route::get( '/welcome', [ SearchController::class, 'search_location' ] )->name( 'search_location' );
+Route::get( '/top-restaurants', [ RestaurantController::class, 'get_most_rated_restaurants' ] )->name( 'most_rated_restaurants' );
 Route::get( '/user-preferences/location', [ SearchController::class, 'search_location' ] )->name( 'users.search.location' );
 
 Route::post( '/registers', [ UserController::class, 'create' ] )->name( 'registers' )->middleware( 'guest' );
