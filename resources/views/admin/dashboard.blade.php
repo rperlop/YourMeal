@@ -171,7 +171,7 @@
                             <p class="card-category">{{ __('Since YourMeal was created') }}</p>
                         </div>
                         <div class="card-body ">
-                        <canvas id="userCountChart"></canvas>
+                            <canvas id="userCountChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -206,83 +206,83 @@
 
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const userCountCtx = document.getElementById('userCountChart').getContext('2d');
-    const userCountChart = new Chart(userCountCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Users'],
-            datasets: [{
-                label: 'Total',
-                data: [{{ $userCount }}],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    stepSize: 1
+    <script>
+        const userCountCtx = document.getElementById('userCountChart').getContext('2d');
+        const userCountChart = new Chart(userCountCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Users'],
+                datasets: [{
+                    label: 'Total',
+                    data: [{{ $userCount }}],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
                 }
             }
-        }
-    });
+        });
 
-    const restaurantCountCtx = document.getElementById('restaurantCountChart').getContext('2d');
-    const restaurantCountChart = new Chart(restaurantCountCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Restaurants'],
-            datasets: [{
-                label: 'Total',
-                data: [{{ $restaurantCount }}],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    stepSize: 1
+        const restaurantCountCtx = document.getElementById('restaurantCountChart').getContext('2d');
+        const restaurantCountChart = new Chart(restaurantCountCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Restaurants'],
+                datasets: [{
+                    label: 'Total',
+                    data: [{{ $restaurantCount }}],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
                 }
             }
-        }
-    });
+        });
 
-    const topRestaurantsData = @json($topRestaurants);
+        const topRestaurantsData = @json($topRestaurants);
 
-    const restaurantNames = topRestaurantsData.map(restaurant => restaurant.name);
-    const reviewCounts = topRestaurantsData.map(restaurant => restaurant.reviews_count);
+        const restaurantNames = topRestaurantsData.map(restaurant => restaurant.name);
+        const reviewCounts = topRestaurantsData.map(restaurant => restaurant.reviews_count);
 
-    const ctx = document.getElementById('topRestaurantsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: restaurantNames,
-            datasets: [{
-                label: 'Total reviews',
-                data: reviewCounts,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    stepSize: 2,
+        const ctx = document.getElementById('topRestaurantsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: restaurantNames,
+                datasets: [{
+                    label: 'Total reviews',
+                    data: reviewCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 2,
+                    }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 @endpush

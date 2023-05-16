@@ -13,16 +13,6 @@ use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get( '/', function () {
     return view( 'welcome' );
@@ -36,7 +26,6 @@ Route::get( '/registers', function () {
     $food_types = FoodType::all();
     $price_ranges = PriceRange::all();
     $schedules = Schedule::all();
-
     return view( 'registers', compact( 'food_types', 'price_ranges', 'schedules' ) );
 } )->name( 'registers' )->middleware( 'guest' );
 
@@ -56,7 +45,6 @@ Route::put( '/user-preferences', [
 Route::get( '/welcome', [ SearchController::class, 'search_location' ] )->name( 'search_location' );
 Route::get( '/user-preferences/location', [ SearchController::class, 'search_location' ] )->name( 'users.search.location' );
 
-
 Route::post( '/registers', [ UserController::class, 'create' ] )->name( 'registers' )->middleware( 'guest' );
 Route::get( '/registers/location', [ SearchController::class, 'search_location' ] )->name( 'registers.search.location' );
 
@@ -73,9 +61,6 @@ Route::get( '/searcher', [ SearchController::class, 'search' ] )->name( 'searche
 Route::post('/restaurant/{restaurant}/review/{updating}', [ReviewController::class, 'store'])->name('review.store')->middleware('auth');
 
 Route::middleware( [ 'auth', 'admin' ] )->group( function () {
-/*    Route::get( '/admin/dashboard', function () {
-        return view( 'admin.dashboard' );
-    } );*/
     Route::get( '/admin/pages/index-users', [ UserController::class, 'index' ] )->name('admin.index.users');
     Route::get( '/admin/pages/create-user', function () {
         $food_types = FoodType::all();
