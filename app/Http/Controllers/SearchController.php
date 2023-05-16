@@ -7,6 +7,7 @@ use App\Models\PriceRange;
 use App\Models\Restaurant;
 use App\Models\Schedule;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -79,7 +80,14 @@ class SearchController extends Controller {
         return view('search.results', compact('restaurants', 'food_types', 'schedules', 'priceRanges'));
     }
 
-
+    /**
+     * Complete the user search with location suggests.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws GuzzleException
+     */
     public function search_location (Request $request): JsonResponse {
         $query = $request->input('query');
 

@@ -30,7 +30,6 @@ class Utilities {
         }
     }
 
-
     /**
      * Get latitude and longitude from a city/town name
      *

@@ -184,6 +184,11 @@ class UserController extends Controller {
         return redirect()->route( 'login' )->with( 'success', 'User removed' );
     }
 
+    /**
+     * Index all users on admin panel
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
     public function index(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $users = User::all();
 
@@ -191,6 +196,11 @@ class UserController extends Controller {
     }
 
     /**
+     * Create a new user on admin panel
+     *
+     * @param Request $request
+     *
+     * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
      * @throws GuzzleException
      */
     protected function admin_create_user( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
@@ -268,15 +278,23 @@ class UserController extends Controller {
         return redirect()->route( 'admin.index.users' )->with( 'success', 'User created' );
     }
 
+    /**
+     * Update the data of a specific user on the admin panel
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return RedirectResponse
+     */
     public function admin_update_user( Request $request, $id ): RedirectResponse {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail( $id );
 
         $validator = Validator::make( $request->all(), [
             'first_name' => 'max:255',
             'last_name'  => 'max:255',
             'email'      => [
                 'email',
-                Rule::unique('users')->ignore($user->id),
+                Rule::unique( 'users' )->ignore( $user->id ),
             ],
             'password'   => 'nullable|min:8',
             'role'       => 'in:admin,user',
@@ -289,36 +307,49 @@ class UserController extends Controller {
             'role.in'        => 'Invalid role value.',
         ] );
 
-
         if ( $validator->fails() ) {
-            return redirect()->route( 'admin.edit.user' , $user->id )
+            return redirect()->route( 'admin.edit.user', $user->id )
                              ->withErrors( $validator )
                              ->withInput();
         }
 
-        $user->fill($request->except('password'));
+        $user->fill( $request->except( 'password' ) );
 
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
+        if ( $request->filled( 'password' ) ) {
+            $user->password = bcrypt( $request->password );
         }
 
-        if ($request->has('role')) {
-            $user->setAttribute('role', $request['role']);
+        if ( $request->has( 'role' ) ) {
+            $user->setAttribute( 'role', $request['role'] );
         }
 
         $user->save();
 
-        return redirect()->route( 'admin.edit.user', $user->id  )->with( 'success', 'Changes are saved.' );
+        return redirect()->route( 'admin.edit.user', $user->id )->with( 'success', 'Changes are saved.' );
     }
 
+    /**
+     * Show the data of a specific user on admin panel
+     *
+     * @param $id
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
     public function admin_show_user_data( $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail( $id );
 
         return view( 'admin/pages/edit-user', compact( 'user' ) );
     }
 
-    public function admin_remove_user($id): RedirectResponse {
-        $user = User::findOrFail($id);
+    /**
+     * Remove a user from admin panel
+     *
+     * @param $id
+     *
+     * @return RedirectResponse
+     */
+    public function admin_remove_user( $id ): RedirectResponse {
+        $user = User::findOrFail( $id );
 
         $user_food_preferences = $user->user_food_preferences;
         $user_food_preferences->schedules()->detach();

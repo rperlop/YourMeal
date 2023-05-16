@@ -19,6 +19,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RestaurantController extends Controller {
+    /**
+     * Show all the data of a specific restaurant on the client web
+     *
+     * @param $id
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
     public function show( $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $restaurant = Restaurant::findOrFail( $id );
 
@@ -77,6 +84,11 @@ class RestaurantController extends Controller {
         return view( 'restaurant', $data );
     }
 
+    /**
+     * Index all restaurants on the admin panel
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
     public function index(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $restaurants = Restaurant::all();
 
@@ -84,6 +96,11 @@ class RestaurantController extends Controller {
     }
 
     /**
+     * Show the data of a specific restaurant on the admin panel
+     *
+     * @param $id
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
      * @throws GuzzleException
      */
     public function show_restaurant_data( $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
@@ -113,6 +130,11 @@ class RestaurantController extends Controller {
     }
 
     /**
+     * Create a new restaurant on admin panel
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
      * @throws GuzzleException
      */
     protected function create_restaurant( Request $request ): RedirectResponse {
@@ -128,7 +150,7 @@ class RestaurantController extends Controller {
             'schedules'      => 'required|array|min:1',
             'food_types'     => 'required|array|min:1',
             'price_ranges'   => 'required|array|min:1',
-            'main_image_url' => 'required|image',
+            'main_image_url' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
 
         ], [
             'name.required'           => 'The name field is mandatory.',
@@ -155,6 +177,7 @@ class RestaurantController extends Controller {
             'price_ranges.min'        => 'At least, you must pick one price range.',
             'main_image_url.required' => 'You must upload an image of the restaurant.',
             'main_image_url.format'   => 'You must upload a correct image format',
+            'main_image_url.max'      => 'The image size can not exceed 2MB.',
         ] );
 
         if ( $validator->fails() ) {
@@ -204,21 +227,29 @@ class RestaurantController extends Controller {
     }
 
     /**
+     * Update a restaurant on the admin panel
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return RedirectResponse
      * @throws GuzzleException
      */
     protected function update_restaurant( Request $request, $id ): RedirectResponse {
         $validator = Validator::make( $request->all(), [
-            'name'           => 'required|max:255',
-            'address'        => 'required|max:255',
-            'description'    => 'required|max:400',
-            'web'            => 'required|max:255',
-            'email'          => 'required|email|unique:restaurants,email,' . $id,
-            'phone_number'   => 'required',
-            'location'       => 'required|max:255',
-            'terrace'        => 'required|max:255',
-            'schedules'      => 'required|array|min:1',
-            'food_types'     => 'required|array|min:1',
-            'price_range_id' => 'required',
+            'name'             => 'required|max:255',
+            'address'          => 'required|max:255',
+            'description'      => 'required|max:400',
+            'web'              => 'required|max:255',
+            'email'            => 'required|email|unique:restaurants,email,' . $id,
+            'phone_number'     => 'required',
+            'location'         => 'required|max:255',
+            'terrace'          => 'required|max:255',
+            'schedules'        => 'required|array|min:1',
+            'food_types'       => 'required|array|min:1',
+            'price_range_id'   => 'required',
+            'main_image.url.*' => 'nullable|image|max:2048',
+
         ], [
             'name.required'         => 'The name field is mandatory.',
             'name.max'              => 'The name can not have more than 255 characters.',
@@ -284,6 +315,13 @@ class RestaurantController extends Controller {
         return redirect()->route( 'update.restaurant', $restaurant->id )->with( 'success', 'Restaurant updated' );
     }
 
+    /**
+     * Remove a restaurant
+     *
+     * @param $id
+     *
+     * @return RedirectResponse
+     */
     public function remove_restaurant( $id ): RedirectResponse {
         $restaurant = Restaurant::findOrFail( $id );
 
