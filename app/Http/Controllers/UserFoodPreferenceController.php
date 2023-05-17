@@ -89,7 +89,7 @@ class UserFoodPreferenceController extends Controller {
         $new_price_ranges = $request->input( 'price_ranges' );
 
         if ( isset( $new_location ) ) {
-            $new_location_lat_long            = ( new Utilities )->getLatLong( $new_location );
+            $new_location_lat_long            = ( new Utilities )->get_lat_long( $new_location );
             $user_food_preferences->latitude  = $new_location_lat_long['latitude'];
             $user_food_preferences->longitude = $new_location_lat_long['longitude'];
         } else {

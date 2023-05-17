@@ -8,6 +8,8 @@ use App\Models\PriceRange;
 use App\Models\Restaurant;
 use App\Models\Review;
 use App\Models\Schedule;
+use App\Models\User;
+use App\Models\UserFoodPreference;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -16,10 +18,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
 
 class RestaurantController extends Controller {
     /**
@@ -190,7 +190,7 @@ class RestaurantController extends Controller {
         }
 
         $location = $request['location'];
-        $lat_long = ( new Utilities )->getLatLong( $location );
+        $lat_long = ( new Utilities )->get_lat_long( $location );
         if ( $lat_long == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the address' ] );
         }
@@ -284,7 +284,7 @@ class RestaurantController extends Controller {
         }
 
         $location = $request['location'];
-        $lat_long = ( new Utilities )->getLatLong( $location );
+        $lat_long = ( new Utilities )->get_lat_long( $location );
         if ( $lat_long == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the address' ] );
         }
@@ -339,12 +339,17 @@ class RestaurantController extends Controller {
         return redirect()->route( 'admin.index.restaurants' )->with( 'success', 'Restaurant removed' );
     }
 
-    public function get_most_rated_restaurants(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    /**
+     * Get the most reviewed restaurants
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
+    public function get_most_reviewed_restaurants($food_type): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $restaurants = Restaurant::select( 'restaurants.*', DB::raw( 'AVG(reviews.rate) as average_rate' ) )
                                  ->join( 'reviews', 'restaurants.id', '=', 'reviews.restaurant_id' )
                                  ->join( 'restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id' )
                                  ->join( 'food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id' )
-                                 ->where( 'food_types.name', 'Spanish' )
+                                 ->where( 'food_types.name', $food_type )
                                  ->groupBy( 'restaurants.id' )
                                  ->orderByDesc( 'average_rate' )
                                  ->limit( 4 )
@@ -352,6 +357,95 @@ class RestaurantController extends Controller {
 
         return view( 'top-restaurants' )->with( 'restaurants', $restaurants );
     }
+
+    /**
+     * Get a list of recommended restaurants for a user
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|Application|Factory|View
+     */
+    public function get_recommended_restaurants(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+    {
+        $userId = Auth::id();
+
+        $userFoodPreferences = DB::table('user_food_preferences')
+                                 ->join('user_food_preferences_has_food_types', 'user_food_preferences.id', '=', 'user_food_preferences_has_food_types.user_food_preference_id')
+                                 ->join('food_types', 'user_food_preferences_has_food_types.food_type_id', '=', 'food_types.id')
+                                 ->join('users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id')
+                                 ->where('users.id', $userId)
+                                 ->pluck('food_types.id');
+
+        $userFoodPreferencesSchedules = DB::table('user_food_preferences')
+                                          ->join('user_food_preferences_has_schedules', 'user_food_preferences.id', '=', 'user_food_preferences_has_schedules.user_food_preference_id')
+                                          ->join('schedules', 'user_food_preferences_has_schedules.schedule_id', '=', 'schedules.id')
+                                          ->join('users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id')
+                                          ->where('users.id', $userId)
+                                          ->pluck('schedules.id');
+
+        $userFoodPreferencesPriceRange = DB::table('user_food_preferences')
+                                           ->join('user_food_preferences_has_price_ranges', 'user_food_preferences.id', '=', 'user_food_preferences_has_price_ranges.user_food_preference_id')
+                                           ->join('price_ranges', 'user_food_preferences_has_price_ranges.price_range_id', '=', 'price_ranges.id')
+                                           ->join('users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id')
+                                           ->where('users.id', $userId)
+                                           ->pluck('price_ranges.id');
+
+        $userFoodPreferencesLocation = DB::table('user_food_preferences')
+                                         ->join('users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id')
+                                         ->where('users.id', $userId)
+                                         ->select('user_food_preferences.latitude', 'user_food_preferences.longitude')
+                                         ->first();
+
+        $latitude = $userFoodPreferencesLocation->latitude;
+        $longitude = $userFoodPreferencesLocation->longitude;
+
+        $restaurants = DB::table('restaurants')
+                         ->select('restaurants.*')
+                         ->selectRaw('(6371 * acos(cos(radians(' . $latitude . ')) * cos(radians(restaurants.latitude)) * cos(radians(restaurants.longitude) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(restaurants.latitude)))) AS distance')
+                         ->whereExists(function ($query) use ($userFoodPreferences) {
+                             $query->select(DB::raw(1))
+                                   ->from('restaurant_has_food_types')
+                                   ->whereIn('food_type_id', $userFoodPreferences)
+                                   ->whereRaw('restaurant_has_food_types.restaurant_id = restaurants.id');
+                         })
+                         ->whereNotExists(function ($query) use ($userId) {
+                             $query->select(DB::raw(1))
+                                   ->from('reviews')
+                                   ->where('reviews.user_id', $userId)
+                                   ->whereRaw('reviews.restaurant_id = restaurants.id');
+                         })
+                         ->whereExists(function ($query) use ($userFoodPreferencesSchedules) {
+                             $query->select(DB::raw(1))
+                                   ->from('restaurant_has_schedules')
+                                   ->whereIn('schedule_id', $userFoodPreferencesSchedules)
+                                   ->whereRaw('restaurant_has_schedules.restaurant_id = restaurants.id');
+                         })
+                         ->where(function ($query) use ($userFoodPreferencesPriceRange) {
+                             $query->whereIn('price_range_id', $userFoodPreferencesPriceRange);
+                         })
+                         ->having('distance', '<=', 5) // Filtrar por distancia <= 5 km
+                         ->orderBy('distance', 'asc')
+                         ->get();
+
+        $restaurantIds = $restaurants->pluck('id');
+
+        $rates = DB::table('reviews')
+                   ->whereIn('restaurant_id', $restaurantIds)
+                   ->select('restaurant_id', DB::raw('AVG(rate) as average_rating'))
+                   ->groupBy('restaurant_id')
+                   ->get();
+
+        $restaurants = $restaurants->map(function ($restaurant) use ($rates) {
+            $rate = $rates->where('restaurant_id', $restaurant->id)->first();
+            $restaurant->average_rating = $rate ? $rate->average_rating : null;
+            return $restaurant;
+        });
+
+        $restaurants = $restaurants->sortByDesc('average_rating')->take(5);
+
+        return view('/recommendations', [
+            'recommendations' => $restaurants,
+        ]);
+    }
+
 
 
 }

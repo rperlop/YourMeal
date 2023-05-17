@@ -46,7 +46,10 @@ Route::get('/', function () {
                                  ->orderByDesc('average_rate')
                                  ->limit(4)
                                  ->get();
-    return view('welcome', ['restaurants_spa' => $restaurants_spa, 'restaurants_med' => $restaurants_med, 'restaurants_bur' => $restaurants_bur]);
+
+    $featured_restaurant = Restaurant::whereNotNull('featured_id')->first();
+
+    return view('welcome', ['restaurants_spa' => $restaurants_spa, 'restaurants_med' => $restaurants_med, 'restaurants_bur' => $restaurants_bur, 'featured_restaurant' => $featured_restaurant]);
 });
 
 Route::get( '/registers', function () {
@@ -74,7 +77,7 @@ Route::put( '/user-preferences', [
 ] )->name( 'user_preferences.update' )->middleware( 'auth' );
 
 Route::get( '/welcome', [ SearchController::class, 'search_location' ] )->name( 'search_location' );
-Route::get( '/top-restaurants', [ RestaurantController::class, 'get_most_rated_restaurants' ] )->name( 'most_rated_restaurants' );
+Route::get( '/top-restaurants', [ RestaurantController::class, 'get_most_reviewed_restaurants' ] )->name( 'most_rated_restaurants' );
 Route::get( '/user-preferences/location', [ SearchController::class, 'search_location' ] )->name( 'users.search.location' );
 
 Route::post( '/registers', [ UserController::class, 'create' ] )->name( 'registers' )->middleware( 'guest' );
@@ -87,6 +90,8 @@ Auth::routes();
 Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->name( 'home' );
 
 Route::get( '/restaurant/{id}', [ RestaurantController::class, 'show' ] )->name( 'restaurant' );
+
+Route::get( '/recommendations', [ RestaurantController::class, 'get_recommended_restaurants' ] )->name( 'recommended.restaurants' )->middleware( 'auth' );
 
 Route::get( '/searcher', [ SearchController::class, 'search' ] )->name( 'searcher' );
 

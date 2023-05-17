@@ -34,19 +34,20 @@
             <div class="col-md-8 offset-md-2">
                 <div class="blog-card bg-white mb-4 overflow-hidden d-lg-flex rounded-lg position-relative">
                     <div class="blog-image overflow-hidden d-flex align-items-center">
-                        <a href="{{ route('restaurant', session('featured_restaurant')->id) }}">
-                            <img src="{{ asset('storage/img/restaurants/bnb38WzCuCZbPQPbiGT9guz6Yl46s1fXKmMQuCzl.jpg') }}" alt="{{ session('featured_restaurant')->name }}" class="blog-thumbnail">
+                        <a href="{{ route('restaurant', ['id' => $featured_restaurant->id]) }}">
+                        <img src="{{ asset('storage/' . $featured_restaurant->main_image_url) }}" alt="{{ $featured_restaurant->main_image_url }}" class="blog-thumbnail">
                         </a>
                     </div>
                     <div class="p-4 blog-container">
                         <h4 class="mt-2 font-weight-bold">
-                            <a href="{{ route('restaurant', session('featured_restaurant')->id) }}" class="text-dark" title="description">{{ session('featured_restaurant')->name }}</a>
+                            <a href="{{ route('restaurant', ['id' => $featured_restaurant->id]) }}" class="text-dark" title="{{ $featured_restaurant->description }}">{{ $featured_restaurant->name }}</a>
                         </h4>
-                        <p class="text-muted">{{ session('featured_restaurant')->description }}</p>
+                        <p class="text-muted">{{ $featured_restaurant->description }}</p>
                     </div>
                 </div>
             </div>
         </div>
+
 
     </div>
 

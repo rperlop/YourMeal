@@ -17,9 +17,8 @@ class Utilities {
      * @throws GuzzleException
      */
     public function get_full_address($lat, $long): ?string {
-        $apiKey = 'a82c53d8a743452e9323753bab52a057';
         $client = new Client();
-        $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($lat . ',' . $long) . "&key=" . $apiKey . "&language=en&pretty=1";
+        $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($lat . ',' . $long) . "&key=" . env('OPENCAGE_API_KEY') . "&language=en&pretty=1";
         $response = $client->request('GET', $url);
         $body = json_decode($response->getBody());
 
@@ -38,17 +37,18 @@ class Utilities {
      * @return array|null
      * @throws GuzzleException
      */
-    public function getLatLong( string $location ): ?array {
-        $apiKey   = 'a82c53d8a743452e9323753bab52a057';
-        $client   = new Client();
-        $url      = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode( $location ) . "&key=" . $apiKey . "&language=en&pretty=1";
-        $response = $client->request( 'GET', $url );
-        $body     = json_decode( $response->getBody() );
-        if ( $body->total_results > 0 ) {
-            $latitude  = $body->results[0]->geometry->lat;
+    public function get_lat_long(string $location): ?array {
+        $apiKey = env('OPENCAGE_API_KEY');
+        $client = new Client();
+        $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($location) . "&key=" . $apiKey . "&language=en&pretty=1";
+        $response = $client->request('GET', $url);
+        $body = json_decode($response->getBody());
+
+        if ($body->total_results > 0) {
+            $latitude = $body->results[0]->geometry->lat;
             $longitude = $body->results[0]->geometry->lng;
 
-            return [ 'latitude' => $latitude, 'longitude' => $longitude ];
+            return ['latitude' => $latitude, 'longitude' => $longitude];
         } else {
             return null;
         }

@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class LoginController extends Controller {
     /*
@@ -37,7 +40,7 @@ class LoginController extends Controller {
         $this->middleware( 'guest' )->except( 'logout' );
     }
 
-    public function logout( Request $request ) {
+    public function logout( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         $this->guard()->logout();
 
         $request->session()->invalidate();
@@ -45,7 +48,7 @@ class LoginController extends Controller {
         return redirect( '/' );
     }
 
-    protected function redirectTo() {
+    protected function redirectTo(): string {
         return '/';
     }
 }

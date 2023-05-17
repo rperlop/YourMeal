@@ -66,7 +66,7 @@ class UserController extends Controller {
         }
 
         $location = $request['location'];
-        $lat_long = ( new Utilities )->getLatLong( $location );
+        $lat_long = ( new Utilities )->get_lat_long( $location );
         if ( $lat_long == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the city' ] );
         }
@@ -242,7 +242,7 @@ class UserController extends Controller {
         }
 
         $location = $request['location'];
-        $lat_long = ( new Utilities )->getLatLong( $location );
+        $lat_long = ( new Utilities )->get_lat_long( $location );
         if ( $lat_long == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the city' ] );
         }

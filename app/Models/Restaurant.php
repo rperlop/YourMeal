@@ -11,6 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Restaurant extends Model {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'featured_id',
+    ];
+
     protected $table = 'restaurants';
 
     public function price_range(): BelongsTo {

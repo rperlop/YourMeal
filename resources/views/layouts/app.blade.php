@@ -60,7 +60,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0 pe-4">
                 <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
-                <a href="#" class="nav-item nav-link">Recommendations</a>
+                @auth
+                    <a href="{{ url('/recommendations') }}" class="nav-item nav-link">Recommendations</a>
+                @endauth
                 <a href="#" class="nav-item nav-link">Search</a>
                 @guest
                     <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>

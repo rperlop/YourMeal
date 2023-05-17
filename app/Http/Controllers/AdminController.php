@@ -26,16 +26,16 @@ namespace App\Http\Controllers;
     }
 
     public function update_featured_restaurant(): RedirectResponse {
-        $last_week = Carbon::now()->subWeek();
+        $restaurant = Restaurant::select('restaurants.*', DB::raw('COUNT(reviews.id) as review_count'))
+                                ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                                ->where('reviews.created_at', '>', Carbon::now()->subWeek())
+                                ->groupBy('restaurants.id')
+                                ->orderByDesc('review_count')
+                                ->first();
 
-        $featured_restaurant = Restaurant::select('restaurants.*', DB::raw('COUNT(reviews.id) as review_count'))
-                                        ->leftJoin('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
-                                        ->where('reviews.created_at', '>', $last_week)
-                                        ->groupBy('restaurants.id')
-                                        ->orderByDesc('review_count')
-                                        ->first();
-
-        session(['featured_restaurant' => $featured_restaurant]);
+        if ($restaurant) {
+            $restaurant->update(['featured_id' => $restaurant->id]);
+        }
 
         return redirect()->back();
     }
