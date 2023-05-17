@@ -27,27 +27,27 @@
 
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Top</h5>
+            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Featured</h5>
             <h2 class="mb-5">Restaurant of the week</h2>
         </div>
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="blog-card bg-white mb-4 overflow-hidden d-lg-flex rounded-lg position-relative">
                     <div class="blog-image overflow-hidden d-flex align-items-center">
-                        <img src="images/food2.jpg" alt="" class="blog-thumbnail">
+                        <a href="{{ route('restaurant', session('featured_restaurant')->id) }}">
+                            <img src="{{ asset('storage/img/restaurants/bnb38WzCuCZbPQPbiGT9guz6Yl46s1fXKmMQuCzl.jpg') }}" alt="{{ session('featured_restaurant')->name }}" class="blog-thumbnail">
+                        </a>
                     </div>
                     <div class="p-4 blog-container">
-                        <a href="#!" class="blog-category text-uppercase py-1 px-2 rounded-lg">
-                            <small class="font-weight-bold">Food</small>
-                        </a>
                         <h4 class="mt-2 font-weight-bold">
-                            <a href="#!" class="text-dark" title="Agriculture is good for both humans and animals">Agriculture is good for both humans and animals</a>
+                            <a href="{{ route('restaurant', session('featured_restaurant')->id) }}" class="text-dark" title="description">{{ session('featured_restaurant')->name }}</a>
                         </h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, ullam, reprehenderit? Praesentium doloribus soluta, quia.</p>
+                        <p class="text-muted">{{ session('featured_restaurant')->description }}</p>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 

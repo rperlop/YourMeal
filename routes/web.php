@@ -14,7 +14,7 @@ use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     $restaurants_spa = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
@@ -46,7 +46,6 @@ Route::get('/', function () {
                                  ->orderByDesc('average_rate')
                                  ->limit(4)
                                  ->get();
-
     return view('welcome', ['restaurants_spa' => $restaurants_spa, 'restaurants_med' => $restaurants_med, 'restaurants_bur' => $restaurants_bur]);
 });
 
@@ -119,5 +118,5 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
     Route::delete( '/admin/pages/edit-restaurant/{id}', [ RestaurantController::class, 'remove_restaurant' ] )->name( 'destroy.restaurant' );
     Route::get( '/admin/pages/create-restaurant/location', [ SearchController::class, 'search_location' ] )->name( 'admin.search.location' );
     Route::get('/admin/dashboard', [AdminController::class, 'stats'])->name('admin.dashboard');
-
+    Route::post('/admin/update-featured-restaurant', [AdminController::class, 'update_featured_restaurant' ]);
 } );

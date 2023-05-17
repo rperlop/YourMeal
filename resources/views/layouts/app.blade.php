@@ -61,6 +61,7 @@
             <div class="navbar-nav ms-auto py-0 pe-4">
                 <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
                 <a href="#" class="nav-item nav-link">Recommendations</a>
+                <a href="#" class="nav-item nav-link">Search</a>
                 @guest
                     <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
                     <a href="{{ url('/registers') }}" class="nav-item nav-link">Register</a>
@@ -99,6 +100,11 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     &copy; <a class="border-bottom" href="#">YourMeal</a>, All Right Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-menu">
+                        <a href="mailto:info@yourmeal.com">Contact</a>
+                    </div>
                 </div>
             </div>
         </div>

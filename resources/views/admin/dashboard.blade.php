@@ -5,27 +5,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card ">
-                        <div class="card-header ">
-                            <h4 class="card-title">{{ __('2017 Sales') }}</h4>
-                            <p class="card-category">{{ __('All products including Taxes') }}</p>
-                        </div>
-                        <div class="card-body ">
-                            <div id="chartActivity" class="ct-chart"></div>
-                        </div>
-                        <div class="card-footer ">
-                            <div class="legend">
-                                <i class="fa fa-circle text-info"></i> {{ __('Tesla Model S') }}
-                                <i class="fa fa-circle text-danger"></i> {{ __('BMW 5 Series') }}
-                            </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="fa fa-check"></i> {{ __('Data information certified') }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
                     <div class="card  card-tasks">
                         <div class="card-header ">
                             <h4 class="card-title">{{ __('Tasks') }}</h4>
@@ -197,6 +176,16 @@
                                 <canvas id="topRestaurantsChart"></canvas>
                             </div>
                         </div>
+                        <div class="card-footer ">
+                            <hr>
+                            <div>
+                                <form action="{{ url('/admin/update-featured-restaurant') }}" method="POST">
+                                    @csrf
+                                    <p>Click here to feature the most reviewed restaurant on last week</p>
+                                    <button type="submit">Feature Restaurant</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,7 +222,7 @@
         });
 
         const restaurantCountCtx = document.getElementById('restaurantCountChart').getContext('2d');
-        const restaurantCountChart = new Chart(restaurantCountCtx, {
+        var restaurantCountChart = new Chart(restaurantCountCtx, {
             type: 'bar',
             data: {
                 labels: ['Restaurants'],
