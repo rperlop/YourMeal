@@ -186,14 +186,18 @@
                             <div class="row service-item p-3 mb-4">
                                 <div class="col-sm-2">
                                     <div class="review-block-name">{{ $review->user->first_name }}
-                                        {{ $review->user->last_name }}</div>
-                                    <div class="review-block-date mb-4">{{ $review->updated_at }}</div>
+                                        {{ $review->user->last_name }}
+                                    </div>
+                                    <div class="review-block-date mb-4">{{ $review->updated_at }}
+                                    </div>
                                     <div class="d-flex justify-content-between align-items-end">
                                         @if (auth()->check() && ($user_review_in_page && !$loop->first) || (auth()->check() && !$user_review_in_page))
-                                            <div class="review-block-report"><a href="#">Report</a></div>
+                                            <div class="review-block-report"><a href="{{ route('report.report', $review) }}">Report</a>
+                                            </div>
                                         @elseif (auth()->check() && $user_review_in_page && $loop->first)
                                             <div class="review-block-edit"><a href="#" data-bs-toggle="modal"
-                                                                              data-bs-target="#reviewForm">Edit your review</a></div>
+                                                                              data-bs-target="#reviewForm">Edit your review</a>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>

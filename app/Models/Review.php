@@ -11,10 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Review extends Model {
     use HasFactory;
 
-    public function rates(): HasOne {
-        return $this->hasOne( Rate::class );
-    }
-
     public function user(): BelongsTo {
         return $this->belongsTo( User::class );
     }
@@ -24,6 +20,10 @@ class Review extends Model {
     }
 
     public function images(): HasMany {
-        return $this->hasMany(Image::class);
+        return $this->hasMany( Image::class );
+    }
+
+    public function reports(): HasMany {
+        return $this->hasMany( Report::class );
     }
 }

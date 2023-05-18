@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
@@ -14,7 +15,6 @@ use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     $restaurants_spa = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
@@ -92,6 +92,13 @@ Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->
 Route::get( '/restaurant/{id}', [ RestaurantController::class, 'show' ] )->name( 'restaurant' );
 
 Route::get( '/recommendations', [ RestaurantController::class, 'get_recommended_restaurants' ] )->name( 'recommended.restaurants' )->middleware( 'auth' );
+
+
+Route::get( '/report/{review}', [ ReportController::class, 'create' ] )->name('report.report')->middleware( 'auth' );
+Route::post( '/report', [ ReportController::class, 'store' ] )->name('report.store')->middleware( 'auth' );
+
+/*Route::post('/restaurant/{restaurant}/review/{updating}', [ReviewController::class, 'store'])->name('review.store')->middleware('auth');*/
+
 
 Route::get( '/searcher', [ SearchController::class, 'search' ] )->name( 'searcher' );
 
