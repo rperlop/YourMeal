@@ -131,4 +131,9 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
     Route::get( '/admin/pages/create-restaurant/location', [ SearchController::class, 'search_location' ] )->name( 'admin.search.location' );
     Route::get('/admin/dashboard', [AdminController::class, 'stats'])->name('admin.dashboard');
     Route::post('/admin/update-featured-restaurant', [AdminController::class, 'update_featured_restaurant' ]);
+    Route::get('/admin/pages/index-reviews', [ReviewController::class, 'index_reviews' ])->name('index-reviews');
+    Route::get( '/admin/pages/show-review/{id}', [ ReviewController::class, 'show_review' ] )->name( 'show-review' );
+    Route::delete('/reviews/{id}', [ReviewController::class, 'delete'])->name('reviews.delete');
+    Route::delete('/reviews/{id}/strike', [ReviewController::class, 'delete_with_strike'])->name('reviews.delete_with_strike');
+    Route::delete('/reviews/{id}/dismiss-reports', [ReviewController::class, 'dismiss_reports'])->name('reviews.dismiss_reports');
 } );

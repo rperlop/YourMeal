@@ -25,11 +25,10 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
 
-            <li class="nav-item @if($activePage == 'reports') active @endif">
-                {{--<a class="nav-link" href="{{route('page.index', 'table')}}">--}}
-                <a class="nav-link" href="#">
+            <li class="nav-item @if($activePage == 'reviews') active @endif">
+                <a class="nav-link" href="{{url('/admin/pages/index-reviews')}}">
                     <i class="nc-icon nc-notes"></i>
-                    <p>{{ __("Reports") }}</p>
+                    <p>{{ __("Reviews") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'restaurants') active @endif">
@@ -38,11 +37,11 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Restaurants") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'icons') active @endif">
+            <li class="nav-item @if($activePage == 'admin-policy') active @endif">
                 {{--<a class="nav-link" href="{{route('page.index', 'icons')}}">--}}
                 <a class="nav-link" href="#">
                     <i class="nc-icon nc-atom"></i>
-                    <p>{{ __("Icons") }}</p>
+                    <p>{{ __("Admin Policy") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'notifications') active @endif">

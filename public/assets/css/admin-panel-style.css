@@ -2517,3 +2517,120 @@ License - nucleoapp.com/license/
     pointer-events: none;
 }
 
+
+.row.restaurant-details .service-item {
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 0.5em !important;
+    padding: 1em;
+}
+
+
+.restaurant-container img{
+    border-radius: 3%;
+}
+
+.review-block .rating{
+    border: 0;
+}
+
+
+.img-thumbnail {
+    width: 170px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.reviews-pagination a,
+.reviews-pagination span{
+    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+}
+
+.review-block .col-sm-2{
+    position: relative;
+}
+
+@media (min-width: 767px) {
+    .review-block .review-block-report,
+    .review-block .review-block-edit{
+        position: absolute;
+        bottom: 0;
+        left: 0.75em;;
+    }
+}
+
+@media (max-width: 767px) {
+    .review-block .review-block-report,
+    .review-block .review-block-edit {
+        position: absolute;
+        right: 0.75em;
+        top: 0;
+    }
+}
+
+#reviewForm .custom-file input{
+    background-color: #fff;
+}
+
+/* End restaurant */
+
+.restaurant-description{
+    text-align: justify;
+}
+
+.blog-card {
+    box-shadow: 0 12px 17px rgba(129, 140, 151, 0.1);
+}
+.blog-card .blog-image {
+    width: 50%;
+    height: auto;
+    position: relative;
+}
+@media only screen and (max-width: 992px) {
+    .blog-card .blog-image {
+        max-height: 250px;
+        width: 100%;
+    }
+}
+.blog-card .blog-image .blog-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+@media only screen and (min-width: 992px) {
+    .blog-card .blog-image .blog-thumbnail {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.blog-card .blog-container {
+    position: relative;
+    flex: 1;
+    padding-bottom: 85px !important;
+}
+.blog-card .blog-container a:hover {
+    text-decoration: none;
+    color: #0062cc;
+}
+.blog-card .blog-container .blog-category {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+.blog-card .blog-container .blog-author {
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    margin-right: 10px;
+}
+.blog-card .blog-container .blog-footer {
+    padding: 15px 30px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\Review;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller {
@@ -85,6 +89,84 @@ class ReviewController extends Controller {
         } else {
             toastr()->success( 'Review created.' );
         }
+
+        return redirect()->back();
+    }
+
+    public function index_reviews(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+        $reviews = Review::where(function ($query) {
+            $query->whereNotNull('comment')
+                  ->where('comment', '<>', '')
+                  ->orWhereHas('images');
+        })
+                         ->with('restaurant', 'user', 'reports')
+                         ->get();
+
+        return view('admin.pages.index-reviews', compact('reviews'));
+    }
+
+    public function show_review($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+        $review = Review::with('user', 'images', 'reports')->find($id);
+
+        return view('admin.pages.show-review', compact('review'));
+    }
+
+    public function delete($id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
+        $review = Review::find($id);
+
+        $review->reports()->delete();
+
+        foreach ($review->images as $image) {
+            Storage::delete($image->url);
+            $image->delete();
+        }
+
+        $review->delete();
+
+        $reviews = Review::where(function ($query) {
+            $query->whereNotNull('comment')
+                  ->where('comment', '<>', '')
+                  ->orWhereHas('images');
+        })
+                         ->with('restaurant', 'user', 'reports')
+                         ->get();
+
+        return view('admin.pages.index-reviews', compact('reviews'));
+    }
+
+    public function delete_with_strike($id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
+        $review = Review::find($id);
+
+        $review->reports()->delete();
+
+        foreach ($review->images as $image) {
+            Storage::delete($image->url);
+            $image->delete();
+        }
+
+        $user = $review->user;
+        $user->strikes++;
+        $user->notify = 1;
+        $user->save();
+
+        $review->delete();
+
+        $reviews = Review::where(function ($query) {
+            $query->whereNotNull('comment')
+                  ->where('comment', '<>', '')
+                  ->orWhereHas('images');
+        })
+                         ->with('restaurant', 'user', 'reports')
+                         ->get();
+
+        return view('admin.pages.index-reviews', compact('reviews'));
+    }
+
+    public function dismiss_reports($id)
+    {
+        $review = Review::find($id);
+
+        $review->reports()->delete();
 
         return redirect()->back();
     }

@@ -371,18 +371,7 @@
     overflow:auto;
     gap: 20px;
 }
-/*.login-sign-up-form .form-footer button{
-    background-color: #009688;
-    border: 1px solid #009688 !important;
-    color: #ffffff;
-    border: none;
-    padding: 13px 30px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 5px;
-    flex: 1;
-    margin-top: 5px;
-}*/
+
 .login-sign-up-form .form-footer button:hover {
     opacity: 0.8;
 }
