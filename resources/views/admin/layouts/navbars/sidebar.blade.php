@@ -38,8 +38,7 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'admin-policy') active @endif">
-                {{--<a class="nav-link" href="{{route('page.index', 'icons')}}">--}}
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{url('/admin/pages/admin-policy')}}">
                     <i class="nc-icon nc-atom"></i>
                     <p>{{ __("Admin Policy") }}</p>
                 </a>

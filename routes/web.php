@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReviewController;
@@ -136,4 +137,8 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
     Route::delete('/reviews/{id}', [ReviewController::class, 'delete'])->name('reviews.delete');
     Route::delete('/reviews/{id}/strike', [ReviewController::class, 'delete_with_strike'])->name('reviews.delete_with_strike');
     Route::delete('/reviews/{id}/dismiss-reports', [ReviewController::class, 'dismiss_reports'])->name('reviews.dismiss_reports');
+    Route::get( '/admin/pages/admin-policy', [ ConfigController::class, 'show_admin_policy_config' ] )->name( 'admin-policy' );
+    Route::put( '/admin/pages/admin-policy', [ ConfigController::class, 'update_admin_policy_config' ] )->name( 'update.admin-policy' );
+
+
 } );
