@@ -44,8 +44,7 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'notifications') active @endif">
-                {{--<a class="nav-link" href="{{route('page.index', 'notifications')}}">--}}
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{url('/admin/pages/notifications')}}">
                     <i class="nc-icon nc-bell-55"></i>
                     <p>{{ __("Notifications") }}</p>
                 </a>

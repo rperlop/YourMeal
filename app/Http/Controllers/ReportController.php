@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
+use App\Models\Notification;
 use App\Models\Report;
 use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller {
@@ -27,7 +31,7 @@ class ReportController extends Controller {
         return view( '/report', compact( 'review' ) );
     }
 
-    public function store( Request $request ) {
+    public function store( Request $request ): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application {
         $validator = Validator::make( $request->all(), [
             'reason' => 'required|max:1500',
         ], [
@@ -47,11 +51,38 @@ class ReportController extends Controller {
         $restaurant = $request->restaurant_id;
         $report->save();
 
+        $review_reports_count = Report::where('review_id', $request->review_id)->count();
+        $reports_min_number = Config::where('property', 'reports_min_number')->value('value');
+        $review = Review::find($request->review_id);
+        $user_id = $review->user_id;
+
+        if ($review_reports_count == $reports_min_number) {
+            $notification = new Notification();
+            $notification->type = 'reported_review';
+            $notification->review_id = $request->review_id;
+            $notification->user_id = $user_id;
+            $notification->save();
+        }
+
+        $user_reports_count = Report::where('user_id', $report->user_id)
+                                  ->where('created_at', '>=', now()->subHour())
+                                  ->count();
+
+        $max_reports_per_user = Config::where('property', 'compulsive_number')->value('value');
+
+        if ($user_reports_count == $max_reports_per_user + 1) {
+            $notification = new Notification();
+            $notification->type = 'compulsive_user';
+            $notification->review_id = $request->review_id;
+            $notification->user_id = $report->user_id;
+            $notification->save();
+        }
+
         return redirect( '/restaurant/'. $restaurant )->with('success', 'Report submitted successfully.');
 
     }
 
-    public function destroy( $id ): Application|\Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse {
+    public function destroy( $id ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         $report = Report::find( $id );
         $report->delete();
 

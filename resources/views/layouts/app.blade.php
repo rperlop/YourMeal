@@ -114,6 +114,42 @@
 </div>
 <!-- Footer End -->
 
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Attention!</h5>
+            </div>
+            @auth
+            @if(Auth::user()->strikes == \App\Models\Config::where('property', 'strikes_number')->value('value'))
+            <div class="modal-body">
+                We regret to inform you that you have been banned for continuously and repeatedly violating our rules. Your user will be deleted. <br><br>Please, confirm you have been notified.
+            </div>
+            @else
+                <div class="modal-body">
+                    You have received a strike for violating our rules. Moderate your behaviour and be responsible with your
+                    use of our site. If you continue to do so, you will be banned. <br><br>Please, confirm you have been notified.
+                </div>
+            @endif
+            @endauth
+            <div class="modal-footer">
+                <form method="POST" action="{{ route('disable-notification') }}" id="disable-notification-form">
+                    @csrf
+                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Auth::check() && Auth::user()->notify == 1)
+    <script>
+        $(document).ready(function() {
+            $('#exampleModalCenter').modal('show');
+        });
+    </script>
+@endif
+
 <!-- JavaScript Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{asset('lib/wow/wow.min.js')}}"></script>

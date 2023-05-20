@@ -3,12 +3,14 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFoodPreferenceController;
+use App\Models\Config;
 use App\Models\FoodType;
 use App\Models\PriceRange;
 use App\Models\Restaurant;
@@ -49,8 +51,9 @@ Route::get('/', function () {
                                  ->get();
 
     $featured_restaurant = Restaurant::whereNotNull('featured_id')->first();
+    $config = Config::all();
 
-    return view('welcome', ['restaurants_spa' => $restaurants_spa, 'restaurants_med' => $restaurants_med, 'restaurants_bur' => $restaurants_bur, 'featured_restaurant' => $featured_restaurant]);
+    return view('welcome', ['restaurants_spa' => $restaurants_spa, 'restaurants_med' => $restaurants_med, 'restaurants_bur' => $restaurants_bur, 'featured_restaurant' => $featured_restaurant, 'config' => $config]);
 });
 
 Route::get( '/registers', function () {
@@ -88,18 +91,15 @@ Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' )
 
 Auth::routes();
 
+Route::post('/disable-notification', [UserController::class, 'confirm_strike_notification'])->name('disable-notification');
+
 Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->name( 'home' );
 
 Route::get( '/restaurant/{id}', [ RestaurantController::class, 'show' ] )->name( 'restaurant' );
 
 Route::get( '/recommendations', [ RestaurantController::class, 'get_recommended_restaurants' ] )->name( 'recommended.restaurants' )->middleware( 'auth' );
 
-
-Route::get( '/report/{review}', [ ReportController::class, 'create' ] )->name('report.report')->middleware( 'auth' );
 Route::post( '/report', [ ReportController::class, 'store' ] )->name('report.store')->middleware( 'auth' );
-
-/*Route::post('/restaurant/{restaurant}/review/{updating}', [ReviewController::class, 'store'])->name('review.store')->middleware('auth');*/
-
 
 Route::get( '/searcher', [ SearchController::class, 'search' ] )->name( 'searcher' );
 
@@ -139,6 +139,8 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
     Route::delete('/reviews/{id}/dismiss-reports', [ReviewController::class, 'dismiss_reports'])->name('reviews.dismiss_reports');
     Route::get( '/admin/pages/admin-policy', [ ConfigController::class, 'show_admin_policy_config' ] )->name( 'admin-policy' );
     Route::put( '/admin/pages/admin-policy', [ ConfigController::class, 'update_admin_policy_config' ] )->name( 'update.admin-policy' );
-
+    Route::get( '/admin/pages/notifications', [ NotificationController::class, 'index' ] )->name( 'notifications' );
+    Route::get( '/report/{review}', [ ReportController::class, 'create' ] )->name('report.report')->middleware( 'auth' );
+    Route::get( '/admin/pages/show-notification/{id}', [ NotificationController::class, 'show_notification' ] )->name( 'show-notification' );
 
 } );

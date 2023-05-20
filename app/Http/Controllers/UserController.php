@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Libraries\Utilities;
+use App\Models\Config;
 use App\Models\User;
 use App\Models\UserFoodPreference;
 
@@ -181,7 +182,7 @@ class UserController extends Controller {
 
         Auth::logout();
 
-        return redirect()->route( 'login' )->with( 'success', 'User removed' );
+        return redirect()->route( 'login' );
     }
 
     /**
@@ -365,5 +366,18 @@ class UserController extends Controller {
         $user_food_preferences->delete();
 
         return redirect()->route( 'admin.index.users' )->with( 'success', 'User removed' );
+    }
+
+    public function confirm_strike_notification(): RedirectResponse {
+        $user = Auth::user();
+        $user->notify = 0;
+        $user->save();
+
+        $strikes_number = Config::where('property', 'strikes_number')->value('value');
+        if (Auth::user()->strikes == $strikes_number){
+            $this->remove_user();
+        }
+
+        return redirect()->back();
     }
 }
