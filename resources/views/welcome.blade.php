@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    @include('top-restaurants', ['restaurants_spa' => $restaurants_spa])
+    @include('top-restaurants', ['restaurants_rate' => $restaurants_rate])
 
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">

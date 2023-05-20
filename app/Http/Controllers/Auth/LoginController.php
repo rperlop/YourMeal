@@ -41,6 +41,13 @@ class LoginController extends Controller {
         $this->middleware( 'guest' )->except( 'logout' );
     }
 
+    /**
+     * Log a user out
+     *
+     * @param Request $request
+     *
+     * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+     */
     public function logout( Request $request ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
         $this->guard()->logout();
 
@@ -49,8 +56,15 @@ class LoginController extends Controller {
         return redirect( '/' );
     }
 
-    protected function authenticated(Request $request, $user)
-    {
+    /**
+     * Get a user logged out if it is banned
+     *
+     * @param Request $request
+     * @param         $user
+     *
+     * @return RedirectResponse
+     */
+    protected function authenticated(Request $request, $user): RedirectResponse {
         if ($user->banned) {
             Auth::logout();
             return redirect()->route('login')->with('status', 'Your account has been banned. Please contact the administrator for more information.');

@@ -6,18 +6,31 @@ use App\Models\Config;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ConfigController extends Controller {
+    /**
+     * Show the admin policy configuration view
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
     public function show_admin_policy_config(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $config = Config::all();
 
         return view( 'admin.pages.admin-policy', compact( 'config' ) );
     }
 
-    public function update_admin_policy_config( Request $request ): \Illuminate\Http\RedirectResponse {
+    /**
+     * Update the banning, notifications and admin policies
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function update_admin_policy_config( Request $request ): RedirectResponse {
         $validated_data = Validator::make($request->all(), [
             'compulsive_number' => 'required|integer',
             'strikes_number' => 'required|integer',

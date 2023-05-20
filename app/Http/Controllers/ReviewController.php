@@ -93,6 +93,11 @@ class ReviewController extends Controller {
         return redirect()->back();
     }
 
+    /**
+     * Index all the reviews
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
     public function index_reviews(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $reviews = Review::where(function ($query) {
             $query->whereNotNull('comment')
@@ -105,13 +110,27 @@ class ReviewController extends Controller {
         return view('admin.pages.index-reviews', compact('reviews'));
     }
 
-    public function show_review($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    /**
+     * Show a review
+     *
+     * @param integer $id
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
+    public function show_review(int $id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $review = Review::with('user', 'images', 'reports')->find($id);
 
         return view('admin.pages.show-review', compact('review'));
     }
 
-    public function delete($id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
+    /**
+     * Delete a review
+     *
+     * @param integer $id
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View|Application
+     */
+    public function delete( int $id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
         $review = Review::find($id);
 
         $review->reports()->delete();
@@ -134,7 +153,14 @@ class ReviewController extends Controller {
         return view('admin.pages.index-reviews', compact('reviews'));
     }
 
-    public function delete_with_strike($id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
+    /**
+     * Delete a review and add a strike to a user
+     *
+     * @param integer $id
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View|Application
+     */
+    public function delete_with_strike( int $id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
         $review = Review::find($id);
 
         $review->reports()->delete();
@@ -162,8 +188,14 @@ class ReviewController extends Controller {
         return view('admin.pages.index-reviews', compact('reviews'));
     }
 
-    public function dismiss_reports($id)
-    {
+    /**
+     * Dismiss the reports of a review
+     *
+     * @param integer $id
+     *
+     * @return RedirectResponse
+     */
+    public function dismiss_reports( int $id): RedirectResponse {
         $review = Review::find($id);
 
         $review->reports()->delete();

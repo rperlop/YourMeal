@@ -9,10 +9,14 @@ use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+    /**
+     * Index all notifications
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
     public function index(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
 
         $notifications = Notification::all();
@@ -20,7 +24,14 @@ class NotificationController extends Controller
 
     }
 
-    public function show_notification($id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    /**
+     * Show a notification
+     *
+     * @param integer $id
+     *
+     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     */
+    public function show_notification( int $id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
 
         $notification = Notification::find($id);
 

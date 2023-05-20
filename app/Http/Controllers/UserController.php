@@ -332,11 +332,11 @@ class UserController extends Controller {
     /**
      * Show the data of a specific user on admin panel
      *
-     * @param $id
+     * @param integer $id
      *
      * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
      */
-    public function admin_show_user_data( $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    public function admin_show_user_data( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $user = User::findOrFail( $id );
 
         return view( 'admin/pages/edit-user', compact( 'user' ) );
@@ -345,11 +345,11 @@ class UserController extends Controller {
     /**
      * Remove a user from admin panel
      *
-     * @param $id
+     * @param integer $id
      *
      * @return RedirectResponse
      */
-    public function admin_remove_user( $id ): RedirectResponse {
+    public function admin_remove_user( int $id ): RedirectResponse {
         $user = User::findOrFail( $id );
 
         $user_food_preferences = $user->user_food_preferences;
@@ -368,7 +368,12 @@ class UserController extends Controller {
         return redirect()->route( 'admin.index.users' )->with( 'success', 'User removed' );
     }
 
-    public function confirm_strike_notification(): RedirectResponse {
+    /**
+     * Notice strike and banning notifications to a user
+     *
+     * @return RedirectResponse
+     */
+    public function notice_banning_and_strike_notification(): RedirectResponse {
         $user = Auth::user();
         $user->notify = 0;
         $user->save();

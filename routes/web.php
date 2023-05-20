@@ -20,40 +20,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $restaurants_spa = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
+    $restaurants_rate = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
+                                  ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                                  ->groupBy('restaurants.id')
+                                  ->havingRaw('COUNT(reviews.id) >= 5')
+                                  ->orderByDesc('average_rate')
+                                  ->limit(6)
+                                  ->get();
+
+    $restaurants_review = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
                              ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
-                             ->join('restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id')
-                             ->join('food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id')
-                             ->where('food_types.name', 'Spanish')
                              ->groupBy('restaurants.id')
-                             ->orderByDesc('average_rate')
-                             ->limit(4)
+                             ->orderByDesc(DB::raw('COUNT(reviews.id)'))
+                             ->take(6)
                              ->get();
 
-    $restaurants_med = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
-                                 ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
-                                 ->join('restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id')
-                                 ->join('food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id')
-                                 ->where('food_types.name', 'Mediterranean')
-                                 ->groupBy('restaurants.id')
-                                 ->orderByDesc('average_rate')
-                                 ->limit(4)
-                                 ->get();
-
-    $restaurants_bur = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
-                                 ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
-                                 ->join('restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id')
-                                 ->join('food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id')
-                                 ->where('food_types.name', 'Burger')
-                                 ->groupBy('restaurants.id')
-                                 ->orderByDesc('average_rate')
-                                 ->limit(4)
-                                 ->get();
 
     $featured_restaurant = Restaurant::whereNotNull('featured_id')->first();
     $config = Config::all();
 
-    return view('welcome', ['restaurants_spa' => $restaurants_spa, 'restaurants_med' => $restaurants_med, 'restaurants_bur' => $restaurants_bur, 'featured_restaurant' => $featured_restaurant, 'config' => $config]);
+    return view('welcome', ['restaurants_rate' => $restaurants_rate, 'restaurants_review' => $restaurants_review, 'featured_restaurant' => $featured_restaurant, 'config' => $config]);
 });
 
 Route::get( '/registers', function () {
@@ -91,15 +77,14 @@ Route::post( '/logout', [ LoginController::class, 'logout' ] )->name( 'logout' )
 
 Auth::routes();
 
-Route::post('/disable-notification', [UserController::class, 'confirm_strike_notification'])->name('disable-notification');
-
-Route::get( '/home', [ App\Http\Controllers\HomeController::class, 'index' ] )->name( 'home' );
+Route::post('/disable-notification', [UserController::class, 'notice_banning_and_strike_notification' ])->name('disable-notification');
 
 Route::get( '/restaurant/{id}', [ RestaurantController::class, 'show' ] )->name( 'restaurant' );
 
 Route::get( '/recommendations', [ RestaurantController::class, 'get_recommended_restaurants' ] )->name( 'recommended.restaurants' )->middleware( 'auth' );
 
 Route::post( '/report', [ ReportController::class, 'store' ] )->name('report.store')->middleware( 'auth' );
+Route::get( '/report/{review}', [ ReportController::class, 'get_report_view' ] )->name('report.report')->middleware( 'auth' );
 
 Route::get( '/searcher', [ SearchController::class, 'search' ] )->name( 'searcher' );
 
@@ -130,7 +115,7 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
     Route::put( '/admin/pages/edit-restaurant/{id}', [ RestaurantController::class, 'update_restaurant' ] )->name( 'update.restaurant' );
     Route::delete( '/admin/pages/edit-restaurant/{id}', [ RestaurantController::class, 'remove_restaurant' ] )->name( 'destroy.restaurant' );
     Route::get( '/admin/pages/create-restaurant/location', [ SearchController::class, 'search_location' ] )->name( 'admin.search.location' );
-    Route::get('/admin/dashboard', [AdminController::class, 'stats'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'get_app_stats'])->name('admin.dashboard');
     Route::post('/admin/update-featured-restaurant', [AdminController::class, 'update_featured_restaurant' ]);
     Route::get('/admin/pages/index-reviews', [ReviewController::class, 'index_reviews' ])->name('index-reviews');
     Route::get( '/admin/pages/show-review/{id}', [ ReviewController::class, 'show_review' ] )->name( 'show-review' );
@@ -140,7 +125,6 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
     Route::get( '/admin/pages/admin-policy', [ ConfigController::class, 'show_admin_policy_config' ] )->name( 'admin-policy' );
     Route::put( '/admin/pages/admin-policy', [ ConfigController::class, 'update_admin_policy_config' ] )->name( 'update.admin-policy' );
     Route::get( '/admin/pages/notifications', [ NotificationController::class, 'index' ] )->name( 'notifications' );
-    Route::get( '/report/{review}', [ ReportController::class, 'create' ] )->name('report.report')->middleware( 'auth' );
     Route::get( '/admin/pages/show-notification/{id}', [ NotificationController::class, 'show_notification' ] )->name( 'show-notification' );
 
 } );
