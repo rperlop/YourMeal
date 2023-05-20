@@ -13,7 +13,11 @@
         <div class="row g-0">
             <form method="POST" action="{{ route('login') }}" id="signUpForm" class="login-sign-up-form">
                 @csrf
-
+                @if(session('status'))
+                    <div class="alert alert-danger">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <div class="row mb-3">
                     <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 

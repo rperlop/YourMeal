@@ -375,7 +375,8 @@ class UserController extends Controller {
 
         $strikes_number = Config::where('property', 'strikes_number')->value('value');
         if (Auth::user()->strikes == $strikes_number){
-            $this->remove_user();
+            $user->banned = true;
+            $user->save();
         }
 
         return redirect()->back();

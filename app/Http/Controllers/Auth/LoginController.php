@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller {
     /*
@@ -47,6 +48,17 @@ class LoginController extends Controller {
 
         return redirect( '/' );
     }
+
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->banned) {
+            Auth::logout();
+            return redirect()->route('login')->with('status', 'Your account has been banned. Please contact the administrator for more information.');
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
 
     protected function redirectTo(): string {
         return '/';
