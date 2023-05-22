@@ -339,71 +339,67 @@ class RestaurantController extends Controller {
         return redirect()->route( 'admin.index.restaurants' )->with( 'success', 'Restaurant removed' );
     }
 
-
     /**
      * Get a list of recommended restaurants for a user
      *
      * @return \Illuminate\Contracts\Foundation\Application|Application|Factory|View
      */
     function get_recommended_restaurants(): View|Factory|Application|\Illuminate\Contracts\Foundation\Application {
-        $userId = Auth::id();
-        $user = User::find($userId);
+        $userId          = Auth::id();
+        $user            = User::find( $userId );
         $userPreferences = $user->user_food_preferences;
-        $restaurants = Restaurant::all();
+        $restaurants     = Restaurant::all();
 
-        $userRatedRestaurants = $user->reviews->pluck('restaurant_id')->toArray();
+        $userRatedRestaurants = $user->reviews->pluck( 'restaurant_id' )->toArray();
 
-        $filtered_restaurants = $restaurants->filter(function ($restaurant) use ($userPreferences, $userRatedRestaurants) {
-            if (in_array($restaurant->id, $userRatedRestaurants)) {
+        $filtered_restaurants = $restaurants->filter( function ( $restaurant ) use ( $userPreferences, $userRatedRestaurants ) {
+            if ( in_array( $restaurant->id, $userRatedRestaurants ) ) {
                 return false;
             }
 
-            $foodTypes = $userPreferences->food_types()->pluck('id')->toArray();
-            if (!empty($foodTypes)) {
-                if (!$restaurant->food_types()->whereIn('id', $foodTypes)->exists()) {
+            $foodTypes = $userPreferences->food_types()->pluck( 'id' )->toArray();
+            if ( ! empty( $foodTypes ) ) {
+                if ( ! $restaurant->food_types()->whereIn( 'id', $foodTypes )->exists() ) {
                     return false;
                 }
             }
 
-            $schedules = $userPreferences->schedules()->pluck('id')->toArray();
-            if (!empty($schedules)) {
-                if (!$restaurant->schedules()->whereIn('id', $schedules)->exists()) {
+            $schedules = $userPreferences->schedules()->pluck( 'id' )->toArray();
+            if ( ! empty( $schedules ) ) {
+                if ( ! $restaurant->schedules()->whereIn( 'id', $schedules )->exists() ) {
                     return false;
                 }
             }
 
-            $priceRanges = $userPreferences->price_ranges()->pluck('id')->toArray();
-            if (!empty($priceRanges)) {
-                if (!$restaurant->price_range()->whereIn('id', $priceRanges)->exists()) {
+            $priceRanges = $userPreferences->price_ranges()->pluck( 'id' )->toArray();
+            if ( ! empty( $priceRanges ) ) {
+                if ( ! $restaurant->price_range()->whereIn( 'id', $priceRanges )->exists() ) {
                     return false;
                 }
             }
 
-            if ($userPreferences->terrace) {
-                if (!$restaurant->terrace) {
+            if ( $userPreferences->terrace ) {
+                if ( ! $restaurant->terrace ) {
                     return false;
                 }
             }
 
             return true;
-        });
+        } );
 
-        $filtered_restaurants = $filtered_restaurants->sortBy(function ($restaurant) use ($userPreferences) {
-            $distance = (new Utilities)->calculate_distance($userPreferences->latitude, $userPreferences->longitude, $restaurant->latitude, $restaurant->longitude);
-            $average_rating = $restaurant->reviews()->avg('rate');
-            return [$distance, -$average_rating];
-        })->values();
+        $filtered_restaurants = $filtered_restaurants->sortBy( function ( $restaurant ) use ( $userPreferences ) {
+            $distance       = ( new Utilities )->calculate_distance( $userPreferences->latitude, $userPreferences->longitude, $restaurant->latitude, $restaurant->longitude );
+            $average_rating = $restaurant->reviews()->avg( 'rate' );
 
-        $filtered_restaurants->each(function ($restaurant) {
-            $average_rating = $restaurant->reviews()->avg('rate');
+            return [ $distance, -$average_rating ];
+        } )->values();
+
+        $filtered_restaurants->each( function ( $restaurant ) {
+            $average_rating             = $restaurant->reviews()->avg( 'rate' );
             $restaurant->average_rating = $average_rating;
-        });
+        } );
 
-        return view('/recommendations', compact('filtered_restaurants'));
+        return view( '/recommendations', compact( 'filtered_restaurants' ) );
     }
-
-
-
-
 }
 

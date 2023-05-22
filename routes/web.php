@@ -40,7 +40,7 @@ Route::get( '/', function () {
     $featured_restaurant = Restaurant::whereNotNull('featured_id')->first();
     $average_rate_feat_rest = $featured_restaurant->reviews()->avg('rate');
     $config = Config::all();
-    
+
     return view('welcome', [
         'restaurants_rate' => $restaurants_rate,
         'restaurants_review' => $restaurants_review,

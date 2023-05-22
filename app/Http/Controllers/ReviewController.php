@@ -26,10 +26,13 @@ class ReviewController extends Controller {
      */
     public function store( Request $request, $restaurant_id, $updating ): RedirectResponse {
         $validator = Validator::make( $request->all(), [
-            'rate'     => 'required|numeric',
+            'rate'     => 'required|numeric|min:1|max:5',
             'images.*' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ], [
             'rate.required'  => 'The rate is mandatory.',
+            'rate.numeric'   => 'The rate must be a numeric value.',
+            'rate.min'       => 'The rate must be at least 1.',
+            'rate.max'       => 'The rate cannot exceed 5.',
             'images.*.image' => 'The file must be an image.',
             'images.*.max'   => 'The image size can not exceed 2MB.',
         ] );
@@ -100,15 +103,15 @@ class ReviewController extends Controller {
      * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
      */
     public function index_reviews(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
-        $reviews = Review::where(function ($query) {
-            $query->whereNotNull('comment')
-                  ->where('comment', '<>', '')
-                  ->orWhereHas('images');
-        })
-                         ->with('restaurant', 'user', 'reports')
+        $reviews = Review::where( function ( $query ) {
+            $query->whereNotNull( 'comment' )
+                  ->where( 'comment', '<>', '' )
+                  ->orWhereHas( 'images' );
+        } )
+                         ->with( 'restaurant', 'user', 'reports' )
                          ->get();
 
-        return view('admin.pages.index-reviews', compact('reviews'));
+        return view( 'admin.pages.index-reviews', compact( 'reviews' ) );
     }
 
     /**
@@ -118,10 +121,10 @@ class ReviewController extends Controller {
      *
      * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
      */
-    public function show_review(int $id): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
-        $review = Review::with('user', 'images', 'reports')->find($id);
+    public function show_review( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+        $review = Review::with( 'user', 'images', 'reports' )->find( $id );
 
-        return view('admin.pages.show-review', compact('review'));
+        return view( 'admin.pages.show-review', compact( 'review' ) );
     }
 
     /**
@@ -131,27 +134,27 @@ class ReviewController extends Controller {
      *
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View|Application
      */
-    public function delete( int $id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
-        $review = Review::find($id);
+    public function delete( int $id ): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
+        $review = Review::find( $id );
 
         $review->reports()->delete();
 
-        foreach ($review->images as $image) {
-            Storage::delete($image->url);
+        foreach ( $review->images as $image ) {
+            Storage::delete( $image->url );
             $image->delete();
         }
 
         $review->delete();
 
-        $reviews = Review::where(function ($query) {
-            $query->whereNotNull('comment')
-                  ->where('comment', '<>', '')
-                  ->orWhereHas('images');
-        })
-                         ->with('restaurant', 'user', 'reports')
+        $reviews = Review::where( function ( $query ) {
+            $query->whereNotNull( 'comment' )
+                  ->where( 'comment', '<>', '' )
+                  ->orWhereHas( 'images' );
+        } )
+                         ->with( 'restaurant', 'user', 'reports' )
                          ->get();
 
-        return view('admin.pages.index-reviews', compact('reviews'));
+        return view( 'admin.pages.index-reviews', compact( 'reviews' ) );
     }
 
     /**
@@ -161,13 +164,13 @@ class ReviewController extends Controller {
      *
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View|Application
      */
-    public function delete_with_strike( int $id): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
-        $review = Review::find($id);
+    public function delete_with_strike( int $id ): \Illuminate\Contracts\Foundation\Application|Factory|View|Application {
+        $review = Review::find( $id );
 
         $review->reports()->delete();
 
-        foreach ($review->images as $image) {
-            Storage::delete($image->url);
+        foreach ( $review->images as $image ) {
+            Storage::delete( $image->url );
             $image->delete();
         }
 
@@ -176,20 +179,20 @@ class ReviewController extends Controller {
         $user->notify = 1;
         $user->save();
 
-        $notifications = Notification::where('review_id', $review->id);
+        $notifications = Notification::where( 'review_id', $review->id );
         $notifications->delete();
 
         $review->delete();
 
-        $reviews = Review::where(function ($query) {
-            $query->whereNotNull('comment')
-                  ->where('comment', '<>', '')
-                  ->orWhereHas('images');
-        })
-                         ->with('restaurant', 'user', 'reports')
+        $reviews = Review::where( function ( $query ) {
+            $query->whereNotNull( 'comment' )
+                  ->where( 'comment', '<>', '' )
+                  ->orWhereHas( 'images' );
+        } )
+                         ->with( 'restaurant', 'user', 'reports' )
                          ->get();
 
-        return view('admin.pages.index-reviews', compact('reviews'));
+        return view( 'admin.pages.index-reviews', compact( 'reviews' ) );
     }
 
     /**
@@ -199,8 +202,8 @@ class ReviewController extends Controller {
      *
      * @return RedirectResponse
      */
-    public function dismiss_reports( int $id): RedirectResponse {
-        $review = Review::find($id);
+    public function dismiss_reports( int $id ): RedirectResponse {
+        $review = Review::find( $id );
 
         $review->reports()->delete();
 
