@@ -31,7 +31,27 @@
                             <h4 class="mt-2 font-weight-bold">
                                 <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}" class="text-dark" title="{{ $restaurant->description }}">{{ $restaurant->name }}</a>
                             </h4>
+                            <div class="rating-top" style="margin-bottom: 6px">
+                            @foreach(range(1,5) as $i)
+                                <span class="fa-stack" style="width:1em">
+                                    <i class="far fa-star fa-stack-1x"></i>
+                                    @if($restaurant->average_rating >0)
+                                        @if($restaurant->average_rating >0.5)
+                                            <i class="fas fa-star fa-stack-1x"></i>
+                                        @else
+                                            <i class="fas fa-star-half fa-stack-1x"></i>
+                                        @endif
+                                    @endif
+                                    @php $restaurant->average_rating--; @endphp
+                                </span>
+                            @endforeach
+                            </div>
                             <p class="text-muted">{{ $restaurant->description }}</p>
+                            <div class="blog-footer d-flex justify-content-between align-items-center border-top">
+                                <div>
+                                    {{ $restaurant->address }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -386,14 +386,22 @@ class RestaurantController extends Controller {
             }
 
             return true;
-        })->sortBy(function ($restaurant) use ($userPreferences) {
-            $distance = (new Utilities )->calculate_distance($userPreferences->latitude, $userPreferences->longitude, $restaurant->latitude, $restaurant->longitude);
-            $averageRating = $restaurant->reviews()->avg('rate');
-            return [$distance, -$averageRating];
+        });
+
+        $filtered_restaurants = $filtered_restaurants->sortBy(function ($restaurant) use ($userPreferences) {
+            $distance = (new Utilities)->calculate_distance($userPreferences->latitude, $userPreferences->longitude, $restaurant->latitude, $restaurant->longitude);
+            $average_rating = $restaurant->reviews()->avg('rate');
+            return [$distance, -$average_rating];
         })->values();
+
+        $filtered_restaurants->each(function ($restaurant) {
+            $average_rating = $restaurant->reviews()->avg('rate');
+            $restaurant->average_rating = $average_rating;
+        });
 
         return view('/recommendations', compact('filtered_restaurants'));
     }
+
 
 
 

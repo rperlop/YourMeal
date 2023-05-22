@@ -559,9 +559,22 @@
     width: 100%;
 }
 
+.blog-card .text-muted{
+    text-align:justify;
+}
+
 .rating-top {
     color: var(--primary);
     margin-right: 0.5em;
     padding-right: 0.5em;
     font-size: 1.00rem;
+}
+
+.rating-top-feat {
+margin-bottom: 5px;
+    color: var(--primary);
+    margin-right: 0.5em;
+    padding-right: 0.5em;
+    font-size: 1.00rem;
+
 }

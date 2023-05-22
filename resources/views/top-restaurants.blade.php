@@ -75,7 +75,21 @@
                                         <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
                                             <h5 class="d-flex justify-content-between border-bottom pb-2">
                                                 <span >{{ $restaurant->name }}</span>
-                                                <span>{{ $restaurant->price_range->range }}</span>
+                                                <div class="rating-top">
+                                                    @foreach(range(1,5) as $i)
+                                                        <span class="fa-stack" style="width:1em">
+                                                        <i class="far fa-star fa-stack-1x"></i>
+                                                        @if($restaurant->average_rate >0)
+                                                                @if($restaurant->average_rate >0.5)
+                                                                    <i class="fas fa-star fa-stack-1x"></i>
+                                                                @else
+                                                                    <i class="fas fa-star-half fa-stack-1x"></i>
+                                                                @endif
+                                                            @endif
+                                                            @php $restaurant->average_rate--; @endphp
+                                                    </span>
+                                                    @endforeach
+                                                </div>
                                             </h5>
                                         </a>
                                         <small class="fst-italic">{{ $restaurant->address }}</small>

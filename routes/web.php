@@ -14,6 +14,7 @@ use App\Models\Config;
 use App\Models\FoodType;
 use App\Models\PriceRange;
 use App\Models\Restaurant;
+use App\Models\Review;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -35,15 +36,16 @@ Route::get( '/', function () {
                                     ->take(6)
                                     ->get();
 
+
     $featured_restaurant = Restaurant::whereNotNull('featured_id')->first();
+    $average_rate_feat_rest = $featured_restaurant->reviews()->avg('rate');
     $config = Config::all();
-
-
-
+    
     return view('welcome', [
         'restaurants_rate' => $restaurants_rate,
         'restaurants_review' => $restaurants_review,
         'featured_restaurant' => $featured_restaurant,
+        'average_rate_feat_rest' => $average_rate_feat_rest,
         'config' => $config,
     ]);
 } );
