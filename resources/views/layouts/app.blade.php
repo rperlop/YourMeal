@@ -74,7 +74,8 @@
                             <a href="{{ url('/user-data') }}" class="dropdown-item">User data</a>
                             <a href="{{ url('/user-preferences') }}" class="dropdown-item">Food preferences</a>
                             @if (Auth::check() && Auth::user()->role == 'admin')
-                                <li><a href="{{ url('/admin/dashboard') }}" class="dropdown-item">Admin dashboard</a></li>
+                                <li><a href="{{ url('/admin/dashboard') }}" class="dropdown-item">Admin dashboard</a>
+                                </li>
                             @endif
                             <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Logout
@@ -96,16 +97,18 @@
 </main>
 
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-        <div class="copyright">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">YourMeal</a>, All Right Reserved.
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="footer-menu">
-                        <a href="mailto:info@yourmeal.com">Contact</a>
+<div class="container-fluid bg-dark text-light fixed-footer footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="fixed-footer">
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="{{url('/')}}">YourMeal</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="mailto:info@yourmeal.com">Contact</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,28 +117,30 @@
 </div>
 <!-- Footer End -->
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="strike-message" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="strike-message-title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Attention!</h5>
+                <h5 class="modal-title" id="strike-message-title">Attention!</h5>
             </div>
             @auth
-            @if(Auth::user()->strikes == \App\Models\Config::where('property', 'strikes_number')->value('value'))
-            <div class="modal-body">
-                We regret to inform you that you have been banned for continuously and repeatedly violating our rules. Your user will be deleted. <br><br>Please, confirm you have been notified.
-            </div>
-            @else
-                <div class="modal-body">
-                    You have received a strike for violating our rules. Moderate your behaviour and be responsible with your
-                    use of our site. If you continue to do so, you will be banned. <br><br>Please, confirm you have been notified.
-                </div>
-            @endif
+                @if(Auth::user()->strikes == \App\Models\Config::where('property', 'strikes_number')->value('value'))
+                    <div class="modal-body">
+                        We regret to inform you that you have been banned for continuously and repeatedly violating our rules. Your user will be deleted.
+                        <br><br>Please, confirm you have been notified.
+                    </div>
+                @else
+                    <div class="modal-body">
+                        You have received a strike for violating our rules. Moderate your behaviour and be responsible with your
+                        use of our site. If you continue to do so, you will be banned.
+                        <br><br>Please, confirm you have been notified.
+                    </div>
+                @endif
             @endauth
             <div class="modal-footer">
-                <form method="POST" action="{{ route('disable-notification') }}" id="disable-notification-form">
+                <form method="POST" id="disable-notification-form">
                     @csrf
-                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Confirm</button>
+                    <button type="submit" class="btn btn-secondary">Confirm</button>
                 </form>
             </div>
         </div>
@@ -144,8 +149,20 @@
 
 @if (Auth::check() && Auth::user()->notify == 1)
     <script>
-        $(document).ready(function() {
-            $('#exampleModalCenter').modal('show');
+        $(document).ready(function () {
+            $('#strike-message').modal('show');
+            $('#disable-notification-form').submit(function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: "{{ route('disable-notification') }}",
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        $('#strike-message').modal('hide');
+                    }
+                });
+            });
         });
     </script>
 @endif

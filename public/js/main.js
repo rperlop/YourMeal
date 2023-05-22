@@ -27,28 +27,35 @@
 })(jQuery);
 
 /*** Register ***/
-let currentTab = 0; // Current tab is set to be the first tab (0)
-showTab(currentTab); // Display the current tab
+let currentTab = 0;
+showTab(currentTab);
 
 function showTab(n) {
-    // This function will display the specified tab of the form...
     const x = document.getElementsByClassName("step");
-    x[n].style.display = "block";
-    //... and fix the Previous/Next buttons:
-    if (n == 0) {
-        document.getElementById("prevBtn").style.display = "none";
-    } else {
-        document.getElementById("prevBtn").style.display = "inline";
+
+    if (n >= 0 && n < x.length) {
+        for (let i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+
+        x[n].style.display = "block";
+
+        if (n === 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+
+        if (n === (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        fixStepIndicator(n);
+        clearAllErrorMessages();
     }
-    if (n == (x.length - 1)) {
-        document.getElementById("nextBtn").innerHTML = "Submit";
-    } else {
-        document.getElementById("nextBtn").innerHTML = "Next";
-    }
-    //... and run a function that will display the correct step indicator:
-    fixStepIndicator(n)
-    clearAllErrorMessages();
 }
+
 
 function nextPrev(n) {
     // This function will figure out which tab to display

@@ -99,7 +99,6 @@ class ReportController extends Controller {
         if ($user_reports_count == $max_reports_per_user + 1) {
             $notification = new Notification();
             $notification->type = 'compulsive_user';
-            $notification->review_id = $request->review_id;
             $notification->user_id = $report->user_id;
             $notification->save();
         }

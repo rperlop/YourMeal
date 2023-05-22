@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\Utilities;
+use App\Utils\Utilities;
 use App\Models\FoodType;
 use App\Models\PriceRange;
 use App\Models\Schedule;

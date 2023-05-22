@@ -1,19 +1,14 @@
 <div class="sidebar" data-color="black">
-    <!--
-Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-Tip 2: you can also add an image using data-image tag
--->
     <div class="sidebar-wrapper" >
         <div class="logo">
             <a href="{{ url('/admin/dashboard') }}" class="simple-text">
-                {{ __("YourMeal") }}
+                {{ __("YourMeal Admin") }}
             </a>
         </div>
         <ul class="nav">
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
                 <a class="nav-link" href="{{ url('/admin/dashboard') }}">
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-chart-bar-32"></i>
                     <p>{{ __("Dashboard") }}</p>
                 </a>
             </li>
@@ -39,7 +34,7 @@ Tip 2: you can also add an image using data-image tag
             </li>
             <li class="nav-item @if($activePage == 'admin-policy') active @endif">
                 <a class="nav-link" href="{{url('/admin/pages/admin-policy')}}">
-                    <i class="nc-icon nc-atom"></i>
+                    <i class="nc-icon nc-settings-gear-64"></i>
                     <p>{{ __("Admin Policy") }}</p>
                 </a>
             </li>
@@ -49,7 +44,12 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Notifications") }}</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url('/')}}">
+                    <i class="nc-icon nc-tap-01"></i>
+                    <p>{{ __("YourMeal web") }}</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
-

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\Utilities;
+use App\Utils\Utilities;
 use App\Models\Config;
 use App\Models\User;
 use App\Models\UserFoodPreference;
-
 use GuzzleHttp\Exception\GuzzleException;
+use http\Env\Response;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -371,9 +372,9 @@ class UserController extends Controller {
     /**
      * Notice strike and banning notifications to a user
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function notice_banning_and_strike_notification(): RedirectResponse {
+    public function notice_banning_and_strike_notification(): void {
         $user = Auth::user();
         $user->notify = 0;
         $user->save();
@@ -383,7 +384,5 @@ class UserController extends Controller {
             $user->banned = true;
             $user->save();
         }
-
-        return redirect()->back();
     }
 }

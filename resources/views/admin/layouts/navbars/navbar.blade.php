@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg " color-on-scroll="500">
+<nav class="navbar navbar-expand-lg ">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"> {{ $navName }} </a>
+        <span class="navbar-brand"> {{ $navName }} </span>
         <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar burger-lines"></span>
             <span class="navbar-toggler-bar burger-lines"></span>
@@ -18,7 +18,7 @@
                 <li class="nav-item">
                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <a class="text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> {{ __('Log out') }} </a>
+                        <a class="text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }} <i class="nc-icon nc-button-power"></i></a>
                     </form>
                 </li>
             </ul>

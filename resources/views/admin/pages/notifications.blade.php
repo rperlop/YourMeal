@@ -1,15 +1,6 @@
 @extends('admin.layouts.app', ['activePage' => 'notifications', 'title' => 'List of notifications', 'navName' => 'Notifications'])
 
 @section('content')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">List of notifications</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content">
         <div class="container-fluid">
 

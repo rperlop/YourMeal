@@ -1,15 +1,6 @@
-@extends('admin.layouts.app', ['activePage' => 'restaurants', 'title' => 'List of restaurants', 'navName' => 'Table List', 'activeButton' => 'laravel'])
+@extends('admin.layouts.app', ['activePage' => 'restaurants', 'title' => 'List of restaurants', 'navName' => 'Restaurants'])
 
 @section('content')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">List of restaurants</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content">
         <div class="container-fluid">
 

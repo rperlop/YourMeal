@@ -1,15 +1,6 @@
-@extends('admin.layouts.app', ['activePage' => 'user-management', 'title' => 'List of users', 'navName' => 'Table List', 'activeButton' => 'laravel'])
+@extends('admin.layouts.app', ['activePage' => 'user-management', 'title' => 'List of users', 'navName' => 'User management'])
 
 @section('content')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">List of users</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content">
         <div class="container-fluid">
 

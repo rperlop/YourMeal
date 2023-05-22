@@ -16,15 +16,6 @@
     font-weight: 700 !important;
 }
 
-.back-to-top {
-    position: fixed;
-    display: none;
-    right: 45px;
-    bottom: 45px;
-    z-index: 99;
-}
-
-
 /*** Spinner ***/
 #spinner {
     opacity: 0;
@@ -284,8 +275,15 @@
     border-right: none;
 }
 
-
+/*.fixed-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-top:10px;
+    height: 2.5rem;
+}*/
 /*** Footer ***/
+
 .form-check-inline {
     width: auto;
     margin-right: 10px;

@@ -30,7 +30,7 @@ class LoginController extends Controller {
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected string $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -70,7 +70,11 @@ class LoginController extends Controller {
             return redirect()->route('login')->with('status', 'Your account has been banned. Please contact the administrator for more information.');
         }
 
-        return redirect()->intended($this->redirectPath());
+        if ($user->role == 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect('/');
     }
 
 

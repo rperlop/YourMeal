@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Notification;
 use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -174,6 +175,9 @@ class ReviewController extends Controller {
         $user->strikes++;
         $user->notify = 1;
         $user->save();
+
+        $notifications = Notification::where('review_id', $review->id);
+        $notifications->delete();
 
         $review->delete();
 
