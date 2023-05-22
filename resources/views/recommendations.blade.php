@@ -18,11 +18,8 @@
         @php
             $counter = 1;
         @endphp
-        @foreach ($recommendations as $restaurant)
+        @foreach ($filtered_restaurants as $restaurant)
             <div class="row">
-                <div class="col-md-1">
-                    <i class="order-number fa fa-3x text-primary mb-4">{{ $counter }}</i>
-                </div>
                 <div class="col-md-8 offset-md-2">
                     <div class="blog-card bg-white mb-4 overflow-hidden d-lg-flex rounded-lg position-relative">
                         <div class="blog-image overflow-hidden d-flex align-items-center">

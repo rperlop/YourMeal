@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\UserFoodPreference;
 use App\Utils\Utilities;
 use App\Models\FoodType;
 use App\Models\PriceRange;
@@ -361,86 +363,57 @@ class RestaurantController extends Controller {
      *
      * @return \Illuminate\Contracts\Foundation\Application|Application|Factory|View
      */
-    public function get_recommended_restaurants(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    function get_recommended_restaurants(): View|Factory|Application|\Illuminate\Contracts\Foundation\Application {
         $userId = Auth::id();
+        $user = User::find($userId);
+        $userPreferences = $user->user_food_preferences;
+        $restaurants = Restaurant::all();
 
-        $userFoodPreferences = DB::table( 'user_food_preferences' )
-                                 ->join( 'user_food_preferences_has_food_types', 'user_food_preferences.id', '=', 'user_food_preferences_has_food_types.user_food_preference_id' )
-                                 ->join( 'food_types', 'user_food_preferences_has_food_types.food_type_id', '=', 'food_types.id' )
-                                 ->join( 'users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id' )
-                                 ->where( 'users.id', $userId )
-                                 ->pluck( 'food_types.id' );
+        $userRatedRestaurants = $user->reviews->pluck('restaurant_id')->toArray();
 
-        $userFoodPreferencesSchedules = DB::table( 'user_food_preferences' )
-                                          ->join( 'user_food_preferences_has_schedules', 'user_food_preferences.id', '=', 'user_food_preferences_has_schedules.user_food_preference_id' )
-                                          ->join( 'schedules', 'user_food_preferences_has_schedules.schedule_id', '=', 'schedules.id' )
-                                          ->join( 'users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id' )
-                                          ->where( 'users.id', $userId )
-                                          ->pluck( 'schedules.id' );
+        $filtered_restaurants = $restaurants->filter(function ($restaurant) use ($userPreferences, $userRatedRestaurants) {
+            if (in_array($restaurant->id, $userRatedRestaurants)) {
+                return false;
+            }
 
-        $userFoodPreferencesPriceRange = DB::table( 'user_food_preferences' )
-                                           ->join( 'user_food_preferences_has_price_ranges', 'user_food_preferences.id', '=', 'user_food_preferences_has_price_ranges.user_food_preference_id' )
-                                           ->join( 'price_ranges', 'user_food_preferences_has_price_ranges.price_range_id', '=', 'price_ranges.id' )
-                                           ->join( 'users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id' )
-                                           ->where( 'users.id', $userId )
-                                           ->pluck( 'price_ranges.id' );
+            $foodTypes = $userPreferences->food_types()->pluck('id')->toArray();
+            if (!empty($foodTypes)) {
+                if (!$restaurant->food_types()->whereIn('id', $foodTypes)->exists()) {
+                    return false;
+                }
+            }
 
-        $userFoodPreferencesLocation = DB::table( 'user_food_preferences' )
-                                         ->join( 'users', 'users.user_food_preferences_id', '=', 'user_food_preferences.id' )
-                                         ->where( 'users.id', $userId )
-                                         ->select( 'user_food_preferences.latitude', 'user_food_preferences.longitude' )
-                                         ->first();
+            $schedules = $userPreferences->schedules()->pluck('id')->toArray();
+            if (!empty($schedules)) {
+                if (!$restaurant->schedules()->whereIn('id', $schedules)->exists()) {
+                    return false;
+                }
+            }
 
-        $latitude  = $userFoodPreferencesLocation->latitude;
-        $longitude = $userFoodPreferencesLocation->longitude;
+            $priceRanges = $userPreferences->price_ranges()->pluck('id')->toArray();
+            if (!empty($priceRanges)) {
+                if (!$restaurant->price_range()->whereIn('id', $priceRanges)->exists()) {
+                    return false;
+                }
+            }
 
-        $restaurants = DB::table( 'restaurants' )
-                         ->select( 'restaurants.*' )
-                         ->selectRaw( '(6371 * acos(cos(radians(' . $latitude . ')) * cos(radians(restaurants.latitude)) * cos(radians(restaurants.longitude) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(restaurants.latitude)))) AS distance' )
-                         ->whereExists( function ( $query ) use ( $userFoodPreferences ) {
-                             $query->select( DB::raw( 1 ) )
-                                   ->from( 'restaurant_has_food_types' )
-                                   ->whereIn( 'food_type_id', $userFoodPreferences )
-                                   ->whereRaw( 'restaurant_has_food_types.restaurant_id = restaurants.id' );
-                         } )
-                         ->whereNotExists( function ( $query ) use ( $userId ) {
-                             $query->select( DB::raw( 1 ) )
-                                   ->from( 'reviews' )
-                                   ->where( 'reviews.user_id', $userId )
-                                   ->whereRaw( 'reviews.restaurant_id = restaurants.id' );
-                         } )
-                         ->whereExists( function ( $query ) use ( $userFoodPreferencesSchedules ) {
-                             $query->select( DB::raw( 1 ) )
-                                   ->from( 'restaurant_has_schedules' )
-                                   ->whereIn( 'schedule_id', $userFoodPreferencesSchedules )
-                                   ->whereRaw( 'restaurant_has_schedules.restaurant_id = restaurants.id' );
-                         } )
-                         ->where( function ( $query ) use ( $userFoodPreferencesPriceRange ) {
-                             $query->whereIn( 'price_range_id', $userFoodPreferencesPriceRange );
-                         } )
-                         ->having( 'distance', '<=', 5 ) // Filtrar por distancia <= 5 km
-                         ->orderBy( 'distance', 'asc' )
-                         ->get();
+            if ($userPreferences->terrace) {
+                if (!$restaurant->terrace) {
+                    return false;
+                }
+            }
 
-        $restaurantIds = $restaurants->pluck( 'id' );
+            return true;
+        })->sortBy(function ($restaurant) use ($userPreferences) {
+            $distance = (new Utilities )->calculate_distance($userPreferences->latitude, $userPreferences->longitude, $restaurant->latitude, $restaurant->longitude);
+            $averageRating = $restaurant->reviews()->avg('rate');
+            return [$distance, -$averageRating];
+        })->values();
 
-        $rates = DB::table( 'reviews' )
-                   ->whereIn( 'restaurant_id', $restaurantIds )
-                   ->select( 'restaurant_id', DB::raw( 'AVG(rate) as average_rating' ) )
-                   ->groupBy( 'restaurant_id' )
-                   ->get();
-
-        $restaurants = $restaurants->map( function ( $restaurant ) use ( $rates ) {
-            $rate                       = $rates->where( 'restaurant_id', $restaurant->id )->first();
-            $restaurant->average_rating = $rate ? $rate->average_rating : null;
-
-            return $restaurant;
-        } );
-
-        $restaurants = $restaurants->sortByDesc( 'average_rating' )->take( 5 );
-
-        return view( '/recommendations', [
-            'recommendations' => $restaurants,
-        ] );
+        return view('/recommendations', compact('filtered_restaurants'));
     }
+
+
+
 }
+

@@ -26,7 +26,7 @@ Route::get( '/', function () {
         DB::raw( 'AVG(reviews.rate) as average_rate' ) )
                                   ->join( 'reviews', 'restaurants.id', '=', 'reviews.restaurant_id' )
                                   ->groupBy( 'restaurants.id' )
-                                  ->havingRaw( 'COUNT(reviews.id) >= 5' )
+                                  ->havingRaw( 'COUNT(reviews.id) >= 1' )
                                   ->orderByDesc( 'average_rate' )
                                   ->limit( 6 )
                                   ->get();

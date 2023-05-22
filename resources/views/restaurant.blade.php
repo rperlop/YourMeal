@@ -18,7 +18,7 @@
             <div class="row g-5 align-items-center restaurant-container">
                 <div class="col-lg-6">
                     <div class="row g-3">
-                        <img src="{{ asset('storage/' . $restaurant->main_image_url)}}" alt="{{ $restaurant->name }}" />
+                        <img src="{{ asset('storage/' . $restaurant->main_image_url)}}" alt="{{ $restaurant->name }}"/>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -30,8 +30,8 @@
                         <p class="mb-4"><span class="rating">
                             @foreach(range(1,5) as $i)
                                     <span class="fa-stack" style="width:1em">
-                                <i class="far fa-star fa-stack-1x"></i>
-                                @if($rating >0)
+                                    <i class="far fa-star fa-stack-1x"></i>
+                                        @if($rating >0)
                                             @if($rating >0.5)
                                                 <i class="fas fa-star fa-stack-1x"></i>
                                             @else
@@ -39,7 +39,7 @@
                                             @endif
                                         @endif
                                         @php $rating--; @endphp
-                            </span>
+                                    </span>
                                 @endforeach
                         </span> {{ $price_range }} </p>
 
@@ -48,9 +48,11 @@
                             <div class="col-lg-6 mb-4">
                                 <div class="service-item rounded pt-3">
                                     <h5 class="mb-4">Location and contact</h5>
-                                    <p><i class="fa fa-fw fa-location-dot text-primary me-2"></i>{{ $restaurant->address }}
+                                    <p>
+                                        <i class="fa fa-fw fa-location-dot text-primary me-2"></i>{{ $restaurant->address }}
                                     </p>
-                                    <p><i class="fa fa-fw fa-phone text-primary me-2"></i>{{ $restaurant->phone_number }}
+                                    <p>
+                                        <i class="fa fa-fw fa-phone text-primary me-2"></i>{{ $restaurant->phone_number }}
                                     </p>
                                     <p class="mb-4"><a href="{{ $restaurant->web }}"><i
                                                 class="fa fa-fw fa-laptop text-primary me-2"></i>
@@ -93,7 +95,6 @@
                     </div>
                 </div>
             </div>
-
 
 
             @if (auth()->check())
@@ -165,7 +166,6 @@
             @endif
 
 
-
             <div class="row g-5 align-items-center">
                 <div class="container container px-5 pt-3">
                     <div class="row justify-content-between mb-3">
@@ -192,7 +192,8 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-end">
                                         @if (auth()->check() && ($user_review_in_page && !$loop->first) || (auth()->check() && !$user_review_in_page))
-                                            <div class="review-block-report"><a href="{{ route('report.report', $review) }}">Report</a>
+                                            <div class="review-block-report">
+                                                <a href="{{ route('report.report', $review) }}">Report</a>
                                             </div>
                                         @elseif (auth()->check() && $user_review_in_page && $loop->first)
                                             <div class="review-block-edit"><a href="#" data-bs-toggle="modal"
@@ -206,8 +207,8 @@
                                         @php $rating = $review->rate; @endphp
                                         @foreach(range(1,5) as $i)
                                             <span class="fa-stack" style="width:1em">
-                                    <i class="far fa-star fa-stack-1x"></i>
-                                    @if($rating >0)
+                                                <i class="far fa-star fa-stack-1x"></i>
+                                                @if($rating >0)
                                                     @if($rating >0.5)
                                                         <i class="fas fa-star fa-stack-1x"></i>
                                                     @else
@@ -215,7 +216,7 @@
                                                     @endif
                                                 @endif
                                                 @php $rating--; @endphp
-                                </span>
+                                            </span>
                                         @endforeach
                                     </div>
                                     <div class="review-block-description mb-3">{{ $review->comment }}</div>
@@ -235,11 +236,8 @@
                     <div class="d-flex justify-content-center mb-4 reviews-pagination">
                         {{ $reviews->links() }}
                     </div>
-
                 </div>
             </div>
-
-
         </div>
 
         @if (session('formSubmitted') && count($errors) > 0)
@@ -253,18 +251,17 @@
         @if (auth()->check())
 
             <script>
-
                 $(document).ready(function () {
                     $('.rating-form').rating();
                 });
 
-                $(function() {
-                    $('#images').on('change', function() {
+                $(function () {
+                    $('#images').on('change', function () {
                         $('.image-preview').html('');
                         var files = $(this).prop('files');
                         for (var i = 0; i < files.length; i++) {
                             var reader = new FileReader();
-                            reader.onload = function(e) {
+                            reader.onload = function (e) {
 
                                 var img = $('<img>', {
                                     src: e.target.result,
@@ -284,10 +281,10 @@
             @if ($user_has_review)
                 <script>
                     $(document).ready(function () {
-                        if({{$user_has_review}}){
+                        if ({{$user_has_review}}) {
                             var user_rate = {{$user_review->rate}};
                             $('[data-rating="' + user_rate + '"]').eq(0).click();
-                            if({{ $user_review->images != null}}){
+                            if ({{ $user_review->images != null}}) {
                                 $('.image-preview').html('');
 
                                 var images = {!! json_encode($user_review->images) !!};
