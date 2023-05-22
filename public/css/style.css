@@ -558,3 +558,10 @@
     left: 0;
     width: 100%;
 }
+
+.rating-top {
+    color: var(--primary);
+    margin-right: 0.5em;
+    padding-right: 0.5em;
+    font-size: 1.00rem;
+}

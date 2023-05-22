@@ -22,32 +22,30 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get( '/', function () {
-    $restaurants_rate = Restaurant::select( 'restaurants.*',
-        DB::raw( 'AVG(reviews.rate) as average_rate' ) )
-                                  ->join( 'reviews', 'restaurants.id', '=', 'reviews.restaurant_id' )
-                                  ->groupBy( 'restaurants.id' )
-                                  ->havingRaw( 'COUNT(reviews.id) >= 1' )
-                                  ->orderByDesc( 'average_rate' )
-                                  ->limit( 6 )
-                                  ->get();
 
-    $restaurants_review = Restaurant::select( 'restaurants.*',
-        DB::raw( 'AVG(reviews.rate) as average_rate' ) )
-                                    ->join( 'reviews', 'restaurants.id', '=', 'reviews.restaurant_id' )
-                                    ->groupBy( 'restaurants.id' )
-                                    ->orderByDesc( DB::raw( 'COUNT(reviews.id)' ) )
-                                    ->take( 6 )
+    $restaurants_rate = Restaurant::withAvg('reviews', 'rate')
+                        ->orderByDesc('reviews_avg_rate')
+                        ->limit(6)
+                        ->get();
+
+    $restaurants_review = Restaurant::select('restaurants.*', DB::raw('AVG(reviews.rate) as average_rate'))
+                                    ->leftJoin('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                                    ->groupBy('restaurants.id')
+                                    ->orderByDesc(DB::raw('COUNT(reviews.id)'))
+                                    ->take(6)
                                     ->get();
 
-    $featured_restaurant = Restaurant::whereNotNull( 'featured_id' )->first();
-    $config              = Config::all();
+    $featured_restaurant = Restaurant::whereNotNull('featured_id')->first();
+    $config = Config::all();
 
-    return view( 'welcome', [
-        'restaurants_rate'    => $restaurants_rate,
-        'restaurants_review'  => $restaurants_review,
+
+
+    return view('welcome', [
+        'restaurants_rate' => $restaurants_rate,
+        'restaurants_review' => $restaurants_review,
         'featured_restaurant' => $featured_restaurant,
-        'config'              => $config,
-    ] );
+        'config' => $config,
+    ]);
 } );
 Route::get( '/registers', function () {
     return view( 'registers' );
@@ -66,10 +64,6 @@ Route::get( '/welcome', [
     SearchController::class,
     'search_location'
 ] )->name( 'search_location' );
-Route::get( '/top-restaurants', [
-    RestaurantController::class,
-    'get_most_reviewed_restaurants',
-] )->name( 'most_rated_restaurants' );
 Route::get( '/user-preferences/location', [
     SearchController::class,
     'search_location',

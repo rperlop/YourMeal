@@ -339,24 +339,6 @@ class RestaurantController extends Controller {
         return redirect()->route( 'admin.index.restaurants' )->with( 'success', 'Restaurant removed' );
     }
 
-    /**
-     * Get the most reviewed restaurants
-     *
-     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
-     */
-    public function get_most_reviewed_restaurants( $food_type ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
-        $restaurants = Restaurant::select( 'restaurants.*', DB::raw( 'AVG(reviews.rate) as average_rate' ) )
-                                 ->join( 'reviews', 'restaurants.id', '=', 'reviews.restaurant_id' )
-                                 ->join( 'restaurant_has_food_types', 'restaurants.id', '=', 'restaurant_has_food_types.restaurant_id' )
-                                 ->join( 'food_types', 'restaurant_has_food_types.food_type_id', '=', 'food_types.id' )
-                                 ->where( 'food_types.name', $food_type )
-                                 ->groupBy( 'restaurants.id' )
-                                 ->orderByDesc( 'average_rate' )
-                                 ->limit( 4 )
-                                 ->get();
-
-        return view( 'top-restaurants' )->with( 'restaurants', $restaurants );
-    }
 
     /**
      * Get a list of recommended restaurants for a user

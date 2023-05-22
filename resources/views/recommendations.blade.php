@@ -12,7 +12,7 @@
 
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Top 5</h5>
+            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Top</h5>
             <h2 class="mb-5">Your unknown perfect restaurants</h2>
         </div>
         @php

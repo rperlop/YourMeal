@@ -125,4 +125,5 @@ class UserFoodPreferenceController extends Controller {
 
         return redirect()->route( 'user-preferences' )->with( 'success', 'Successful update' );
     }
+
 }

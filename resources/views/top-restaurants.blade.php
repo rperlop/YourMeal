@@ -8,7 +8,8 @@
             <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
                 <li class="nav-item">
                     <a class="d-flex align-items-center text-start px-3 ms-0 pb-3 active" data-bs-toggle="pill" href="#tab-1">
-                        <div>
+                        <i class="fa fa-star fa-2x text-primary"></i>
+                        <div class="ms-2">
                             <small class="text-body">Top</small>
                             <h6 class="mt-n1 mb-0">Rated</h6>
                         </div>
@@ -16,7 +17,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="d-flex align-items-center text-start px-3 pb-3" data-bs-toggle="pill" href="#tab-2">
-                        <div>
+                        <i class="fa fa-users fa-2x text-primary"></i>
+                        <div class="ms-2">
                             <small class="text-body">Top</small>
                             <h6 class="mt-n1 mb-0">Reviewed</h6>
                         </div>
@@ -36,7 +38,21 @@
                                         <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
                                             <h5 class="d-flex justify-content-between border-bottom pb-2">
                                                 <span>{{ $restaurant->name }}</span>
-                                                <span>{{ $restaurant->price_range->range }}</span>
+                                                <div class="rating-top">
+                                                @foreach(range(1,5) as $i)
+                                                    <span class="fa-stack" style="width:1em">
+                                                        <i class="far fa-star fa-stack-1x"></i>
+                                                        @if($restaurant->reviews_avg_rate >0)
+                                                            @if($restaurant->reviews_avg_rate >0.5)
+                                                                <i class="fas fa-star fa-stack-1x"></i>
+                                                            @else
+                                                                <i class="fas fa-star-half fa-stack-1x"></i>
+                                                            @endif
+                                                        @endif
+                                                        @php $restaurant->reviews_avg_rate--; @endphp
+                                                    </span>
+                                                @endforeach
+                                                </div>
                                             </h5>
                                         </a>
                                         <small class="fst-italic">{{ $restaurant->address }}</small>

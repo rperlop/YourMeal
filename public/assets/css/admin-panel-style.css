@@ -2422,7 +2422,8 @@ License - nucleoapp.com/license/
 }
 
 .data-form .row {
-    margin-left: 0;
+    margin-left: 15px;
+    padding-left: 15px;
 }
 
 .wrapper-full-page~.fixed-plugin .dropdown.open .dropdown-menu {
