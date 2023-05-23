@@ -15,6 +15,14 @@
             <h5 class="section-title ff-secondary text-center text-primary fw-normal">Top</h5>
             <h2 class="mb-5">Your unknown perfect restaurants</h2>
         </div>
+        @if($filtered_restaurants->isEmpty())
+            <div class="row">
+                <div class="col-md-8 offset-md-2" id="recommendations-text">
+                    <p>There are no recommendations that fit your preferences. Perhaps you should broaden your tastes.
+                        Why not try adding more types of food or another location?</p>
+                </div>
+            </div>
+        @else
         @php
             $counter = 1;
         @endphp
@@ -60,6 +68,7 @@
                 $counter++;
             @endphp
         @endforeach
+        @endif
     </div>
 
 
