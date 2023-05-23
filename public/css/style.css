@@ -291,7 +291,7 @@
 
 /** register **/
 
-.login-sign-up-form  {
+.login-sign-up-form {
     max-width: 500px;
     background-color: #ffffff;
     margin: 40px auto;
@@ -299,24 +299,29 @@
     box-shadow: 0px 6px 18px rgb(0 0 0 / 9%);
     border-radius: 12px;
 }
-.login-sign-up-form  .form-header {
+
+.login-sign-up-form .form-header {
     gap: 5px;
     text-align: center;
     font-size: .9em;
 }
+
 .login-sign-up-form .form-header .stepIndicator {
     position: relative;
     flex: 1;
     padding-bottom: 30px;
 }
-.login-sign-up-form  .form-header .stepIndicator.active {
+
+.login-sign-up-form .form-header .stepIndicator.active {
     font-weight: 600;
     color: var(--primary);
 }
-.login-sign-up-form  .form-header .stepIndicator.finish {
+
+.login-sign-up-form .form-header .stepIndicator.finish {
     color: var(--primary);
 }
-.login-sign-up-form  .form-header .stepIndicator::before {
+
+.login-sign-up-form .form-header .stepIndicator::before {
     content: "";
     position: absolute;
     left: 50%;
@@ -329,14 +334,17 @@
     border-radius: 50%;
     border: 3px solid #f5f1ec;
 }
-.login-sign-up-form  .form-header .stepIndicator.active::before {
+
+.login-sign-up-form .form-header .stepIndicator.active::before {
     background-color: var(--primary);
     border: 3px solid var(--primary);
 }
+
 .login-sign-up-form .form-header .stepIndicator.finish::before {
     background-color: var(--primary);
     border: 3px solid;
 }
+
 .login-sign-up-form .form-header .stepIndicator::after {
     content: "";
     position: absolute;
@@ -346,27 +354,33 @@
     height: 3px;
     background-color: #f3f3f3;
 }
-.login-sign-up-form  .form-header .stepIndicator.active::after {
+
+.login-sign-up-form .form-header .stepIndicator.active::after {
     background-color: var(--primary);
 }
-.login-sign-up-form  .form-header .stepIndicator.finish::after {
+
+.login-sign-up-form .form-header .stepIndicator.finish::after {
     background-color: var(--primary);
 }
+
 .login-sign-up-form .form-header .stepIndicator:last-child:after {
     display: none;
 }
-.login-sign-up-form  input {
+
+.login-sign-up-form input {
     border-radius: 5px;
 }
 
-.login-sign-up-form  input.invalid {
+.login-sign-up-form input.invalid {
     border: 1px solid #ffaba5;
 }
-.login-sign-up-form  .step {
+
+.login-sign-up-form .step {
     display: none;
 }
-.login-sign-up-form  .form-footer{
-    overflow:auto;
+
+.login-sign-up-form .form-footer {
+    overflow: auto;
     gap: 20px;
 }
 
@@ -374,7 +388,7 @@
     opacity: 0.8;
 }
 
-.login-sign-up-form  .form-footer #prevBtn {
+.login-sign-up-form .form-footer #prevBtn {
     font-family: 'Merriweather Sans', sans-serif;
     font-weight: 500;
     text-transform: uppercase;
@@ -382,7 +396,7 @@
     border-radius: 5px;
 }
 
-.checkbox-error{
+.checkbox-error {
     margin-top: -1em;
     font-size: .875em;
     color: #dc3545;
@@ -392,6 +406,7 @@
 #registerForm .row {
     --bs-gutter-x: 0 !important;
 }
+
 /** fin registro **/
 
 
@@ -422,8 +437,7 @@
 
 /* Restaurant */
 
-.food-type
-{
+.food-type {
     background-color: var(--primary);
     padding: 0.75em;
     text-align: center;
@@ -450,15 +464,15 @@
 
 .row.restaurant-details .service-item .fa-angles-right,
 .review-block-name,
-.simple-rating{
+.simple-rating {
     color: var(--primary);
 }
 
-.restaurant-container img{
+.restaurant-container img {
     border-radius: 3%;
 }
 
-.review-block .rating{
+.review-block .rating {
     border: 0;
 }
 
@@ -470,17 +484,17 @@
 }
 
 .reviews-pagination a,
-.reviews-pagination span{
+.reviews-pagination span {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
 }
 
-.review-block .col-sm-2{
+.review-block .col-sm-2 {
     position: relative;
 }
 
 @media (min-width: 767px) {
     .review-block .review-block-report,
-    .review-block .review-block-edit{
+    .review-block .review-block-edit {
         position: absolute;
         bottom: 0;
         left: 0.75em;;
@@ -496,35 +510,39 @@
     }
 }
 
-#reviewForm .custom-file input{
+#reviewForm .custom-file input {
     background-color: #fff;
 }
 
 /* End restaurant */
 
-.restaurant-description{
+.restaurant-description {
     text-align: justify;
 }
 
 .blog-card {
     box-shadow: 0 12px 17px rgba(129, 140, 151, 0.1);
 }
+
 .blog-card .blog-image {
     width: 50%;
     height: auto;
     position: relative;
 }
+
 @media only screen and (max-width: 992px) {
     .blog-card .blog-image {
         max-height: 250px;
         width: 100%;
     }
 }
+
 .blog-card .blog-image .blog-thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 @media only screen and (min-width: 992px) {
     .blog-card .blog-image .blog-thumbnail {
         position: absolute;
@@ -532,25 +550,30 @@
         left: 0;
     }
 }
+
 .blog-card .blog-container {
     position: relative;
     flex: 1;
     padding-bottom: 85px !important;
 }
+
 .blog-card .blog-container a:hover {
     text-decoration: none;
     color: #0062cc;
 }
+
 .blog-card .blog-container .blog-category {
     background: rgba(40, 167, 69, 0.1);
     color: #28a745;
 }
+
 .blog-card .blog-container .blog-author {
     height: 40px;
     width: 40px;
     border-radius: 40px;
     margin-right: 10px;
 }
+
 .blog-card .blog-container .blog-footer {
     padding: 15px 30px;
     position: absolute;
@@ -559,22 +582,22 @@
     width: 100%;
 }
 
-.blog-card .text-muted{
-    text-align:justify;
+.blog-card .text-muted {
+    text-align: justify;
 }
 
 .rating-top {
     color: var(--primary);
     margin-right: 0.5em;
     padding-right: 0.5em;
-    font-size: 1.00rem;
+    font-size: 14px;
 }
 
 .rating-top-feat {
-margin-bottom: 5px;
+    margin-bottom: 5px;
     color: var(--primary);
     margin-right: 0.5em;
     padding-right: 0.5em;
-    font-size: 1.00rem;
+    font-size: 11px;
 
 }

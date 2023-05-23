@@ -77,9 +77,9 @@
                                                 <span >{{ $restaurant->name }}</span>
                                                 <div class="rating-top">
                                                     @foreach(range(1,5) as $i)
-                                                        <span class="fa-stack" style="width:1em">
-                                                        <i class="far fa-star fa-stack-1x"></i>
-                                                        @if($restaurant->average_rate >0)
+                                                        <span class="fa-stack">
+                                                            <i class="far fa-star fa-stack-1x"></i>
+                                                            @if($restaurant->average_rate >0)
                                                                 @if($restaurant->average_rate >0.5)
                                                                     <i class="fas fa-star fa-stack-1x"></i>
                                                                 @else
@@ -87,7 +87,7 @@
                                                                 @endif
                                                             @endif
                                                             @php $restaurant->average_rate--; @endphp
-                                                    </span>
+                                                        </span>
                                                     @endforeach
                                                 </div>
                                             </h5>
