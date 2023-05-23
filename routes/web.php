@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RestaurantController;
@@ -231,14 +232,14 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
         ReviewController::class,
         'dismiss_reports',
     ] )->name( 'reviews.dismiss_reports' );
-    Route::get( '/admin/pages/admin-policy', [
+    Route::get( '/admin/pages/configuration', [
         ConfigController::class,
         'show_admin_policy_config',
-    ] )->name( 'admin-policy' );
-    Route::put( '/admin/pages/admin-policy', [
+    ] )->name( 'configuration' );
+    Route::put( '/admin/pages/configuration', [
         ConfigController::class,
         'update_admin_policy_config',
-    ] )->name( 'update.admin-policy' );
+    ] )->name( 'update.configuration' );
     Route::get( '/admin/pages/notifications', [
         NotificationController::class,
         'index'
@@ -247,4 +248,8 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
         NotificationController::class,
         'show_notification',
     ] )->name( 'show-notification' );
+    Route::post( '/admin/pages/configuration/', [
+        FoodTypeController::class,
+        'store',
+    ] )->name( 'store.food_type' );
 } );

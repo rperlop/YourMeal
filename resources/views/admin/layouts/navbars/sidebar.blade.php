@@ -32,10 +32,10 @@
                     <p>{{ __("Restaurants") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'admin-policy') active @endif">
-                <a class="nav-link" href="{{url('/admin/pages/admin-policy')}}">
+            <li class="nav-item @if($activePage == 'configuration') active @endif">
+                <a class="nav-link" href="{{url('/admin/pages/configuration')}}">
                     <i class="nc-icon nc-settings-gear-64"></i>
-                    <p>{{ __("Admin Policy") }}</p>
+                    <p>{{ __("Configuration") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'notifications') active @endif">

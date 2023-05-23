@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Config;
+use App\Models\FoodType;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -19,8 +20,8 @@ class ConfigController extends Controller {
      */
     public function show_admin_policy_config(): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $config = Config::all();
-
-        return view( 'admin.pages.admin-policy', compact( 'config' ) );
+        $food_types = FoodType::all();
+        return view( 'admin.pages.configuration', compact( 'config', 'food_types' ) );
     }
 
     /**
@@ -58,6 +59,6 @@ class ConfigController extends Controller {
               ->update(['value' => $request->input($property)]);
         }
 
-        return redirect()->route( 'admin-policy' )->with( 'success', 'Admin policy configuration updated successfully.' );
+        return redirect()->route( 'configuration' )->with( 'success', 'Admin policy configuration updated successfully.' );
     }
 }

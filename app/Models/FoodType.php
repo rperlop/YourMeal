@@ -11,6 +11,8 @@ class FoodType extends Model {
 
     protected $table = 'food_types';
 
+    public $timestamps = false;
+
     public function restaurant(): BelongsToMany {
         return $this->belongsToMany( Restaurant::class, 'restaurant_has_food_types' );
     }

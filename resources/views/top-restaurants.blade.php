@@ -77,7 +77,7 @@
                                                 <span >{{ $restaurant->name }}</span>
                                                 <div class="rating-top">
                                                     @foreach(range(1,5) as $i)
-                                                        <span class="fa-stack">
+                                                        <span class="fa-stack" style="width:1em">
                                                             <i class="far fa-star fa-stack-1x"></i>
                                                             @if($restaurant->average_rate >0)
                                                                 @if($restaurant->average_rate >0.5)

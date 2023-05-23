@@ -6,6 +6,7 @@ use App\Models\FoodType;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class FoodTypeController extends Controller {
@@ -18,5 +19,24 @@ class FoodTypeController extends Controller {
         $foodTypes = FoodType::all();
 
         return view( 'food_types.index', [ 'foodTypes' => $foodTypes ] );
+    }
+
+    /**
+     * Store a new food type
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse {
+        $request->validate([
+            'name' => 'required|unique:food_types,name',
+        ]);
+
+        $food_type = new FoodType();
+        $food_type->name = $request->input('name');
+        $food_type->save();
+
+        return redirect()->back()->with('success', 'Food type added successfully.');
     }
 }
