@@ -78,19 +78,50 @@
         </div>
 
         <div class="row mb-0">
-            <form method="POST" action="{{ route('user.destroy') }}" id="signUpForm" class="login-sign-up-form" onsubmit="return confirm('Are you sure? You will not be able to recover your account')">
+            <form id="deleteForm" class="login-sign-up-form">
                 @csrf
-                @method('DELETE')
                 <div class="row mb-0">
-                    <p class="text-md">Do you want to remove your account? You won't get back it.</p>
+                    <p class="text-md">Do you want to remove your account? You won't be able to recover your data.</p>
                 </div>
 
                 <div class="col-md-8 offset-md-4">
-                    <button class="btn btn-primary" type="submit">Delete account</button>
+                    <button id="deleteButtonMain" class="btn btn-primary" type="button">Delete account</button>
                 </div>
             </form>
-
         </div>
-    </div>
+
+        <div class="modal fade" id="delete-message" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="strike-message-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delete-message.tittle">Attention!</h5>
+                    </div>
+                    @auth
+                        <div class="modal-body">
+                            Are you sure you want to remove your account? You will not be able to recover your data.
+                        </div>
+                    @endauth
+                    <div class="modal-footer">
+                        <button type="button" id="deleteButtonModal" class="btn btn-secondary">Yes</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#deleteButtonMain').click(function () {
+                    $('#delete-message').modal('show');
+                });
+
+                $('#deleteButtonModal').click(function () {
+                    var deleteForm = $('#deleteForm');
+                    deleteForm.attr('action', "{{ route('user.destroy') }}");
+                    deleteForm.attr('method', 'POST');
+                    deleteForm.submit();
+                });
+            });
+        </script>
 
 @endsection

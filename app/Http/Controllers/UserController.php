@@ -178,7 +178,15 @@ class UserController extends Controller {
 
         $user->save();
 
-        $user->reviews()->delete();
+        $user->notifications()->delete();
+
+        $user->reports()->delete();
+
+        $user->reviews()->each(function ($review) {
+            $review->reports()->delete();
+            $review->images()->delete();
+            $review->delete();
+        });
 
         $user->delete();
 
@@ -290,6 +298,8 @@ class UserController extends Controller {
      * @param         $id
      *
      * @return RedirectResponse
+     *
+     * @throws GuzzleException
      */
     public function admin_update_user( Request $request, $id ): RedirectResponse {
         $user = User::findOrFail( $id );
@@ -433,13 +443,22 @@ class UserController extends Controller {
         $user = User::findOrFail( $id );
 
         $user_food_preferences = $user->user_food_preferences;
+
         $user_food_preferences->schedules()->detach();
         $user_food_preferences->food_types()->detach();
         $user_food_preferences->price_ranges()->detach();
 
         $user->save();
 
-        $user->reviews()->delete();
+        $user->notifications()->delete();
+
+        $user->reports()->delete();
+
+        $user->reviews()->each(function ($review) {
+            $review->reports()->delete();
+            $review->images()->delete();
+            $review->delete();
+        });
 
         $user->delete();
 
@@ -451,7 +470,7 @@ class UserController extends Controller {
     /**
      * Notice strike and banning notifications to a user
      *
-     * @return JsonResponse
+     * @return void
      */
     public function notice_banning_and_strike_notification(): void {
         $user = Auth::user();

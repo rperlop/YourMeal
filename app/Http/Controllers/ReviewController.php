@@ -139,6 +139,8 @@ class ReviewController extends Controller {
 
         $review->reports()->delete();
 
+        $review->notifications()->delete();
+
         foreach ( $review->images as $image ) {
             Storage::delete( $image->url );
             $image->delete();
@@ -168,6 +170,8 @@ class ReviewController extends Controller {
         $review = Review::find( $id );
 
         $review->reports()->delete();
+
+        $review->notifications()->delete();
 
         foreach ( $review->images as $image ) {
             Storage::delete( $image->url );

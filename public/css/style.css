@@ -198,13 +198,13 @@
 }
 
 
-/*** Service ***/
+/*** Box ***/
 .service-item {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
     transition: .5s;
 }
 
-/*** Food Menu ***/
+/*** Top Menu ***/
 .nav-pills .nav-item .active {
     border-bottom: 2px solid var(--primary);
 }
@@ -289,8 +289,7 @@
     margin-right: 10px;
 }
 
-/** register **/
-
+/*** Register ***/
 .login-sign-up-form {
     max-width: 500px;
     background-color: #ffffff;
@@ -406,12 +405,10 @@
 #registerForm .row {
     --bs-gutter-x: 0 !important;
 }
+/*** End Register ***/
 
-/** fin registro **/
 
-
-/* buscador */
-
+/*** Searcher ***/
 .has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
@@ -432,11 +429,9 @@
     background-color: var(--primary);
     border-color: transparent;
 }
-
 /* End searcher */
 
-/* Restaurant */
-
+/*** Restaurant ***/
 .food-type {
     background-color: var(--primary);
     padding: 0.75em;
@@ -514,12 +509,12 @@
     background-color: #fff;
 }
 
-/* End restaurant */
-
 .restaurant-description {
     text-align: justify;
 }
+/*** End restaurant ***/
 
+/*** Feature restaurant ***/
 .blog-card {
     box-shadow: 0 12px 17px rgba(129, 140, 151, 0.1);
 }
@@ -601,7 +596,9 @@
     font-size: 11px;
 
 }
+/*** End feature restaurant ***/
 
+/*** Recommendations text ***/
 #recommendations-text{
     margin-top: 9%;
     margin-bottom: 9%;

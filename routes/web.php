@@ -100,10 +100,10 @@ Route::middleware( [ 'auth' ] )->group( function () {
         UserController::class,
         'update'
     ] )->name( 'user.update' );
-    Route::delete( '/user-data', [
+    Route::match(['delete', 'post'], '/user-data', [
         UserController::class,
         'remove_user'
-    ] )->name( 'user.destroy' );
+    ])->name('user.destroy');
     Route::get( '/user-preferences', [
         UserFoodPreferenceController::class,
         'show_user_food_preferences',
