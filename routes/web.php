@@ -87,6 +87,14 @@ Route::get( '/searcher', [
     SearchController::class,
     'search'
 ] )->name( 'searcher' );
+Route::post('/searcher', [
+    SearchController::class,
+    'search_with_filters'
+])->name('search_with_filters');
+Route::get('/searcher/autocomplete', [
+    SearchController::class,
+    'search_location'
+])->name('search_location_page');
 
 /**
  * Auth routes

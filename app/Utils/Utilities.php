@@ -16,7 +16,7 @@ class Utilities {
      * @return array|null
      * @throws GuzzleException
      */
-    public function get_full_address($lat, $long): ?string {
+    public static function  get_full_address($lat, $long): ?string {
         $client = new Client();
         $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($lat . ',' . $long) . "&key=" . env('OPENCAGE_API_KEY') . "&language=en&pretty=1";
         $response = $client->request('GET', $url);
@@ -37,7 +37,7 @@ class Utilities {
      * @return array|null
      * @throws GuzzleException
      */
-    public function get_lat_long(string $location): ?array {
+    public static function get_lat_long(string $location): ?array {
         $apiKey = env('OPENCAGE_API_KEY');
         $client = new Client();
         $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($location) . "&key=" . $apiKey . "&language=en&pretty=1";
@@ -64,7 +64,7 @@ class Utilities {
      *
      * @return float|int
      */
-    function calculate_distance($latitude1, $longitude1, $latitude2, $longitude2): float|int {
+    public static function calculate_distance($latitude1, $longitude1, $latitude2, $longitude2): float|int {
         $earthRadius = 6371;
 
         $deltaLatitude = deg2rad($latitude2 - $latitude1);

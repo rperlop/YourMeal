@@ -41,12 +41,20 @@ class NotificationController extends Controller
             return view('admin.pages.show-notification', compact('review', 'notification'));
         } else {
             $compulsive_number = Config::where('property', 'compulsive_number')->value('value');
+
             $reports = Report::where('user_id', $notification->user_id)
                              ->where('created_at', '<', $notification->created_at)
                              ->orderBy('created_at', 'desc')
                              ->take($compulsive_number)
                              ->get();
-            return view('admin.pages.show-notification', compact('review', 'notification', 'reports'));
+
+            $reviewIds = $reports->pluck('review_id');
+
+            $reviews = Review::with('user', 'images', 'reports')
+                             ->whereIn('id', $reviewIds)
+                             ->get();
+
+            return view('admin.pages.show-notification', compact('reviews', 'notification', 'reports', 'compulsive_number'));
         }
 
     }

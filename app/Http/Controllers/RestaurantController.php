@@ -118,7 +118,7 @@ class RestaurantController extends Controller {
         $selected_schedules   = $restaurant->schedules()->pluck( 'schedules.id' )->toArray();
         $selected_price_range = $restaurant->price_range_id;
 
-        $location = ( new Utilities )->get_full_address( $restaurant->latitude, $restaurant->longitude );
+        $location = Utilities::get_full_address( $restaurant->latitude, $restaurant->longitude );
 
         return view( 'admin/pages/edit-restaurant' )
             ->with( 'restaurant', $restaurant )
@@ -190,7 +190,7 @@ class RestaurantController extends Controller {
         }
 
         $location = $request['location'];
-        $lat_long = ( new Utilities )->get_lat_long( $location );
+        $lat_long = Utilities::get_lat_long( $location );
         if ( $lat_long == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the address' ] );
         }
@@ -284,7 +284,7 @@ class RestaurantController extends Controller {
         }
 
         $location = $request['location'];
-        $lat_long = ( new Utilities )->get_lat_long( $location );
+        $lat_long = Utilities::get_lat_long( $location );
         if ( $lat_long == null ) {
             return back()->withErrors( [ 'location' => 'It does not exist the address' ] );
         }
@@ -388,7 +388,7 @@ class RestaurantController extends Controller {
         } );
 
         $filtered_restaurants = $filtered_restaurants->sortBy( function ( $restaurant ) use ( $userPreferences ) {
-            $distance       = ( new Utilities )->calculate_distance( $userPreferences->latitude, $userPreferences->longitude, $restaurant->latitude, $restaurant->longitude );
+            $distance       = Utilities::calculate_distance( $userPreferences->latitude, $userPreferences->longitude, $restaurant->latitude, $restaurant->longitude );
             $average_rating = $restaurant->reviews()->avg( 'rate' );
 
             return [ $distance, -$average_rating ];

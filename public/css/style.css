@@ -429,6 +429,124 @@
     background-color: var(--primary);
     border-color: transparent;
 }
+
+.multiselect .dropdown-toggle {
+    background-color: #fff;
+    border: 1px solid lightgrey;
+    text-transform: none;
+}
+
+.custom-select {
+    border-right: none !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.custom-input {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.card-deck{
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    display: flex;
+}
+
+@media (min-width: 576px){
+    .card-deck .card {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-flex: 1;
+        -ms-flex: 1 0 0%;
+        flex: 1 0 0%;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        margin-right: 15px;
+        margin-bottom: 0;
+        margin-left: 15px;
+    }
+}
+
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+
+.card-deck .card {
+    margin-bottom: 15px;
+}
+
+.card-footer {
+    padding: 0.5rem 1rem;
+    background-color: inherit;
+    border-top: none;
+    text-align: end;
+}
+
+.card-text{
+    text-align: justify;
+}
+
+.card-title{
+    display: flex;
+}
+
+.card-title .rating{
+    border: none;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.service-item .bootstrap-select>.dropdown-toggle:after {
+    border: solid currentColor;
+    border-width: 0 0.15em 0.15em 0;
+    display: inline-block;
+    padding: 0.2em;
+    transform: rotate(45deg);
+    color: #666565;
+    margin-right: 0.2em;
+}
+
+.bootstrap-select .dropdown-toggle:focus{
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.25rem rgba(254, 161, 22, 0.25);
+}
+
+.bootstrap-select .bs-ok-default:after {
+    color: var(--primary);
+}
+
+.bootstrap-select>.dropdown-toggle.bs-placeholder{
+    color: #666565;
+}
+
+#filter-search-text:focus{
+    clip-path: inset(-15px -2px -15px -15px);
+}
+
+#search-text:focus{
+    clip-path: inset(-15px -15px -15px 1px);
+}
 /* End searcher */
 
 /*** Restaurant ***/

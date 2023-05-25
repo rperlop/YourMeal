@@ -17,11 +17,27 @@
                                 <div class="review-block-description mb-3">{{ $review->comment }}</div>
                                 <div class="review-block-images">
                                     @foreach ($review->images as $image)
-                                        <a href="{{ asset('storage/img/' . $image->name) }}"
-                                           data-lightbox="photos-{{$review->id}}">
+                                        <a href="#" data-toggle="modal" data-target="#image-modal-{{$image->id}}">
                                             <img class="img-thumbnail mb-2" src="{{ asset('storage/img/' . $image->name) }}"
                                                  alt="{{$image->name}}">
                                         </a>
+
+                                        <!-- Image Modal -->
+                                        <div class="modal fade" id="image-modal-{{$image->id}}" tabindex="-1" role="dialog" aria-labelledby="image-modal-title-{{$image->id}}" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="image-modal-title-{{$image->id}}">{{$image->name}}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img src="{{ asset('storage/img/' . $image->name) }}" class="img-fluid" alt="{{$image->name}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -46,9 +62,8 @@
             <div class="card ">
                 <div class="card-header ">
                     <h4 class="card-title">Reports</h4>
-
-                    @if ($review->reports->count() > 0)
-                        <div class="container">
+                    <div class="container">
+                        @if ($review->reports->count() > 0)
                             <div class="row g-5 align-items-center">
                                 <div class="container container px-5 pt-3">
                                     @foreach ($review->reports as $report)
@@ -58,6 +73,7 @@
                                                     <div class="review-block-date mb-4">User #{{ $report->user_id }} reports:
                                                     </div>
                                                     <div class="d-flex justify-content-between align-items-end">
+                                                        {{ $report->created_at }}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-10">
@@ -77,8 +93,10 @@
                                     <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Dismiss Reports</button>
                                 </form>
                             </div>
-                            @endif
-                        </div>
+                        @else
+                            <p>There are not reports</p>
+                        @endif
+                    </div>
                 </div>
             </div>
             <a href="{{ url('/admin/pages/index-reviews') }}" class="btn btn-success">Go Back</a>
@@ -108,7 +126,7 @@
         <script>
 
             $(document).ready(function () {
-                var formId = null; // Variable para almacenar el ID del formulario a enviar
+                var formId = null;
                 var modalTitle = $('#delete-message-title');
                 var modalMessage = $('#delete-message-body');
 
@@ -116,13 +134,12 @@
                     formId = $(this).data('form-id');
                     var buttonType = $(this).data('button-type');
 
-                    // Actualiza el título y el mensaje del modal según el tipo de botón
                     if (buttonType === 'delete') {
                         modalTitle.text('Attention!');
                         modalMessage.text('Are you sure you want to delete this review?');
                     } else if (buttonType === 'dismiss') {
                         modalTitle.text('Dismiss Reports');
-                        modalMessage.text('Are you sure you want to dismiss the reports for this item?');
+                        modalMessage.text('Are you sure you want to dismiss the reports for this review?');
                     }
 
                     $('#delete-message').modal('show');
@@ -137,9 +154,8 @@
                 });
             });
 
-            // Reinicia el formulario cuando se cierra el modal
             $('#delete-message').on('hidden.bs.modal', function () {
-                formId = null; // Restablece el ID del formulario
+                formId = null;
                 $('#delete-message').find('form').trigger('reset');
             });
 
@@ -150,20 +166,17 @@
                     for (var i = 0; i < files.length; i++) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
-
                             var img = $('<img>', {
                                 src: e.target.result,
                                 class: 'img-thumbnail',
                                 style: 'width: 150px; height: 150px;'
                             });
-
                             $('.image-preview').append(img);
                         }
                         reader.readAsDataURL(files[i]);
                     }
                 });
             });
-
         </script>
 
 @endsection

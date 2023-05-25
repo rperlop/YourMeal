@@ -31,6 +31,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
     <link href="{{asset('lib/lightbox/css/lightbox.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -63,7 +64,7 @@
                 @auth
                     <a href="{{ url('/recommendations') }}" class="nav-item nav-link">Recommendations</a>
                 @endauth
-                <a href="#" class="nav-item nav-link">Search</a>
+                <a href="{{ url('/searcher') }}" class="nav-item nav-link">Search</a>
                 @guest
                     <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
                     <a href="{{ url('/registers') }}" class="nav-item nav-link">Register</a>
@@ -169,6 +170,7 @@
 
 <!-- JavaScript Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
 <script src="{{asset('lib/wow/wow.min.js')}}"></script>
 <script src="{{asset('lib/easing/easing.min.js')}}"></script>
 <script src="{{asset('lib/lightbox/js/lightbox.js')}}"></script>
