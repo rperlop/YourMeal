@@ -117,7 +117,8 @@
                                                 <p>{{ $review->comment }}</p>
                                                 <h5>Reports:</h5>
                                                 <ul>
-                                                    @foreach ($review->reports->take($compulsive_number) as $report)
+                                                    @foreach ($reports as $report)
+                                                        @if($report->review_id == $review->id)
                                                         <p>User #{{ $report->user_id }} reported:</p>
                                                         <li>{{ $report->reason }}</li>
                                                         <form action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
@@ -125,9 +126,9 @@
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#dismiss-modal-{{ $report->id }}">Dismiss</button>                                                        </form>
                                                         <hr>
+                                                        @endif
                                                     @endforeach
                                                 </ul>
-
                                             </div>
                                             <div class="card-footer ">
                                             </div>
@@ -138,20 +139,24 @@
                         </div>
                     </div>
                     <div class="container">
-                        <div class="card ">
-                            <div class="card-header ">
-                                <h4 class="card-title">User #{{ $notification->user_id }} is a potential compulsive user</h4>
-                            </div>
-                        </div>
                         <div class="card-footer ">
                             <form id="dismissReportsForm" action="{{ route('reviews.dismiss_reports', ['id' => $notification->user_id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" data-button-type="dismissReports" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Dismiss Reports</button>
+                                <button type="button" data-button-type="delete" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Dismiss Reports</button>
+                            </form>
+                            <form id="dismissReportsForm" action="{{ route('reviews.dismiss_reports', ['id' => $notification->user_id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" data-button-type="deleteStrike" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Add Strike</button>
+                            </form>
+                            <form id="removeNotificationForm" action="{{ route('remove.notification', ['id' => $notification->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" data-button-type="dismissReports" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="removeNotificationForm">Remove Notification</button>
                             </form>
                         </div>
                     </div>
-
                 @endif
                 <a href="{{ url('/admin/pages/notifications') }}" class="btn btn-success">Go Back</a>
             </div>
@@ -175,32 +180,6 @@
                 </div>
             </div>
 
-            <!-- Modal for Dismiss -->
-            <div class="modal fade" id="dismiss-modal-{{ $report->id }}" tabindex="-1" role="dialog" aria-labelledby="dismiss-modal-title-{{ $report->id }}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="dismiss-modal-title-{{ $report->id }}">Dismiss Report</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to dismiss this report?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <form id="dismissReportForm-{{ $report->id }}" action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="btn btn-danger deleteButton" data-button-type="dismiss" data-toggle="modal" data-target="#dismiss-modal-{{$report->id}}" data-form-id="dismissReportForm-{{$report->id}}">Dismiss</button>
-                            </form>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
             <script>
                 $(document).ready(function () {
                     var formId = null;
@@ -211,16 +190,19 @@
                         if (buttonType === 'delete') {
                             console.log('Button type:', buttonType);
                             $('#delete-message-title').text('Attention!');
-                            $('#delete-message-body').text('Are you sure you want to delete this review?');
+                            $('#delete-message-body').text('Are you sure you want to delete this notification? These reports will continue being on the database ');
                         } else if (buttonType === 'deleteStrike') {
                             console.log('Button type:', buttonType);
-                            $('#delete-message-title').text('Attention!');
-                            $('#delete-message-body').text('Are you sure you want to delete this review and add a strike to the user?');
-                        } else if (buttonType === 'dismissReports' || buttonType === 'dismissReportsForm') {
+                            $('#delete-message-title').text('Add strike');
+                            $('#delete-message-body').text('Are you sure you want to delete these reports, the notification and add a strike to the user?');
+                        } else if (buttonType === 'dismissReports') {
                             console.log('Button type:', buttonType);
                             $('#delete-message-title').text('Dismiss Reports');
-                            $('#delete-message-body').text('Are you sure you want to dismiss the reports for this review?');
-                        }
+                            $('#delete-message-body').text('Are you sure you want to dismiss the reports and the notification?');
+                        } else if (buttonType === 'dismiss' ) {
+                            console.log('Button type:', buttonType);
+                            $('#delete-message-title').text('Dismiss');
+                            $('#delete-message-body').text('Are you sure you want to dismiss this report?');
                         $('#delete-message').modal('show');
                     });
 
@@ -258,6 +240,4 @@
                 });
             </script>
 
-
 @endsection
-

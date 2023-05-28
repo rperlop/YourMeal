@@ -212,13 +212,14 @@ class ReviewController extends Controller {
 
         $review->reports()->delete();
 
+        toastr()->success( 'Reports dismissed.' );
         return redirect()->back();
     }
 
     /**
      * Dismiss a report of a review
      *
-     * @param int $reportId
+     * @param int $report_id
      *
      * @return RedirectResponse
      */
@@ -226,6 +227,7 @@ class ReviewController extends Controller {
         $report = Report::find( $report_id );
 
         $report->delete();
+
         toastr()->success( 'Report dismissed.' );
 
         return redirect()->back();

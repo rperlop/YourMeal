@@ -272,4 +272,8 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
         FoodTypeController::class,
         'store',
     ] )->name( 'store.food_type' );
+    Route::delete( '/admin/pages/notification/{id}/delete', [
+        NotificationController::class,
+        'remove_notification',
+    ] )->name( 'remove.notification' );
 } );

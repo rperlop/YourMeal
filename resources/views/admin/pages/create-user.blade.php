@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="content">
-        <div class="container-fluid data-form">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-xl-7">
                     <div class="card">
                         <div class="card-body">
                             <form method="POST" action="{{route('create.user')}}">
@@ -38,7 +38,7 @@
                                     <div class="form-group">
                                         <label for="role" class="required">Role</label>
                                         <div class="form-floating @error('role') is-invalid @enderror">
-                                            <select class="form-select" id="role" name="role">
+                                            <select class="form-control" id="role" name="role">
                                                 <option value="user">User</option>
                                                 <option value="admin">Admin</option>
                                             </select>
@@ -63,7 +63,7 @@
                                         <p class="text-center mb-4">Food types</p>
                                         <div class="mb-3">
                                             @foreach(array_chunk($food_types->toArray(), 4) as $group)
-                                                <div class="row">
+                                                <div class="row px-4">
                                                     @foreach($group as $food_type)
                                                         <div class="form-check mb-3 col-md-3 @error('food_types') is-invalid @enderror">
                                                             <input class="form-check-input" type="checkbox" name="food_types[]"
@@ -86,7 +86,7 @@
                                     <div id="price-range-container">
                                         <p class="text-center mb-4">Price range</p>
                                         <div class="mb-3">
-                                            <div class="row">
+                                            <div class="row px-4">
                                                 @foreach($price_ranges as $price_range)
                                                     <div class="form-check mb-3 col-md-3 @error('price_ranges') is-invalid @enderror">
                                                         <input class="form-check-input" type="checkbox" name="price_ranges[]"
@@ -107,7 +107,7 @@
                                     <div id="schedule-container">
                                         <p class="text-center mb-4">Schedule</p>
                                         <div class="mb-3">
-                                            <div class="row">
+                                            <div class="row px-4">
                                                 @foreach($schedules as $schedule)
                                                     <div class="form-check mb-3 col-md-3 @error('schedules') is-invalid @enderror">
                                                         <input class="form-check-input" type="checkbox" name="schedules[]"
@@ -129,7 +129,7 @@
                                         <div class="form-group">
                                             <label for="terrace" class="required">Terrace </label>
                                             <div class="form-floating @error('terrace') is-invalid @enderror">
-                                                <select class="form-select" id="terrace" name="terrace">
+                                                <select class="form-control" id="terrace" name="terrace">
                                                     <option value="1">Yes</option>
                                                     <option value="2">No</option>
                                                 </select>

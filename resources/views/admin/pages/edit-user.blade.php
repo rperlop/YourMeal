@@ -12,7 +12,7 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-xl-7">
                     <div class="card">
                         <div class="card-body">
                             <p class="mb-4">User data</p>
@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <label for="role" class="required">Role</label>
                                     <div class="form-floating @error('role') is-invalid @enderror">
-                                        <select class="form-select" id="role" name="role">
+                                        <select class="form-control" id="role" name="role">
                                             <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
                                             <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                                         </select>
@@ -146,7 +146,7 @@
                                 <div class="form-group">
                                     <label for="terrace" class="required">Terrace </label>
                                     <div class="form-floating @error('terrace') is-invalid @enderror">
-                                        <select class="form-select" id="terrace" name="terrace">
+                                        <select class="form-control" id="terrace" name="terrace">
                                             <option value="1" {{ $terrace ? 'selected' : '' }}>Yes</option>
                                             <option value="2" {{ !$terrace ? 'selected' : '' }}>No</option>
                                         </select>
@@ -179,7 +179,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <form id="addStrikeForm_{{ $user->id }}" class="col-12 text-right" action="" method="POST">
+                            <form id="addStrikeForm_{{ $user->id }}" class="mt-2 text-right" action="" method="POST">
                                 @csrf
                                 @method('POST')
                                 <button type="button" class="btn btn-danger addStrikeButton" data-toggle="modal" data-target="#strike-message" data-user-id="{{ $user->id }}" data-form-id="addStrikeForm">Add Strike</button>
@@ -189,26 +189,26 @@
                 </div>
             </div>
 
-                <!-- Modal Strike -->
-                <div class="modal fade" id="strike-message" tabindex="-1" role="dialog" aria-labelledby="strike-message-title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="strike-message-title">Add Strike</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to add a strike to this user?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger addStrikeButtonModal" data-dismiss="modal">Yes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                            </div>
+            <!-- Modal Strike -->
+            <div class="modal fade" id="strike-message" tabindex="-1" role="dialog" aria-labelledby="strike-message-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="strike-message-title">Add Strike</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to add a strike to this user?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger addStrikeButtonModal" data-dismiss="modal">Yes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
             <script>
                 $('#location').autocomplete({

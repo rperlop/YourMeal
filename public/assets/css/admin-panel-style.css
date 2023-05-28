@@ -828,74 +828,6 @@ fieldset[disabled] .btn-danger.active {
     top: 70px;
 }
 
-.table .radio,
-.table .checkbox {
-    position: relative;
-    height: 20px;
-    display: block;
-    width: 20px;
-    margin: 0px 5px;
-    text-align: center;
-}
-
-.table .radio .icons,
-.table .checkbox .icons {
-    left: 5px;
-}
-
-.table > thead > tr > th,
-.table > tbody > tr > th,
-.table > tfoot > tr > th,
-.table > thead > tr > td,
-.table > tbody > tr > td,
-.table > tfoot > tr > td {
-    padding: 12px 8px;
-    vertical-align: middle;
-}
-
-.table > thead > tr > th {
-    border-bottom-width: 1px;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #9A9A9A;
-    font-weight: 400;
-    padding-bottom: 5px;
-    border-top: none !important;
-    border-bottom: none;
-    text-align: left !important;
-}
-
-.table .td-actions .btn {
-    opacity: 0.36;
-    filter: alpha(opacity=36);
-}
-
-.table .td-actions .btn.btn-xs {
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-.table .td-actions {
-    min-width: 90px;
-}
-
-.table > tbody > tr {
-    position: relative;
-}
-
-.table > tbody > tr:hover .td-actions .btn {
-    opacity: 1;
-    filter: alpha(opacity=100);
-}
-
-.table .btn:focus {
-    box-shadow: none !important;
-}
-
-.table-upgrade .table tr td {
-    width: 100%;
-}
-
 .nav .nav-item .nav-link:hover,
 .nav .nav-item .nav-link:focus {
     background-color: transparent;
@@ -1387,17 +1319,6 @@ fieldset[disabled] .btn-danger.active {
 
 .card .ct-label {
     font-size: 1rem !important;
-}
-
-.card .table tbody td:first-child,
-.card .table thead th:first-child {
-    padding-left: 15px;
-}
-
-.card .table tbody td:last-child,
-.card .table thead th:last-child {
-    padding-right: 15px;
-    display: inline-flex;
 }
 
 .card .alert {
@@ -2575,4 +2496,3 @@ License - nucleoapp.com/license/
         position: fixed;
     }
 }
-

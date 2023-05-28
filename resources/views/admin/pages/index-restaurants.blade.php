@@ -8,7 +8,7 @@
                 <div class="col-lg-12">
                     <a href="{{ route('create.restaurant') }}" class="btn btn-primary mb-3">New restaurant</a>
 
-                    <table class="table table-bordered" id="user_table">
+                    <table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%" id="user_table">
                         <thead>
                         <tr>
                             <th>Name</th>

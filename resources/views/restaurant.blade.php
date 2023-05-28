@@ -187,12 +187,14 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-end">
                                         @if (auth()->check() && ($user_review_in_page && !$loop->first) || (auth()->check() && !$user_review_in_page))
-                                            <div class="review-block-report">
-                                                <a href="{{ route('report.report', $review) }}">Report</a>
-                                            </div>
+                                            @if (!empty($review->comment) || count($review->images) > 0)
+                                                <div class="review-block-report">
+                                                    <a href="{{ route('report.report', $review) }}">Report</a>
+                                                </div>
+                                            @endif
                                         @elseif (auth()->check() && $user_review_in_page && $loop->first)
-                                            <div class="review-block-edit"><a href="#" data-bs-toggle="modal"
-                                                                              data-bs-target="#reviewForm">Edit your review</a>
+                                            <div class="review-block-edit">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#reviewForm">Edit your review</a>
                                             </div>
                                         @endif
                                     </div>
