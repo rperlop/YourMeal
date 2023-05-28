@@ -1,22 +1,12 @@
 @extends('admin.layouts.app', ['activePage' => 'restaurants', 'title' => 'Admin - New restaurant', 'navName' => 'New restaurant'])
 
 @section('content')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">New restaurant</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content">
         <div class="container-fluid data-form">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-
                             <form method="POST" action="{{route('create.restaurant')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">

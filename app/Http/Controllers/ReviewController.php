@@ -215,4 +215,19 @@ class ReviewController extends Controller {
         return redirect()->back();
     }
 
+    /**
+     * Dismiss a report of a review
+     *
+     * @param int $reportId
+     *
+     * @return RedirectResponse
+     */
+    public function dismiss_report( int $report_id ): RedirectResponse {
+        $report = Report::find( $report_id );
+
+        $report->delete();
+        toastr()->success( 'Report dismissed.' );
+
+        return redirect()->back();
+    }
 }

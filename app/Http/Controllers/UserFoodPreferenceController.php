@@ -123,7 +123,9 @@ class UserFoodPreferenceController extends Controller {
 
         $user_food_preferences->save();
 
-        return redirect()->route( 'user-preferences' )->with( 'success', 'Successful update' );
+        toastr()->success( 'Successful update.' );
+
+        return redirect()->route( 'user-preferences' );
     }
 
 }

@@ -167,10 +167,9 @@
                                         </span>
                                     @endif
                                 </div>
-
                                 <div class="row d-print-none mt-2">
                                     <div class="col-12 text-right">
-                                        <a class="btn btn-danger" href="{{url( '/admin/pages/index-users')}}">
+                                        <a class="btn btn-success" href="{{url( '/admin/pages/index-users')}}">
                                             <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                                             Go back
                                         </a>
@@ -179,12 +178,37 @@
                                         </button>
                                     </div>
                                 </div>
-
+                            </form>
+                            <form id="addStrikeForm_{{ $user->id }}" class="col-12 text-right" action="" method="POST">
+                                @csrf
+                                @method('POST')
+                                <button type="button" class="btn btn-danger addStrikeButton" data-toggle="modal" data-target="#strike-message" data-user-id="{{ $user->id }}" data-form-id="addStrikeForm">Add Strike</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+
+                <!-- Modal Strike -->
+                <div class="modal fade" id="strike-message" tabindex="-1" role="dialog" aria-labelledby="strike-message-title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="strike-message-title">Add Strike</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to add a strike to this user?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger addStrikeButtonModal" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             <script>
                 $('#location').autocomplete({
@@ -202,6 +226,25 @@
                     },
                     minLength: 3,
                     delay: 250
+                });
+
+                $('.addStrikeButton').click(function () {
+                    var userId = $(this).data('user-id');
+                    var addStrikeButtonModal = document.querySelector('.addStrikeButtonModal');
+
+                    addStrikeButtonModal.setAttribute('data-user-id', userId);
+
+                    var addStrikeMessageModal = new bootstrap.Modal(document.querySelector('#strike-message'));
+                    addStrikeMessageModal.show();
+                });
+
+                document.querySelector('.addStrikeButtonModal').addEventListener('click', function () {
+                    var userId = this.getAttribute('data-user-id');
+                    var addStrikeForm = document.querySelector('#addStrikeForm_' + userId);
+
+                    addStrikeForm.action = "{{ route('admin.add_strike.user', ['id' => ':id']) }}".replace(':id', userId);
+                    addStrikeForm.setAttribute('method', 'POST');
+                    addStrikeForm.submit();
                 });
             </script>
 @endsection

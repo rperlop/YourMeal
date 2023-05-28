@@ -1,5 +1,5 @@
 <div class="container-xxl py-5">
-    <div class="container">
+    <div class="container bg-white">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
             <h5 class="section-title ff-secondary text-center text-primary fw-normal">Top</h5>
             <h1 class="mb-5">Most Popular Restaurants</h1>
@@ -32,13 +32,13 @@
                             <div class="col-lg-6">
                                 <div class="d-flex align-items-center">
                                     <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
-                                        <img class="flex-shrink-0 img-fluid rounded" src="{{ asset('storage/' . $restaurant->main_image_url)}}" alt="{{ $restaurant->name }}" style="width: 80px;">
+                                        <img class="flex-shrink-0 img-fluid rounded top-restaurants-img" src="{{ asset('storage/' . $restaurant->main_image_url)}}" alt="{{ $restaurant->name }}">
                                     </a>
                                     <div class="w-100 d-flex flex-column text-start ps-4">
                                         <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
-                                            <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                                <span>{{ $restaurant->name }}</span>
-                                                <div class="rating-top">
+                                            <h5 class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                                <span class="flex-grow-1 flex-shrink-1" style="max-width: calc(100% - 85px)">{{ $restaurant->name }}</span>
+                                                <div class="rating-top" style="width: 85px">
                                                 @foreach(range(1,5) as $i)
                                                     <span class="fa-stack" style="width:1em">
                                                         <i class="far fa-star fa-stack-1x"></i>
@@ -69,13 +69,13 @@
                             <div class="col-lg-6">
                                 <div class="d-flex align-items-center">
                                     <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
-                                        <img class="flex-shrink-0 img-fluid rounded" src="{{ asset('storage/' . $restaurant->main_image_url)}}" alt="{{ $restaurant->name }}" style="width: 80px;">
+                                        <img class="flex-shrink-0 img-fluid rounded top-restaurants-img" src="{{ asset('storage/' . $restaurant->main_image_url)}}" alt="{{ $restaurant->name }}">
                                     </a>
                                     <div class="w-100 d-flex flex-column text-start ps-4">
                                         <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
-                                            <h5 class="d-flex justify-content-between border-bottom pb-2">
-                                                <span >{{ $restaurant->name }}</span>
-                                                <div class="rating-top">
+                                            <h5 class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                                <span class="flex-grow-1 flex-shrink-1" style="max-width: calc(100% - 85px)">{{ $restaurant->name }}</span>
+                                                <div class="rating-top" style="width: 85px">
                                                     @foreach(range(1,5) as $i)
                                                         <span class="fa-stack" style="width:1em">
                                                             <i class="far fa-star fa-stack-1x"></i>

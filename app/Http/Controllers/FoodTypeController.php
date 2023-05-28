@@ -37,6 +37,8 @@ class FoodTypeController extends Controller {
         $food_type->name = $request->input('name');
         $food_type->save();
 
-        return redirect()->back()->with('success', 'Food type added successfully.');
+        toastr()->success( 'Food type added successfully.' );
+
+        return redirect()->back();
     }
 }

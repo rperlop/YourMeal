@@ -20,6 +20,7 @@ use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 Auth::routes();
 
@@ -39,6 +40,9 @@ Route::get( '/', function () {
 
 
     $featured_restaurant = Restaurant::whereNotNull('featured_id')->first();
+    $truncated_description = Str::limit($featured_restaurant->description, 100, '...');
+    $featured_restaurant->truncated_description = $truncated_description;
+
     $average_rate_feat_rest = $featured_restaurant->reviews()->avg('rate');
     $config = Config::all();
 
@@ -83,11 +87,11 @@ Route::get( '/restaurant/{id}', [
     RestaurantController::class,
     'show'
 ] )->name( 'restaurant' );
-Route::get( '/searcher', [
+Route::get('/searcher', [
     SearchController::class,
     'search'
-] )->name( 'searcher' );
-Route::post('/searcher', [
+])->name('searcher');
+Route::get('/advanced-search', [
     SearchController::class,
     'search_with_filters'
 ])->name('search_with_filters');
@@ -181,6 +185,10 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
         UserController::class,
         'admin_remove_user',
     ] )->name( 'admin.destroy.user' );
+    Route::post( '/admin/pages/edit-user/{id}', [
+        UserController::class,
+        'add_strike',
+    ] )->name( 'admin.add_strike.user' );
     Route::get( '/admin/pages/index-restaurants', [
         RestaurantController::class,
         'index',
@@ -240,6 +248,10 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
         ReviewController::class,
         'dismiss_reports',
     ] )->name( 'reviews.dismiss_reports' );
+    Route::delete( '/reviews/dismiss-report/{id}', [
+        ReviewController::class,
+        'dismiss_report',
+    ] )->name( 'reviews.dismiss_report' );
     Route::get( '/admin/pages/configuration', [
         ConfigController::class,
         'show_admin_policy_config',

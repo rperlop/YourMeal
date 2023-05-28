@@ -7,7 +7,6 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-
                             <form method="POST" action="{{route('create.user')}}">
                                 @csrf
                                 <div class="form-group">

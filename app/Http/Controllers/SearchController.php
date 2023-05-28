@@ -24,8 +24,41 @@ class SearchController extends Controller
      *
      * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
-    public function search(): \Illuminate\Foundation\Application|View|Factory|Application
+    public function search(Request $request): \Illuminate\Foundation\Application|View|Factory|Application
     {
+        if ($request->filled('search_location_input')) {
+            $search_text_value = $request->input('search_location_input');
+            $lat_long_search = Utilities::get_lat_long($search_text_value);
+            $longitude = $lat_long_search['longitude'];
+            $latitude = $lat_long_search['latitude'];
+
+            $results = Restaurant::All();
+            $results = $results->map(function ($restaurant) use ($latitude, $longitude) {
+                $distance = Utilities::calculate_distance($latitude, $longitude, $restaurant->latitude, $restaurant->longitude);
+                $restaurant->distance = number_format($distance, 2);
+                return $restaurant;
+            });
+
+            $results = $results->sortBy('distance');
+
+            $per_page = 9;
+            $page = $request->query('page', 1);
+
+            $paginated_results = new LengthAwarePaginator(
+                $results->forPage($page, $per_page),
+                $results->count(),
+                $per_page,
+                $page,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+
+            $has_results = true;
+        } else {
+            $has_results = false;
+            $paginated_results = null;
+        }
+
+
         $food_types = FoodType::All();
 
         $schedules = Schedule::all();
@@ -36,7 +69,10 @@ class SearchController extends Controller
             'food_types' => $food_types,
             'schedules' => $schedules,
             'price_ranges' => $price_ranges,
-            'is_get' => true
+            'is_get' => true,
+            'has_results' => $has_results,
+            'restaurants' => $paginated_results,
+            'request' => $request
         ];
 
         return view('searcher', $data);
@@ -174,7 +210,8 @@ class SearchController extends Controller
             'food_types' => $food_types,
             'schedules' => $schedules,
             'price_ranges' => $price_ranges,
-            'restaurants' => $paginated_results
+            'restaurants' => $paginated_results,
+            'request' => $request
         ];
 
         return view('searcher', $data);

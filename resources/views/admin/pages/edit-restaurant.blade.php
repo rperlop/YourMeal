@@ -1,25 +1,8 @@
-@extends('admin.layouts.app', ['activePage' => 'restaurants', 'title' => 'Admin - Edit restaurant', 'navName' => 'New restaurant'])
+@extends('admin.layouts.app', ['activePage' => 'restaurants', 'title' => 'Admin - Edit restaurant', 'navName' => 'Edit restaurant'])
 
 @section('content')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Edit restaurant</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content">
         <div class="container-fluid data-form">
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;&times;</span>
-                    </button>
-                </div>
-            @endif
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card">

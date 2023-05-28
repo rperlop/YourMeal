@@ -290,7 +290,9 @@ class UserController extends Controller {
             $user_food_preferences->schedules()->sync( $request['schedules'] );
         }
 
-        return redirect()->route( 'admin.index.users' )->with( 'success', 'User created' );
+        toastr()->success( 'User created.' );
+
+        return redirect()->route( 'admin.index.users' );
     }
 
     /**
@@ -405,7 +407,9 @@ class UserController extends Controller {
 
         $user_food_preferences->save();
 
-        return redirect()->route( 'admin.edit.user', $user->id )->with( 'success', 'Changes are saved.' );
+        toastr()->success( 'Changes are saved.' );
+
+        return redirect()->route( 'admin.edit.user', $user->id );
     }
 
     /**
@@ -466,7 +470,9 @@ class UserController extends Controller {
 
         $user_food_preferences->delete();
 
-        return redirect()->route( 'admin.index.users' )->with( 'success', 'User removed' );
+        toastr()->success( 'User removed.' );
+
+        return redirect()->route( 'admin.index.users' );
     }
 
     /**
@@ -484,5 +490,22 @@ class UserController extends Controller {
             $user->banned = true;
             $user->save();
         }
+    }
+
+    /**
+     * Add a strike to a user
+     *
+     * @param int $id
+     *
+     * @return void
+     */
+    public function add_strike(int $id) {
+        $user = User::findOrFail( $id );
+        $user->strikes++;
+        $user->notify = 1;
+        $user->save();
+
+        toastr()->success( 'Strike added.' );
+        return redirect()->route( 'admin.edit.user', $user->id );
     }
 }

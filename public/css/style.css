@@ -408,7 +408,7 @@
 /*** End Register ***/
 
 
-/*** Searcher ***/
+/* Searcher */
 .has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
@@ -447,34 +447,6 @@
     border-bottom-left-radius: 0 !important;
 }
 
-.card-deck{
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-    display: flex;
-}
-
-@media (min-width: 576px){
-    .card-deck .card {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-flex: 1;
-        -ms-flex: 1 0 0%;
-        flex: 1 0 0%;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        margin-right: 15px;
-        margin-bottom: 0;
-        margin-left: 15px;
-    }
-}
-
 .card {
     position: relative;
     display: -webkit-box;
@@ -490,10 +462,6 @@
     background-clip: border-box;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 0.25rem;
-}
-
-.card-deck .card {
-    margin-bottom: 15px;
 }
 
 .card-footer {
@@ -546,6 +514,33 @@
 
 #search-text:focus{
     clip-path: inset(-15px -15px -15px 1px);
+}
+
+.hidden {
+    display: none;
+}
+
+.results-row .card{
+    height: 100%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.results-row .card-footer{
+    display: flex;
+    align-items: center;
+}
+
+.results-row .card-footer .rating{
+    border-right: none;
+}
+
+.no-results{
+    text-align: center;
 }
 /* End searcher */
 
@@ -634,7 +629,8 @@
 
 /*** Feature restaurant ***/
 .blog-card {
-    box-shadow: 0 12px 17px rgba(129, 140, 151, 0.1);
+    box-shadow: 0px 12px 17px rgba(129, 140, 151, 0.1);
+    border: 1px solid #ebebeb;
 }
 
 .blog-card .blog-image {
@@ -652,7 +648,7 @@
 
 .blog-card .blog-image .blog-thumbnail {
     width: 100%;
-    height: 100%;
+    height: 250px;
     object-fit: cover;
 }
 
@@ -668,6 +664,7 @@
     position: relative;
     flex: 1;
     padding-bottom: 85px !important;
+    max-height: 250px;
 }
 
 .blog-card .blog-container a:hover {
@@ -720,4 +717,11 @@
 #recommendations-text{
     margin-top: 9%;
     margin-bottom: 9%;
+}
+
+/*** Top Restaurants ***/
+.top-restaurants-img{
+    width: 120px;
+    height: 75px;
+    object-fit: cover;
 }

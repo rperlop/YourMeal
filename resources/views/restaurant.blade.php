@@ -4,13 +4,11 @@
 
 @section('content')
 
-
     <div class="container-xxl py-5 bg-dark hero-header mb-5">
         <div class="container text-center my-5 pt-5 pb-4">
             <h1 class="display-3 text-white mb-3 animated slideInDown">Restaurant</h1>
         </div>
     </div>
-
 
     <div class="container-xxl bg-white p-0">
         <div class="container">
@@ -157,14 +155,11 @@
                                         <button type="submit" class="btn btn-primary float-end">Submit</button>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             @endif
-
 
             <div class="row g-5 align-items-center">
                 <div class="container container px-5 pt-3">

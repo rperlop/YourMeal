@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 use App\Models\User;
-use App\Models\UserFoodPreference;
 use App\Utils\Utilities;
 use App\Models\FoodType;
 use App\Models\PriceRange;
@@ -17,7 +17,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -226,7 +225,9 @@ class RestaurantController extends Controller {
             $restaurant->schedules()->sync( $request['schedules'] );
         }
 
-        return redirect()->route( 'admin.index.restaurants' )->with( 'success', 'Restaurant created' );
+        toastr()->success( 'Restaurant created.' );
+
+        return redirect()->route( 'admin.index.restaurants' );
     }
 
     /**
@@ -315,7 +316,9 @@ class RestaurantController extends Controller {
         $restaurant->food_types()->sync( $request['food_types'] );
         $restaurant->schedules()->sync( $request['schedules'] );
 
-        return redirect()->route( 'update.restaurant', $restaurant->id )->with( 'success', 'Restaurant updated' );
+        toastr()->success( 'Restaurant updated.' );
+
+        return redirect()->route( 'update.restaurant', $restaurant->id );
     }
 
     /**
@@ -336,7 +339,9 @@ class RestaurantController extends Controller {
 
         $restaurant->delete();
 
-        return redirect()->route( 'admin.index.restaurants' )->with( 'success', 'Restaurant removed' );
+        toastr()->success( 'Restaurant removed.' );
+
+        return redirect()->route( 'admin.index.restaurants' );
     }
 
     /**
@@ -344,7 +349,7 @@ class RestaurantController extends Controller {
      *
      * @return \Illuminate\Contracts\Foundation\Application|Application|Factory|View
      */
-    function get_recommended_restaurants(): View|Factory|Application|\Illuminate\Contracts\Foundation\Application {
+    function get_recommended_restaurants(Request $request): View|Factory|Application|\Illuminate\Contracts\Foundation\Application {
         $userId          = Auth::id();
         $user            = User::find( $userId );
         $userPreferences = $user->user_food_preferences;
@@ -397,9 +402,22 @@ class RestaurantController extends Controller {
         $filtered_restaurants->each( function ( $restaurant ) {
             $average_rating             = $restaurant->reviews()->avg( 'rate' );
             $restaurant->average_rating = $average_rating;
+            $truncated_description = Str::limit($restaurant->description, 100, '...');
+            $restaurant->truncated_description = $truncated_description;
         } );
 
-        return view( '/recommendations', compact( 'filtered_restaurants' ) );
+        $per_page = 6;
+        $page = $request->query('page', 1);
+
+        $paginated_results = new LengthAwarePaginator(
+            $filtered_restaurants->forPage($page, $per_page),
+            $filtered_restaurants->count(),
+            $per_page,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return view( '/recommendations', compact( 'paginated_results' ) );
     }
 }
 

@@ -103,7 +103,9 @@ class ReportController extends Controller {
             $notification->save();
         }
 
-        return redirect( '/restaurant/'. $restaurant )->with('success', 'Report submitted successfully.');
+        toastr()->success( 'Report submitted successfully.' );
+
+        return redirect( '/restaurant/'. $restaurant );
 
     }
 

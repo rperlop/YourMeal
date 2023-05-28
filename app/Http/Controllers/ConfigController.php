@@ -59,6 +59,8 @@ class ConfigController extends Controller {
               ->update(['value' => $request->input($property)]);
         }
 
-        return redirect()->route( 'configuration' )->with( 'success', 'Admin policy configuration updated successfully.' );
+        toastr()->success( 'Configuration updated successfully.' );
+
+        return redirect()->route( 'configuration' );
     }
 }
