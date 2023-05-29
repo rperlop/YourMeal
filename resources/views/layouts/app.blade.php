@@ -108,7 +108,7 @@
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
-                            <a href="mailto:info@yourmeal.com">Contact</a>
+                            <a href="mailto:yourmealweb@gmail.com">Contact</a>
                         </div>
                     </div>
                 </div>
