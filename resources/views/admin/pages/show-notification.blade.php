@@ -11,7 +11,7 @@
                         <div class="review-block">
                             <div class="row service-item p-3 mb-4">
                                 <div class="col-sm-2">
-                                    <div class="review-block-date mb-4">User #{{ $review->user_id }} reviewed the restaurant #{{ $review->restaurant_id }}:
+                                    <div class="review-block-date mb-4"><strong>User #{{ $review->user_id }} reviewed the restaurant #{{ $review->restaurant_id }}:</strong>
                                     </div>
                                 </div>
                                 <div class="col-sm-10">
@@ -71,7 +71,7 @@
                                             <div class="review-block">
                                                 <div class="row service-item p-3 mb-4">
                                                     <div class="col-sm-2">
-                                                        <div class="review-block-date mb-4">User #{{ $report->user_id }} reports:
+                                                        <div class="review-block-date mb-4"><strong>User #{{ $report->user_id }} reports:</strong>
                                                         </div>
                                                         <div class="d-flex justify-content-between align-items-end">
                                                             {{ $report->created_at }}
@@ -118,7 +118,7 @@
                                                 <h5><strong>REPORTS:</strong></h5>
                                                     @foreach ($reports as $report)
                                                         @if($report->review_id == $review->id)
-                                                        <p><strong>User #{{ $report->user_id }} reported:</strong></p>
+                                                        <p><strong>User #{{ $report->user_id }} reported at {{$report->created_at}}:</strong></p>
                                                         <li>{{ $report->reason }}</li>
                                                         <form action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
                                                             @csrf
