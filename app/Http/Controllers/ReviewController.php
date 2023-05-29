@@ -200,36 +200,7 @@ class ReviewController extends Controller {
         return view( 'admin.pages.index-reviews', compact( 'reviews' ) );
     }
 
-    /**
-     * Dismiss the reports of a review
-     *
-     * @param integer $id
-     *
-     * @return RedirectResponse
-     */
-    public function dismiss_reports( int $id ): RedirectResponse {
-        $review = Review::find( $id );
 
-        $review->reports()->delete();
 
-        toastr()->success( 'Reports dismissed.' );
-        return redirect()->back();
-    }
 
-    /**
-     * Dismiss a report of a review
-     *
-     * @param int $report_id
-     *
-     * @return RedirectResponse
-     */
-    public function dismiss_report( int $report_id ): RedirectResponse {
-        $report = Report::find( $report_id );
-
-        $report->delete();
-
-        toastr()->success( 'Report dismissed.' );
-
-        return redirect()->back();
-    }
 }

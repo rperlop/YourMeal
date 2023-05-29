@@ -245,11 +245,11 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
         'delete_with_strike',
     ] )->name( 'reviews.delete_with_strike' );
     Route::delete( '/reviews/{id}/dismiss-reports', [
-        ReviewController::class,
+        ReportController::class,
         'dismiss_reports',
     ] )->name( 'reviews.dismiss_reports' );
     Route::delete( '/reviews/dismiss-report/{id}', [
-        ReviewController::class,
+        ReportController::class,
         'dismiss_report',
     ] )->name( 'reviews.dismiss_report' );
     Route::get( '/admin/pages/configuration', [
@@ -276,4 +276,12 @@ Route::middleware( [ 'auth', 'admin' ] )->group( function () {
         NotificationController::class,
         'remove_notification',
     ] )->name( 'remove.notification' );
+    Route::post( '/admin/pages/notification/{id}/delete/strike', [
+        NotificationController::class,
+        'remove_notification_and_reports_adding_strike',
+    ] )->name( 'remove.notification.reports.strike' );
+    Route::post( '/admin/pages/notification/{id}/delete/reports', [
+        NotificationController::class,
+        'remove_notification_and_reports',
+    ] )->name( 'remove.notification.reports' );
 } );

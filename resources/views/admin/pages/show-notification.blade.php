@@ -49,12 +49,12 @@
                             <form id="deleteReviewForm" action="{{ route('reviews.delete', ['id' => $review->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-danger deleteButton" data-button-type="delete" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewForm">Delete Review</button>
+                                <button type="button" class="btn btn-danger deleteButton" data-button-type="deleteReview" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewForm">Delete Review</button>
                             </form>
                             <form id="deleteReviewWithStrikeForm" action="{{ route('reviews.delete_with_strike', ['id' => $review->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-danger deleteButton" data-button-type="deleteStrike" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewWithStrikeForm">Delete Review with Strike</button>
+                                <button type="button" class="btn btn-danger deleteButton" data-button-type="deleteReviewStrike" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewWithStrikeForm">Delete Review with Strike</button>
                             </form>
                         </div>
                     </div>
@@ -88,9 +88,9 @@
                                 </div>
 
                                 <div class="card-footer ">
-                                    <form id="dismissReportsForm" action="{{ route('reviews.dismiss_reports', ['id' => $review->id]) }}" method="POST">
+                                    <form id="dismissReportsForm" action="{{ route('remove.notification.reports', ['id' => $notification->id]) }}" method="POST">
                                         @csrf
-                                        @method('DELETE')
+                                        @method('POST')
                                         <button type="button" class="btn btn-danger deleteButton" data-button-type="dismissReports" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Dismiss Reports</button>
                                     </form>
                                 </div>
@@ -111,20 +111,20 @@
                                     <div class="review">
                                         <div class="card ">
                                             <div class="card-header ">
-                                                <h5>User #{{ $review->user->id }} on
-                                                    <a href="{{ url('admin/pages/show-review/') }}/{{ $review->id }}">review #{{ $review->id }}</a>
+                                                 <h5> <strong>User #{{ $review->user->id }} on
+                                                    <a href="{{ url('admin/pages/show-review/') }}/{{ $review->id }}">review #{{ $review->id }}</a></strong>
                                                 </h5>
-                                                <p>{{ $review->comment }}</p>
-                                                <h5>Reports:</h5>
-                                                <ul>
+                                                <p>           {{ $review->comment }}</p>
+                                                <h5><strong>REPORTS:</strong></h5>
                                                     @foreach ($reports as $report)
                                                         @if($report->review_id == $review->id)
-                                                        <p>User #{{ $report->user_id }} reported:</p>
+                                                        <p><strong>User #{{ $report->user_id }} reported:</strong></p>
                                                         <li>{{ $report->reason }}</li>
                                                         <form action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#dismiss-modal-{{ $report->id }}">Dismiss</button>                                                        </form>
+                                                            <button type="submit" class="btn btn-danger deleteButton" data-button-type="dismiss" data-toggle="modal" data-target="#dismiss-modal-{{ $report->id }}">Dismiss</button>
+                                                        </form>
                                                         <hr>
                                                         @endif
                                                     @endforeach
@@ -139,26 +139,27 @@
                         </div>
                     </div>
                     <div class="container">
-                        <div class="card-footer ">
-                            <form id="dismissReportsForm" action="{{ route('reviews.dismiss_reports', ['id' => $notification->user_id]) }}" method="POST">
+
+                            <form id="dismissReportsForm" action="{{ route('remove.notification.reports', ['id' => $notification->id]) }}" method="POST">
                                 @csrf
-                                @method('DELETE')
-                                <button type="button" data-button-type="delete" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Dismiss Reports</button>
+                                @method('POST')
+                                <button type="button" data-button-type="delete" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Remove Notification and Reports</button>
                             </form>
-                            <form id="dismissReportsForm" action="{{ route('reviews.dismiss_reports', ['id' => $notification->user_id]) }}" method="POST">
+                            <form id="dismissReportsStrikeForm" action="{{ route('remove.notification.reports.strike', ['id' => $notification->id]) }}" method="POST">
                                 @csrf
-                                @method('DELETE')
-                                <button type="button" data-button-type="deleteStrike" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Add Strike</button>
+                                @method('POST')
+                                <button type="button" data-button-type="deleteStrike" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsStrikeForm">Add Strike</button>
                             </form>
                             <form id="removeNotificationForm" action="{{ route('remove.notification', ['id' => $notification->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" data-button-type="dismissReports" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="removeNotificationForm">Remove Notification</button>
+                                <button type="button" data-button-type="dismissNotification" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="removeNotificationForm">Remove Notification</button>
                             </form>
-                        </div>
                     </div>
                 @endif
+                <div class="container">
                 <a href="{{ url('/admin/pages/notifications') }}" class="btn btn-success">Go Back</a>
+                </div>
             </div>
 
             <!-- Modal -->
@@ -190,19 +191,32 @@
                         if (buttonType === 'delete') {
                             console.log('Button type:', buttonType);
                             $('#delete-message-title').text('Attention!');
-                            $('#delete-message-body').text('Are you sure you want to delete this notification? These reports will continue being on the database ');
+                            $('#delete-message-body').text('Are you sure you want to delete this notification and its reports? ');
                         } else if (buttonType === 'deleteStrike') {
                             console.log('Button type:', buttonType);
                             $('#delete-message-title').text('Add strike');
                             $('#delete-message-body').text('Are you sure you want to delete these reports, the notification and add a strike to the user?');
-                        } else if (buttonType === 'dismissReports') {
+                        } else if (buttonType === 'dismissNotification') {
                             console.log('Button type:', buttonType);
-                            $('#delete-message-title').text('Dismiss Reports');
-                            $('#delete-message-body').text('Are you sure you want to dismiss the reports and the notification?');
-                        } else if (buttonType === 'dismiss' ) {
+                            $('#delete-message-title').text('Delete Notification');
+                            $('#delete-message-body').text('Are you sure you want to delete this notification? These reports will continue being on the database');
+                        } else if (buttonType === 'dismiss') {
                             console.log('Button type:', buttonType);
                             $('#delete-message-title').text('Dismiss');
                             $('#delete-message-body').text('Are you sure you want to dismiss this report?');
+                        } else if (buttonType === 'deleteReview') {
+                            console.log('Button type:', buttonType);
+                            $('#delete-message-title').text('Delete the review');
+                            $('#delete-message-body').text('Are you sure you want to delete this review?');
+                        } else if (buttonType === 'deleteReviewStrike') {
+                            console.log('Button type:', buttonType);
+                            $('#delete-message-title').text('Delete this review');
+                            $('#delete-message-body').text('Are you sure you want to delete this review and add a strike to the user?');
+                        } else if (buttonType === 'dismissReports') {
+                            console.log('Button type:', buttonType);
+                            $('#delete-message-title').text('Dismiss Reports');
+                            $('#delete-message-body').text('Are you sure you want to dismiss these reports?');
+                        }
                         $('#delete-message').modal('show');
                     });
 
@@ -232,12 +246,13 @@
                                         style: 'width: 150px; height: 150px;'
                                     });
                                     $('.image-preview').append(img);
-                                }
+                                };
                                 reader.readAsDataURL(files[i]);
                             }
                         });
                     });
                 });
             </script>
+
 
 @endsection

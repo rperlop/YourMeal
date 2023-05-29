@@ -6,11 +6,11 @@
         <div class="container">
             <div class="card ">
                 <div class="card-header ">
-                    <h4 class="card-title">Review #{{ $review->id }}</h4>
+                    <h4 class="card-title">REVIEW #{{ $review->id }}</h4>
                     <div class="review-block">
                         <div class="row service-item p-3 mb-4">
                             <div class="col-sm-2">
-                                <div class="review-block-date mb-4">User #{{ $review->user_id }} reviewed the restaurant #{{ $review->restaurant_id }}:
+                                <div class="review-block-date mb-4"><strong>User #{{ $review->user_id }} reviewed the restaurant #{{ $review->restaurant_id }}:</strong>
                                 </div>
                             </div>
                             <div class="col-sm-10">
@@ -61,7 +61,7 @@
 
             <div class="card ">
                 <div class="card-header ">
-                    <h4 class="card-title">Reports</h4>
+                    <h4 class="card-title"><b>REPORTS</b></h4>
                     <div class="container">
                         @if ($review->reports->count() > 0)
                             <div class="row g-5 align-items-center">
@@ -70,7 +70,7 @@
                                         <div class="review-block">
                                             <div class="row service-item p-3 mb-4">
                                                 <div class="col-sm-2">
-                                                    <div class="review-block-date mb-4">User #{{ $report->user_id }} reports:
+                                                    <div class="review-block-date mb-4"> <b>User #{{ $report->user_id }} reports: </b>
                                                     </div>
                                                     <div class="d-flex justify-content-between align-items-end">
                                                         {{ $report->created_at }}
@@ -94,7 +94,7 @@
                                 </form>
                             </div>
                         @else
-                            <p>There are not reports</p>
+                            <p>There are no reports</p>
                         @endif
                     </div>
                 </div>

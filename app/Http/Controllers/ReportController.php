@@ -57,16 +57,17 @@ class ReportController extends Controller {
      *
      * @return Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
      */
-    public function store( Request $request ): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application {
-        $validator = Validator::make( $request->all(), [
+    public function store(Request $request): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    {
+        $validator = Validator::make($request->all(), [
             'reason' => 'required|max:1500',
         ], [
-            'first_name.required' => 'The reason is mandatory.',
-            'first_name.max'      => 'The reason can not have more than 1500 characters.',
-        ] );
+            'reason.required' => 'The reason is mandatory.',
+            'reason.max'      => 'The reason cannot have more than 1500 characters.',
+        ]);
 
-        if ( $validator->fails() ) {
-            return back()->withErrors( $validator )
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
                          ->withInput();
         }
 
@@ -77,12 +78,15 @@ class ReportController extends Controller {
         $restaurant = $request->restaurant_id;
         $report->save();
 
-        $review_reports_count = Report::where('review_id', $request->review_id)->count();
         $reports_min_number = Config::where('property', 'reports_min_number')->value('value');
         $review = Review::find($request->review_id);
         $user_id = $review->user_id;
 
-        if ($review_reports_count == $reports_min_number) {
+        $unique_user_reports_count = Report::where('review_id', $request->review_id)
+                                           ->distinct('user_id')
+                                           ->count('user_id');
+
+        if ($unique_user_reports_count == $reports_min_number) {
             $notification = new Notification();
             $notification->type = 'reported_review';
             $notification->review_id = $request->review_id;
@@ -91,8 +95,8 @@ class ReportController extends Controller {
         }
 
         $user_reports_count = Report::where('user_id', $report->user_id)
-                                  ->where('created_at', '>=', now()->subHour())
-                                  ->count();
+                                    ->where('created_at', '>=', now()->subHour())
+                                    ->count();
 
         $max_reports_per_user = Config::where('property', 'compulsive_number')->value('value');
 
@@ -103,23 +107,26 @@ class ReportController extends Controller {
             $notification->save();
         }
 
-        toastr()->success( 'Report submitted successfully.' );
+        toastr()->success('Report submitted successfully.');
 
-        return redirect( '/restaurant/'. $restaurant );
-
+        return redirect('/restaurant/' . $restaurant);
     }
 
+
     /**
-     * Delete a report
+     * Dismiss a report of a review
      *
-     * @param integer $id
+     * @param int $report_id
      *
-     * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+     * @return RedirectResponse
      */
-    public function destroy( int $id ): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse {
-        $report = Report::find( $id );
+    public function dismiss_report( int $report_id ): RedirectResponse {
+        $report = Report::find( $report_id );
+
         $report->delete();
 
-        return redirect( '/reports' );
+        toastr()->success( 'Report dismissed.' );
+
+        return redirect()->back();
     }
 }
