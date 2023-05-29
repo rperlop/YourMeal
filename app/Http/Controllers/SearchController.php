@@ -32,7 +32,10 @@ class SearchController extends Controller
             $longitude = $lat_long_search['longitude'];
             $latitude = $lat_long_search['latitude'];
 
-            $results = Restaurant::All();
+
+            $restaurants = Restaurant::query();
+            $restaurants->withAvg('reviews', 'rate');
+            $results = $restaurants->get();
             $results = $results->map(function ($restaurant) use ($latitude, $longitude) {
                 $distance = Utilities::calculate_distance($latitude, $longitude, $restaurant->latitude, $restaurant->longitude);
                 $restaurant->distance = number_format($distance, 2);
