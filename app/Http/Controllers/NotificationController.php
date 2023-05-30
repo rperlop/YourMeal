@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 
 class NotificationController extends Controller {
     /**
@@ -71,7 +70,7 @@ class NotificationController extends Controller {
 
         toastr()->success( 'Notification removed' );
 
-        return view( 'admin.pages.notifications');
+        return view( 'admin.pages.notifications' );
     }
 
     /**
@@ -86,13 +85,13 @@ class NotificationController extends Controller {
 
         $compulsive_number = Config::where( 'property', 'compulsive_number' )->value( 'value' );
 
-        Report::where('user_id', $notification->user_id)
-              ->where('created_at', '<=', $notification->created_at)
-              ->orderBy('created_at', 'desc')
-              ->take($compulsive_number)
+        Report::where( 'user_id', $notification->user_id )
+              ->where( 'created_at', '<=', $notification->created_at )
+              ->orderBy( 'created_at', 'desc' )
+              ->take( $compulsive_number )
               ->delete();
 
-        $user = User::find($notification->user_id);
+        $user = User::find( $notification->user_id );
         $user->strikes++;
         $user->notify = 1;
         $user->save();
@@ -101,7 +100,7 @@ class NotificationController extends Controller {
 
         toastr()->success( 'Notification removed' );
 
-        return view( 'admin.pages.notifications');
+        return view( 'admin.pages.notifications' );
     }
 
     /**
@@ -114,19 +113,18 @@ class NotificationController extends Controller {
     public function remove_notification_and_reports( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $notification = Notification::find( $id );
 
-        $compulsive_number = Config::where('property', 'compulsive_number')->value('value');
+        $compulsive_number = Config::where( 'property', 'compulsive_number' )->value( 'value' );
 
-        Report::where('user_id', $notification->user_id)
-              ->where('created_at', '<=', $notification->created_at)
-              ->orderBy('created_at', 'desc')
-              ->take($compulsive_number)
+        Report::where( 'user_id', $notification->user_id )
+              ->where( 'created_at', '<=', $notification->created_at )
+              ->orderBy( 'created_at', 'desc' )
+              ->take( $compulsive_number )
               ->delete();
 
         $notification->delete();
 
-        toastr()->success('Notification removed');
+        toastr()->success( 'Notification removed' );
 
-        return view( 'admin.pages.notifications');
+        return view( 'admin.pages.notifications' );
     }
-
 }

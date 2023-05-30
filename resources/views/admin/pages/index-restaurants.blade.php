@@ -3,14 +3,13 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-lg-12">
                     <a href="{{ route('create.restaurant') }}" class="btn btn-primary mb-3">New restaurant</a>
-
                     <table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%" id="user_table">
                         <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Phone number</th>
                             <th>Email</th>
@@ -21,6 +20,7 @@
                         <tbody>
                         @foreach ($restaurants as $restaurant)
                             <tr>
+                                <td>{{$restaurant->id}}</td>
                                 <td>{{$restaurant->name}}</td>
                                 <td>{{$restaurant->phone_number}}</td>
                                 <td>{{$restaurant->email}}</td>
@@ -29,7 +29,6 @@
                                     <a href="{{ route('edit.restaurant', $restaurant->id) }}" class="btn btn-success">
                                         Edit
                                     </a>
-
                                     <form id="deleteForm_{{ $restaurant->id }}" style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
@@ -98,4 +97,3 @@
     </script>
 
 @endsection
-

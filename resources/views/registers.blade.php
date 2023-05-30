@@ -3,6 +3,8 @@
 @section('title', 'Registration')
 
 @section('content')
+
+    <!-- Header -->
     <div class="container bg-white p-0">
         <div class="container-xxl py-5 bg-dark hero-header mb-5">
             <div class="container text-center my-5 pt-5 pb-4">
@@ -10,20 +12,21 @@
             </div>
         </div>
 
+        <!-- Register Form -->
         <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-0">
                 <form method="POST" action="{{ route('registers') }}" id="registerForm" class="login-sign-up-form">
                 @csrf
-                <!-- start step indicators -->
+                <!-- Start Step Indicators -->
                     <div class="form-header d-flex mb-4">
                         <span class="stepIndicator">Personal data</span>
                         <span class="stepIndicator">Food preferences (I)</span>
                         <span class="stepIndicator">Food preferences (II)</span>
                         <span class="stepIndicator">Confirm</span>
                     </div>
-                    <!-- end step indicators -->
+                    <!-- End Step Indicators -->
 
-                    <!-- step one -->
+                    <!-- Step 1 -->
                     <div class="step">
                         <p class="text-center mb-4">Personal data</p>
                         <div class="mb-3">
@@ -32,8 +35,8 @@
                                        id="first_name" placeholder="First Name" name="first_name">
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                                 <label for="first_name">First Name</label>
                             </div>
@@ -44,8 +47,8 @@
                                        placeholder="Last Name" name="last_name">
                                 @error('last_name')
                                 <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                                 <label for="last_name">Last Name</label>
                             </div>
@@ -56,8 +59,8 @@
                                        placeholder="Your Email" name="email">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                                 <label for="email">Your Email</label>
                             </div>
@@ -68,8 +71,8 @@
                                        id="password" placeholder="Your Password" name="password">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                                 <label for="password">Your Password</label>
                             </div>
@@ -85,7 +88,7 @@
                         @endif
                     </div>
 
-                    <!-- step two -->
+                    <!-- Step 2 -->
                     <div class="step">
                         <div id="food-type-container">
                             <p class="text-center mb-4">Food types</p>
@@ -103,14 +106,13 @@
                                         @endforeach
                                         @error('food_types')
                                         <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                         @enderror
                                     </div>
                                 @endforeach
                             </div>
                         </div>
-
 
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -123,7 +125,7 @@
                         @endif
                     </div>
 
-                    <!-- step three -->
+                    <!-- Step 3 -->
                     <div class="step">
                         <div id="price-range-container">
                             <p class="text-center mb-4">Price range</p>
@@ -135,8 +137,8 @@
                                                    value="{{ $price_range->id }}" id="{{ $price_range->range }}">
                                             @error('price_ranges')
                                             <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                             @enderror
                                             <label class="form-check-label" for="{{ $price_range->range }}">
                                                 {{ $price_range->range }}
@@ -156,8 +158,8 @@
                                                    value="{{ $schedule->id }}" id="{{ $schedule->schedule_type }}">
                                             @error('schedules')
                                             <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                             @enderror
                                             <label class="form-check-label" for="{{ $schedule->schedule_type }}">
                                                 {{ $schedule->schedule_type }}
@@ -177,8 +179,8 @@
                                 <label for="terrace">Do you like to eat in terraces?</label>
                                 @error('terrace')
                                 <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -190,8 +192,8 @@
                                        placeholder="Location" name="location">
                                 @error('location')
                                 <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                                 <label for="location">Location</label>
                             </div>
@@ -207,7 +209,7 @@
                         @endif
                     </div>
 
-                    <!-- step four -->
+                    <!-- Step 4 -->
                     <div class="step">
                         <p class="text-center mb-4">Confirm</p>
                         <div class="mb-3">
@@ -216,8 +218,7 @@
                         </div>
                     </div>
 
-
-                    <!-- start previous / next buttons -->
+                    <!-- Start Previous / Next Buttons -->
                     <div class="form-footer">
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-primary" type="button" id="prevBtn" onclick="nextPrev(-1)"
@@ -226,12 +227,11 @@
                             <button class="btn btn-primary ms-auto" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
                         </div>
                     </div>
-                    <!-- end previous / next buttons -->
+                    <!-- End Previous / Next Buttons -->
                 </form>
             </div>
         </div>
     </div>
-    <!-- Registration End -->
 
     <script>
         $('#location').autocomplete({

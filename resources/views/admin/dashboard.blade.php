@@ -1,11 +1,12 @@
 @extends('admin.layouts.app', ['activePage' => 'dashboard', 'title' => 'Admin Panel', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
 @section('content')
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <div class ="row">
+                    <div class="row">
                         <div class="col-sm-12">
                             <div class="card ">
                                 <div class="card-header ">
@@ -30,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class ="row">
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="card ">
                                 <div class="card-header ">
@@ -58,10 +59,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-md-6">
-                    <div class ="row">
+                    <div class="row">
                         <div class="col-sm-12">
                             <div class="card  card-tasks">
                                 <div class="card-header ">
@@ -86,7 +86,9 @@
                                                                 </a>
                                                             @endif
                                                         </td>
-                                                        <td style="text-align: end;"><i class="now-ui-icons loader_refresh spin"></i> {{ $notification->created_at }}</td>
+                                                        <td style="text-align: end;">
+                                                            <i class="now-ui-icons loader_refresh spin"></i> {{ $notification->created_at }}
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -104,8 +106,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -193,9 +193,9 @@
                     x: {
                         ticks: {
 
-                            callback: function(value) {
+                            callback: function (value) {
 
-                                return this.getLabelForValue(value).length > 10 ? this.getLabelForValue(value).substring(0,10) + "..." : this.getLabelForValue(value);
+                                return this.getLabelForValue(value).length > 10 ? this.getLabelForValue(value).substring(0, 10) + "..." : this.getLabelForValue(value);
                             }
                         }
                     }

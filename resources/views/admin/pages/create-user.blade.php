@@ -44,8 +44,8 @@
                                             </select>
                                             @error('role')
                                             <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                               <strong>{{ $message }}</strong>
+                                            </span>
                                             @enderror
                                         </div>
                                     </div>
@@ -93,8 +93,8 @@
                                                                value="{{ $price_range->id }}" id="{{ $price_range->range }}">
                                                         @error('price_ranges')
                                                         <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                                         @enderror
                                                         <label class="form-check-label" for="{{ $price_range->range }}">
                                                             {{ $price_range->range }}
@@ -114,8 +114,8 @@
                                                                value="{{ $schedule->id }}" id="{{ $schedule->schedule_type }}">
                                                         @error('schedules')
                                                         <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
+                                                             <strong>{{ $message }}</strong>
+                                                        </span>
                                                         @enderror
                                                         <label class="form-check-label" for="{{ $schedule->schedule_type }}">
                                                             {{ $schedule->schedule_type }}
@@ -173,12 +173,8 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </form>
-
-
                         </div>
                     </div>
                 </div>

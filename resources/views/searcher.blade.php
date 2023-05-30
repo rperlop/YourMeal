@@ -4,13 +4,14 @@
 
 @section('content')
 
-
+    <!-- Header -->
     <div class="container-xxl py-5 bg-dark hero-header mb-5">
         <div class="container text-center my-5 pt-5 pb-4">
             <h1 class="display-3 text-white mb-3 animated slideInDown">Search</h1>
         </div>
     </div>
 
+    <!-- Search -->
     <div class="container-xxl bg-white p-0">
         <div class="container">
             <div class="row g-5 align-items-center">
@@ -38,7 +39,7 @@
                                             <div class="input-group mb-3">
                                                 <input type="text" id="search-text" name="search_text" @if(!@isset($is_get)) value="{{ old('search_text', $request->input('search_text')) }}" @elseif (@isset($is_get) && @isset($has_results)) value="{{ old('search_location_input', $request->input('search_location_input')) }}" @endif
                                                 class="form-control ui-autocomplete-input custom-input"
-                                                       placeholder="Search keyword" />
+                                                       placeholder="Search keyword"/>
                                             </div>
                                         </div>
                                     </div>
@@ -136,14 +137,14 @@
                                         <div class="col-lg-4 mb-4">
                                             <div class="card">
                                                 <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
-                                                <img class="card-img-top img-fluid"
-                                                     src="{{asset('storage/' . $restaurant->main_image_url)}}" alt="{{$restaurant->name}}" />
+                                                    <img class="card-img-top img-fluid"
+                                                         src="{{asset('storage/' . $restaurant->main_image_url)}}" alt="{{$restaurant->name}}"/>
                                                 </a>
                                                 <div class="card-body">
                                                     <div class="card-title justify-content-between align-self-center">
                                                         <div class="title">
                                                             <a href="{{ route('restaurant', ['id' => $restaurant->id]) }}">
-                                                            <h5>{{$restaurant->name}}</h5>
+                                                                <h5>{{$restaurant->name}}</h5>
                                                             </a>
                                                         </div>
 
@@ -153,19 +154,19 @@
                                                 @if(@isset($restaurant->distance))
                                                     <div class="card-footer justify-content-between">
                                                         <div class="restaurant-rate-price">
-                                    <span class="rating">
-                                        @foreach(range(1,5) as $i)
-                                            <span class="fa-stack" style="width:1em">
-                                            <i class="far fa-star fa-stack-1x"></i>
-                                            @if($restaurant->reviews_avg_rate >0)
-                                                    @if($restaurant->reviews_avg_rate >0.5)
-                                                        <i class="fas fa-star fa-stack-1x"></i>
-                                                    @else
-                                                        <i class="fas fa-star-half fa-stack-1x"></i>
-                                                    @endif
-                                                @endif
-                                                @php $restaurant->reviews_avg_rate--; @endphp
-                                        </span>
+                                                            <span class="rating">
+                                                            @foreach(range(1,5) as $i)
+                                                                 <span class="fa-stack" style="width:1em">
+                                                                    <i class="far fa-star fa-stack-1x"></i>
+                                                                    @if($restaurant->reviews_avg_rate >0)
+                                                                    @if($restaurant->reviews_avg_rate >0.5)
+                                                                    <i class="fas fa-star fa-stack-1x"></i>
+                                                                    @else
+                                                                    <i class="fas fa-star-half fa-stack-1x"></i>
+                                                                    @endif
+                                                                    @endif
+                                                                    @php $restaurant->reviews_avg_rate--; @endphp
+                                                                 </span>
                                                             @endforeach
                                                         </div>
                                                         <small class="text-muted">{{$restaurant->distance}} km</small>
@@ -190,8 +191,6 @@
                 </div>
             @endif
         </div>
-
-
     </div>
 
     <script>
@@ -203,19 +202,17 @@
             var price_ranges = {!! json_encode(old('price_ranges', $request->input('price_ranges', []))) !!};
             var schedules = {!! json_encode(old('schedules', $request->input('schedules', []))) !!};
 
-            if(food_types.length > 0){
+            if (food_types.length > 0) {
                 $('#food-types').selectpicker('val', food_types);
             }
 
-            if(price_ranges.length > 0){
+            if (price_ranges.length > 0) {
                 $('#price-ranges').selectpicker('val', price_ranges);
             }
 
-            if(schedules.length > 0){
+            if (schedules.length > 0) {
                 $('#schedules').selectpicker('val', schedules);
             }
-
-
             @endif
 
             $('#filter-search-text').change(function () {
@@ -266,6 +263,5 @@
         }
 
     </script>
-
 
 @endsection

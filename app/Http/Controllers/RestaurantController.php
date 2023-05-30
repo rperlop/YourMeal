@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use App\Models\User;
@@ -347,9 +348,11 @@ class RestaurantController extends Controller {
     /**
      * Get a list of recommended restaurants for a user
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Contracts\Foundation\Application|Application|Factory|View
      */
-    function get_recommended_restaurants(Request $request): View|Factory|Application|\Illuminate\Contracts\Foundation\Application {
+    function get_recommended_restaurants( Request $request ): View|Factory|Application|\Illuminate\Contracts\Foundation\Application {
         $userId          = Auth::id();
         $user            = User::find( $userId );
         $userPreferences = $user->user_food_preferences;
@@ -400,21 +403,21 @@ class RestaurantController extends Controller {
         } )->values();
 
         $filtered_restaurants->each( function ( $restaurant ) {
-            $average_rating             = $restaurant->reviews()->avg( 'rate' );
-            $restaurant->average_rating = $average_rating;
-            $truncated_description = Str::limit($restaurant->description, 100, '...');
+            $average_rating                    = $restaurant->reviews()->avg( 'rate' );
+            $restaurant->average_rating        = $average_rating;
+            $truncated_description             = Str::limit( $restaurant->description, 100, '...' );
             $restaurant->truncated_description = $truncated_description;
         } );
 
         $per_page = 6;
-        $page = $request->query('page', 1);
+        $page     = $request->query( 'page', 1 );
 
         $paginated_results = new LengthAwarePaginator(
-            $filtered_restaurants->forPage($page, $per_page),
+            $filtered_restaurants->forPage( $page, $per_page ),
             $filtered_restaurants->count(),
             $per_page,
             $page,
-            ['path' => $request->url(), 'query' => $request->query()]
+            [ 'path' => $request->url(), 'query' => $request->query() ]
         );
 
         return view( '/recommendations', compact( 'paginated_results' ) );

@@ -10,7 +10,6 @@ class Image extends Model {
     use HasFactory;
 
     public function review(): BelongsTo {
-        return $this->belongsTo(Review::class);
+        return $this->belongsTo( Review::class );
     }
-
 }

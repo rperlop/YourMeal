@@ -104,8 +104,8 @@
                                                                value="{{ $price_range->id }}" id="{{ $price_range->range }}">
                                                         @error('price_ranges')
                                                         <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                                         @enderror
                                                         <label class="form-check-label" for="{{ $price_range->range }}">
                                                             {{ $price_range->range }}
@@ -125,8 +125,8 @@
                                                                value="{{ $schedule->id }}" id="{{ $schedule->schedule_type }}">
                                                         @error('schedules')
                                                         <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
                                                         @enderror
                                                         <label class="form-check-label" for="{{ $schedule->schedule_type }}">
                                                             {{ $schedule->schedule_type }}
@@ -153,7 +153,7 @@
                                             <label for="location" class="required">Location </label>
                                             <input type="text" name="location" id="location" class="form-control ui-autocomplete-input" {{$errors->has('location') ? 'is-invalid' : ''}} placeholder="Search location">
                                             @if ($errors->has('location'))
-                                                <span class="text-danger">
+                                            <span class="text-danger">
                                                 <strong>{{ $errors->first('location') }}</strong>
                                             </span>
                                             @endif

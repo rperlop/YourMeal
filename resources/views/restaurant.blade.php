@@ -4,15 +4,16 @@
 
 @section('content')
 
+    <!-- Header -->
     <div class="container-xxl py-5 bg-dark hero-header mb-5">
         <div class="container text-center my-5 pt-5 pb-4">
             <h1 class="display-3 text-white mb-3 animated slideInDown">Restaurant</h1>
         </div>
     </div>
 
+    <!-- Restaurant -->
     <div class="container-xxl bg-white p-0">
         <div class="container">
-
             <div class="row g-5 align-items-center restaurant-container">
                 <div class="col-lg-6">
                     <div class="row g-3">
@@ -63,7 +64,6 @@
                                     <h5 class="mb-4">More details</h5>
                                     <div class="mb-4">
                                         <div class="mb-2"><strong>Schedule:</strong></div>
-
                                         @foreach ($restaurant->schedules as $schedule)
                                             <div><i
                                                     class="fa-solid fa-fw fa-angles-right me-2"></i>{{ $schedule->schedule_type }}
@@ -89,12 +89,11 @@
                                 </div>
                             @endforeach
                         </div>
-
                     </div>
                 </div>
             </div>
 
-
+            <!-- Reviews -->
             @if (auth()->check())
 
                 @php $updating = 0; @endphp
@@ -248,6 +247,7 @@
         @if (auth()->check())
 
             <script>
+
                 $(document).ready(function () {
                     $('.rating-form').rating();
                 });
@@ -259,13 +259,11 @@
                         for (var i = 0; i < files.length; i++) {
                             var reader = new FileReader();
                             reader.onload = function (e) {
-
                                 var img = $('<img>', {
                                     src: e.target.result,
                                     class: 'img-thumbnail',
                                     style: 'width: 150px; height: 150px;'
                                 });
-
                                 $('.image-preview').append(img);
                             }
                             reader.readAsDataURL(files[i]);
@@ -283,7 +281,6 @@
                             $('[data-rating="' + user_rate + '"]').eq(0).click();
                             if ({{ $user_review->images != null}}) {
                                 $('.image-preview').html('');
-
                                 var images = {!! json_encode($user_review->images) !!};
                                 for (var i = 0; i < images.length; i++) {
                                     var img = $('<img>', {
@@ -294,7 +291,6 @@
                                     $('.image-preview').append(img);
                                 }
                             }
-
                         }
                     });
                 </script>

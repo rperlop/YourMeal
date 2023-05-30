@@ -10,11 +10,10 @@ class Report extends Model {
     use HasFactory;
 
     public function reviews(): HasMany {
-        return $this->hasMany(Review::class);
+        return $this->hasMany( Review::class );
     }
 
     public function users(): HasMany {
-        return $this->hasMany(User::class);
+        return $this->hasMany( User::class );
     }
-
 }

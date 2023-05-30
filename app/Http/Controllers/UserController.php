@@ -10,11 +10,9 @@ use App\Models\Config;
 use App\Models\User;
 use App\Models\UserFoodPreference;
 use GuzzleHttp\Exception\GuzzleException;
-use http\Env\Response;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -184,11 +182,11 @@ class UserController extends Controller {
 
         $user->reports()->delete();
 
-        $user->reviews()->each(function ($review) {
+        $user->reviews()->each( function ( $review ) {
             $review->reports()->delete();
             $review->images()->delete();
             $review->delete();
-        });
+        } );
 
         $user->delete();
 
@@ -309,26 +307,26 @@ class UserController extends Controller {
         $user = User::findOrFail( $id );
 
         $validator = Validator::make( $request->all(), [
-            'first_name' => 'max:255',
-            'last_name'  => 'max:255',
-            'email'      => [
+            'first_name'   => 'max:255',
+            'last_name'    => 'max:255',
+            'email'        => [
                 'email',
                 Rule::unique( 'users' )->ignore( $user->id ),
             ],
-            'password'   => 'nullable|min:8',
-            'role'       => 'in:admin,user',
+            'password'     => 'nullable|min:8',
+            'role'         => 'in:admin,user',
             'location'     => 'required|max:255',
             'terrace'      => 'required|max:255',
             'schedules'    => 'required|array|min:1',
             'food_types'   => 'required|array|min:1',
             'price_ranges' => 'required|array|min:1',
         ], [
-            'first_name.max' => 'The first name can not have more than 255 characters.',
-            'last_name.max'  => 'The last name can not have more than 255 characters.',
-            'email.email'    => 'The email has to have an email format.',
-            'email.unique'   => 'This email is already used.',
-            'password.min'   => 'Password must be at least 8 characters long.',
-            'role.in'        => 'Invalid role value.',
+            'first_name.max'        => 'The first name can not have more than 255 characters.',
+            'last_name.max'         => 'The last name can not have more than 255 characters.',
+            'email.email'           => 'The email has to have an email format.',
+            'email.unique'          => 'This email is already used.',
+            'password.min'          => 'Password must be at least 8 characters long.',
+            'role.in'               => 'Invalid role value.',
             'location.required'     => 'The location field is mandatory.',
             'location.max'          => 'The location can not have more than 255 characters.',
             'terrace.required'      => 'The terrace field is mandatory.',
@@ -460,11 +458,11 @@ class UserController extends Controller {
 
         $user->reports()->delete();
 
-        $user->reviews()->each(function ($review) {
+        $user->reviews()->each( function ( $review ) {
             $review->reports()->delete();
             $review->images()->delete();
             $review->delete();
-        });
+        } );
 
         $user->delete();
 
@@ -481,12 +479,12 @@ class UserController extends Controller {
      * @return void
      */
     public function notice_banning_and_strike_notification(): void {
-        $user = Auth::user();
+        $user         = Auth::user();
         $user->notify = 0;
         $user->save();
 
-        $strikes_number = Config::where('property', 'strikes_number')->value('value');
-        if (Auth::user()->strikes == $strikes_number){
+        $strikes_number = Config::where( 'property', 'strikes_number' )->value( 'value' );
+        if ( Auth::user()->strikes == $strikes_number ) {
             $user->banned = true;
             $user->save();
         }
@@ -497,15 +495,16 @@ class UserController extends Controller {
      *
      * @param int $id
      *
-     * @return void
+     * @return RedirectResponse
      */
-    public function add_strike(int $id) {
+    public function add_strike( int $id ): RedirectResponse {
         $user = User::findOrFail( $id );
         $user->strikes++;
         $user->notify = 1;
         $user->save();
 
         toastr()->success( 'Strike added.' );
+
         return redirect()->route( 'admin.edit.user', $user->id );
     }
 }

@@ -3,6 +3,8 @@
 @section('title', 'Food Preferences')
 
 @section('content')
+
+    <!-- Header -->
     <div class="container bg-white p-0">
     <div class="container-xxl py-5 bg-dark hero-header mb-5">
         <div class="container text-center my-5 pt-5 pb-4">
@@ -10,6 +12,7 @@
         </div>
     </div>
 
+        <!-- Form -->
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-0">
             <form method="POST" action="{{ route('user_preferences.update') }}" id="signUpForm" class="login-sign-up-form">
@@ -36,8 +39,8 @@
                     </div>
                     @error('terrace')
                     <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                        <strong>{{ $message }}</strong>
+                    </span>
                     @enderror
                 </div>
                 <div class="row mb-3">
@@ -54,8 +57,8 @@
                     </div>
                     @error('schedules')
                     <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                        <strong>{{ $message }}</strong>
+                    </span>
                     @enderror
                 </div>
                 <div class="row mb-3">

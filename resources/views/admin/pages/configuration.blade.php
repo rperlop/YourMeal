@@ -16,8 +16,8 @@
                                     <input type="text" name="compulsive_number" id="compulsive_number" class="form-control" value="{{ $config->where('property', 'compulsive_number')->first()->value ?? '' }}">
                                     @if ($errors->has('compulsive_number'))
                                         <span class="text-danger">
-                                        <strong>{{ $errors->first('compulsive_number') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('compulsive_number') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="form-group">
@@ -25,8 +25,8 @@
                                     <input type="text" name="strikes_number" id="strikes_number" class="form-control" value="{{ $config->where('property', 'strikes_number')->first()->value ?? '' }}">
                                     @if ($errors->has('strikes_number'))
                                         <span class="text-danger">
-                                        <strong>{{ $errors->first('strikes_number') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('strikes_number') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="form-group">
@@ -34,8 +34,8 @@
                                     <input type="text" name="reports_min_number" id="reports_min_number" class="form-control" value="{{ $config->where('property', 'reports_min_number')->first()->value ?? '' }}">
                                     @if ($errors->has('reports_min_number'))
                                         <span class="text-danger">
-                                        <strong>{{ $errors->first('reports_min_number') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('reports_min_number') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="row d-print-none mt-2">
@@ -74,8 +74,8 @@
                                     <input type="text" name="name" id="name" class="form-control">
                                     @if ($errors->has('name'))
                                         <span class="text-danger">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="row d-print-none mt-2">

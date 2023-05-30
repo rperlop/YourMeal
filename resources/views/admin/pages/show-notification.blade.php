@@ -139,7 +139,6 @@
                         </div>
                     </div>
                     <div class="container">
-
                             <form id="dismissReportsForm" action="{{ route('remove.notification.reports', ['id' => $notification->id]) }}" method="POST">
                                 @csrf
                                 @method('POST')
@@ -253,6 +252,5 @@
                     });
                 });
             </script>
-
 
 @endsection

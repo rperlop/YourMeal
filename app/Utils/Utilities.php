@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 class Utilities {
-
     /**
      * Get a city/town name from latitude and longitude
      *
@@ -16,13 +15,13 @@ class Utilities {
      * @return array|null
      * @throws GuzzleException
      */
-    public static function  get_full_address($lat, $long): ?string {
-        $client = new Client();
-        $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($lat . ',' . $long) . "&key=" . env('OPENCAGE_API_KEY') . "&language=en&pretty=1";
-        $response = $client->request('GET', $url);
-        $body = json_decode($response->getBody());
+    public static function get_full_address( $lat, $long ): ?string {
+        $client   = new Client();
+        $url      = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode( $lat . ',' . $long ) . "&key=" . env( 'OPENCAGE_API_KEY' ) . "&language=en&pretty=1";
+        $response = $client->request( 'GET', $url );
+        $body     = json_decode( $response->getBody() );
 
-        if ($body->total_results > 0) {
+        if ( $body->total_results > 0 ) {
             return $body->results[0]->formatted ?? null;
         } else {
             return null;
@@ -37,18 +36,18 @@ class Utilities {
      * @return array|null
      * @throws GuzzleException
      */
-    public static function get_lat_long(string $location): ?array {
-        $apiKey = env('OPENCAGE_API_KEY');
-        $client = new Client();
-        $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($location) . "&key=" . $apiKey . "&language=en&pretty=1";
-        $response = $client->request('GET', $url);
-        $body = json_decode($response->getBody());
+    public static function get_lat_long( string $location ): ?array {
+        $apiKey   = env( 'OPENCAGE_API_KEY' );
+        $client   = new Client();
+        $url      = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode( $location ) . "&key=" . $apiKey . "&language=en&pretty=1";
+        $response = $client->request( 'GET', $url );
+        $body     = json_decode( $response->getBody() );
 
-        if ($body->total_results > 0) {
-            $latitude = $body->results[0]->geometry->lat;
+        if ( $body->total_results > 0 ) {
+            $latitude  = $body->results[0]->geometry->lat;
             $longitude = $body->results[0]->geometry->lng;
 
-            return ['latitude' => $latitude, 'longitude' => $longitude];
+            return [ 'latitude' => $latitude, 'longitude' => $longitude ];
         } else {
             return null;
         }
@@ -64,21 +63,20 @@ class Utilities {
      *
      * @return float|int
      */
-    public static function calculate_distance($latitude1, $longitude1, $latitude2, $longitude2): float|int {
+    public static function calculate_distance( $latitude1, $longitude1, $latitude2, $longitude2 ): float|int {
         $earthRadius = 6371;
 
-        $deltaLatitude = deg2rad($latitude2 - $latitude1);
-        $deltaLongitude = deg2rad($longitude2 - $longitude1);
+        $deltaLatitude  = deg2rad( $latitude2 - $latitude1 );
+        $deltaLongitude = deg2rad( $longitude2 - $longitude1 );
 
-        $a = sin($deltaLatitude / 2) * sin($deltaLatitude / 2) +
-             cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) *
-             sin($deltaLongitude / 2) * sin($deltaLongitude / 2);
+        $a = sin( $deltaLatitude / 2 ) * sin( $deltaLatitude / 2 ) +
+             cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) *
+             sin( $deltaLongitude / 2 ) * sin( $deltaLongitude / 2 );
 
-        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+        $c = 2 * atan2( sqrt( $a ), sqrt( 1 - $a ) );
 
         $distance = $earthRadius * $c;
 
         return $distance;
     }
-
 }

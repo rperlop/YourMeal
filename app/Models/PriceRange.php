@@ -16,6 +16,6 @@ class PriceRange extends Model {
     }
 
     public function restaurants(): HasMany {
-        return $this->hasMany(Restaurant::class);
+        return $this->hasMany( Restaurant::class );
     }
 }

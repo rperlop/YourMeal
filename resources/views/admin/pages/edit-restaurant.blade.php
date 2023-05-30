@@ -7,7 +7,6 @@
                 <div class="col-xl-7">
                     <div class="card">
                         <div class="card-body">
-
                             <form method="POST" action="{{route('update.restaurant' , ['id' => $restaurant->id])}}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')

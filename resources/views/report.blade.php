@@ -3,6 +3,8 @@
 @section('title', 'Report')
 
 @section('content')
+
+    <!-- Header -->
     <div class="container bg-white p-0">
         <div class="container-xxl py-5 bg-dark hero-header mb-5">
             <div class="container text-center my-5 pt-5 pb-4">
@@ -10,6 +12,7 @@
             </div>
         </div>
 
+        <!-- Report Form -->
         <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-0">
                 <form method="POST" action="{{ route('report.store') }}" id="report-form" class="login-sign-up-form">
@@ -22,8 +25,8 @@
                             <textarea name="reason" id="reason" class="form-control {{$errors->has('reason') ? 'is-invalid' : ''}}" value="{{old('reason', '')}}"></textarea>
                             @if ($errors->has('reason'))
                                 <span class="text-danger">
-                                <strong>{{ $errors->first('reason') }}</strong>
-                            </span>
+                                    <strong>{{ $errors->first('reason') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>

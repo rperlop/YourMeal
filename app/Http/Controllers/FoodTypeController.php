@@ -28,13 +28,13 @@ class FoodTypeController extends Controller {
      *
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse {
-        $request->validate([
+    public function store( Request $request ): RedirectResponse {
+        $request->validate( [
             'name' => 'required|unique:food_types,name',
-        ]);
+        ] );
 
-        $food_type = new FoodType();
-        $food_type->name = $request->input('name');
+        $food_type       = new FoodType();
+        $food_type->name = $request->input( 'name' );
         $food_type->save();
 
         toastr()->success( 'Food type added successfully.' );

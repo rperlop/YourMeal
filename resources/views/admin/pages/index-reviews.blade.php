@@ -3,10 +3,8 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-lg-12">
-
                     <table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%" id="user_table">
                         <thead>
                         <tr>

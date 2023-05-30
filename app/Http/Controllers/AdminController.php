@@ -22,10 +22,10 @@ class AdminController extends Controller {
         $user_count       = User::count();
         $restaurant_count = Restaurant::count();
         $notifications    = Notification::latest()->take( 5 )->get();
-        $top_restaurants = Restaurant::withCount( 'reviews' )
-                                     ->orderBy( 'reviews_count', 'desc' )
-                                     ->take( 5 )
-                                     ->get();
+        $top_restaurants  = Restaurant::withCount( 'reviews' )
+                                      ->orderBy( 'reviews_count', 'desc' )
+                                      ->take( 5 )
+                                      ->get();
 
         return view( 'admin.dashboard', compact( 'user_count', 'restaurant_count', 'notifications', 'top_restaurants' ) );
     }
@@ -47,5 +47,4 @@ class AdminController extends Controller {
 
         return redirect()->back();
     }
-
 }

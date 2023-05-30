@@ -4,6 +4,7 @@
 
 @section('content')
 
+    <!-- Header -->
     <div class="container bg-white p-0">
         <div class="container-xxl bg-white p-0">
             <div class="container-xxl py-5 bg-dark hero-header mb-5">
@@ -26,6 +27,7 @@
 
         @include('top-restaurants', ['restaurants_rate' => $restaurants_rate])
 
+    <!-- Featured Restaurant -->
         <div class="container bg-white">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h5 class="section-title ff-secondary text-center text-primary fw-normal">Featured</h5>
@@ -55,7 +57,7 @@
                                             @endif
                                         @endif
                                         @php $average_rate_feat_rest--; @endphp
-                                </span>
+                                    </span>
                                 @endforeach
                             </div>
                             <p class="text-muted">{{ $featured_restaurant->truncated_description }}</p>
@@ -70,7 +72,7 @@
             </div>
         </div>
 
-
+        <!-- App Using Instructions -->
         <div class="container-xxl py-5 bg-white">
             <div class="text-center wow fadeInUp">
                 <h1 class="mb-5">How to find your perfect restaurant?</h1>
@@ -119,7 +121,6 @@
     </div>
 
     <script>
-
         $('#search-location-input').autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -140,7 +141,6 @@
         $('#exampleModalCenter').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus');
         });
-
     </script>
 
 @endsection

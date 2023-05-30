@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\Notification;
-use App\Models\Report;
 use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -199,8 +198,4 @@ class ReviewController extends Controller {
 
         return view( 'admin.pages.index-reviews', compact( 'reviews' ) );
     }
-
-
-
-
 }

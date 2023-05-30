@@ -49,7 +49,7 @@
 </div>
 <!-- Spinner End -->
 
-<!-- Navbar & Hero Start -->
+<!-- Navbar Start -->
 <div class="container-xxl position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
         <a href="{{ url('/') }}" class="navbar-brand p-0">
@@ -91,6 +91,7 @@
         </div>
     </nav>
 </div>
+<!-- Navbar End -->
 
 <!-- Page Content -->
 <main>
@@ -118,6 +119,7 @@
 </div>
 <!-- Footer End -->
 
+<!-- Modal -->
 <div class="modal fade" id="strike-message" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="strike-message-title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

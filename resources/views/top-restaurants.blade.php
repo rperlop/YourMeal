@@ -1,3 +1,4 @@
+<!-- Tabs Menu -->
 <div class="container-xxl py-5">
     <div class="container bg-white">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -25,6 +26,7 @@
                     </a>
                 </li>
             </ul>
+            <!-- Top Most Rated -->
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
@@ -63,6 +65,7 @@
                     </div>
                 </div>
 
+                <!-- Top Most Reviewed -->
                 <div id="tab-2" class="tab-pane fade show p-0">
                     <div class="row g-4">
                         @foreach ($restaurants_review as $restaurant)

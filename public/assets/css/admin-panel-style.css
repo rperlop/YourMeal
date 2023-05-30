@@ -2347,7 +2347,7 @@ License - nucleoapp.com/license/
     padding-left: 15px;
 }
 
-.wrapper-full-page~.fixed-plugin .dropdown.open .dropdown-menu {
+.wrapper-full-page ~ .fixed-plugin .dropdown.open .dropdown-menu {
     -webkit-transform: translateY(-17%);
     -moz-transform: translateY(-17%);
     -o-transform: translateY(-17%);
@@ -2355,7 +2355,7 @@ License - nucleoapp.com/license/
     transform: translateY(-17%);
 }
 
-.wrapper-full-page~.fixed-plugin .dropdown .dropdown-menu {
+.wrapper-full-page ~ .fixed-plugin .dropdown .dropdown-menu {
     -webkit-transform: translateY(-19%);
     -moz-transform: translateY(-19%);
     -o-transform: translateY(-19%);
@@ -2384,11 +2384,11 @@ License - nucleoapp.com/license/
 }
 
 
-.restaurant-container img{
+.restaurant-container img {
     border-radius: 3%;
 }
 
-.review-block .rating{
+.review-block .rating {
     border: 0;
 }
 
@@ -2400,17 +2400,17 @@ License - nucleoapp.com/license/
 }
 
 .reviews-pagination a,
-.reviews-pagination span{
+.reviews-pagination span {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
 }
 
-.review-block .col-sm-2{
+.review-block .col-sm-2 {
     position: relative;
 }
 
 @media (min-width: 767px) {
     .review-block .review-block-report,
-    .review-block .review-block-edit{
+    .review-block .review-block-edit {
         position: absolute;
         bottom: 0;
         left: 0.75em;;
@@ -2426,35 +2426,40 @@ License - nucleoapp.com/license/
     }
 }
 
-#reviewForm .custom-file input{
+#reviewForm .custom-file input {
     background-color: #fff;
 }
 
 /* End restaurant */
 
-.restaurant-description{
+/* Restaurant card */
+.restaurant-description {
     text-align: justify;
 }
 
 .blog-card {
     box-shadow: 0 12px 17px rgba(129, 140, 151, 0.1);
 }
+
 .blog-card .blog-image {
     width: 50%;
     height: auto;
     position: relative;
 }
+
 @media only screen and (max-width: 992px) {
     .blog-card .blog-image {
         max-height: 250px;
         width: 100%;
     }
 }
+
 .blog-card .blog-image .blog-thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 @media only screen and (min-width: 992px) {
     .blog-card .blog-image .blog-thumbnail {
         position: absolute;
@@ -2468,20 +2473,24 @@ License - nucleoapp.com/license/
     flex: 1;
     padding-bottom: 85px !important;
 }
+
 .blog-card .blog-container a:hover {
     text-decoration: none;
     color: #0062cc;
 }
+
 .blog-card .blog-container .blog-category {
     background: rgba(40, 167, 69, 0.1);
     color: #28a745;
 }
+
 .blog-card .blog-container .blog-author {
     height: 40px;
     width: 40px;
     border-radius: 40px;
     margin-right: 10px;
 }
+
 .blog-card .blog-container .blog-footer {
     padding: 15px 30px;
     position: absolute;
@@ -2489,10 +2498,11 @@ License - nucleoapp.com/license/
     left: 0;
     width: 100%;
 }
+/* Restaurant card */
 
-/* sidebar */
-@media(min-width: 992px){
-    .sidebar{
+/* Sidebar */
+@media (min-width: 992px) {
+    .sidebar {
         position: fixed;
     }
 }
