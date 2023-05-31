@@ -70,7 +70,7 @@ class NotificationController extends Controller {
 
         toastr()->success( 'Notification removed' );
 
-        return view( 'notifications' );
+        return redirect('/admin/pages/notifications');
     }
 
     /**
@@ -100,9 +100,7 @@ class NotificationController extends Controller {
 
         toastr()->success( 'Notification removed' );
 
-
-
-        return view( 'notifications' );
+        return redirect('/admin/pages/notifications');
     }
 
     /**
