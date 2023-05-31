@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class NotificationController extends Controller {
     /**
@@ -61,9 +62,9 @@ class NotificationController extends Controller {
      *
      * @param int $id
      *
-     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     * @return RedirectResponse
      */
-    public function remove_notification( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    public function remove_notification( int $id ): RedirectResponse {
         $notification = Notification::find( $id );
 
         $notification->delete();
@@ -78,9 +79,9 @@ class NotificationController extends Controller {
      *
      * @param int $id
      *
-     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     * @return RedirectResponse
      */
-    public function remove_notification_and_reports_adding_strike( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    public function remove_notification_and_reports_adding_strike( int $id ): RedirectResponse {
         $notification = Notification::find( $id );
 
         $compulsive_number = Config::where( 'property', 'compulsive_number' )->value( 'value' );
@@ -108,9 +109,9 @@ class NotificationController extends Controller {
      *
      * @param int $id
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function remove_notification_and_reports( int $id ): \Illuminate\Http\RedirectResponse {
+    public function remove_notification_and_reports( int $id ): RedirectResponse {
         $notification = Notification::find( $id );
 
         $compulsive_number = Config::where( 'property', 'compulsive_number' )->value( 'value' );
