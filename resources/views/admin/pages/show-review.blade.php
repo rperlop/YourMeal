@@ -48,12 +48,12 @@
                         <form id="deleteReviewForm" action="{{ route('reviews.delete', ['id' => $review->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewForm">Delete Review</button>
+                            <button type="button" class="btn btn-danger deleteButton" data-button-type="delete" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewForm">Delete Review</button>
                         </form>
                         <form id="deleteReviewWithStrikeForm" action="{{ route('reviews.delete_with_strike', ['id' => $review->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewWithStrikeForm">Delete Review with Strike</button>
+                            <button type="button" class="btn btn-danger deleteButton" data-button-type="deleteStrike" data-toggle="modal" data-target="#delete-message" data-form-id="deleteReviewWithStrikeForm">Delete Review with Strike</button>
                         </form>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                                 <form id="dismissReportsForm" action="{{ route('reviews.dismiss_reports', ['id' => $review->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Dismiss Reports</button>
+                                    <button type="button" class="btn btn-danger deleteButton" data-button-type="dismiss" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Dismiss Reports</button>
                                 </form>
                             </div>
                         @else
@@ -103,18 +103,17 @@
         </div>
 
         <!-- Modal -->
+        <!-- Modal -->
         <div class="modal fade" id="delete-message" tabindex="-1" role="dialog" aria-labelledby="delete-message-title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="delete-message-title">Attention!</h5>
+                        <h5 class="modal-title" id="delete-message-title"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to remove this review?</p>
-                    </div>
+                    <div class="modal-body" id="delete-message-body"></div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger deleteButtonModal" data-dismiss="modal">Yes</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
@@ -127,19 +126,20 @@
 
             $(document).ready(function () {
                 var formId = null;
-                var modalTitle = $('#delete-message-title');
-                var modalMessage = $('#delete-message-body');
 
                 $('.deleteButton').click(function () {
                     formId = $(this).data('form-id');
-                    var buttonType = $(this).data('button-type');
+                    const buttonType = $(this).data('button-type');
 
                     if (buttonType === 'delete') {
-                        modalTitle.text('Attention!');
-                        modalMessage.text('Are you sure you want to delete this review?');
+                        $('#delete-message-title').text('Attention!');
+                        $('#delete-message-body').text('Are you sure you want to delete this review?');
+                    } else if (buttonType === 'deleteStrike') {
+                        $('#delete-message-title').text('Delete and add atrike');
+                        $('#delete-message-body').text('Are you sure you want to delete this review and add a strike?');
                     } else if (buttonType === 'dismiss') {
-                        modalTitle.text('Dismiss Reports');
-                        modalMessage.text('Are you sure you want to dismiss the reports for this review?');
+                        $('#delete-message-title').text('Dismiss Reports');
+                        $('#delete-message-body').text('Are you sure you want to dismiss the reports for this review?');
                     }
 
                     $('#delete-message').modal('show');
