@@ -487,6 +487,8 @@ class UserController extends Controller {
         if ( Auth::user()->strikes == $strikes_number ) {
             $user->banned = true;
             $user->save();
+            Auth::logout();
+
         }
     }
 
