@@ -15,6 +15,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if(@isset($notifications))
                         @foreach ($notifications as $notification)
                             <tr>
                                 <td>{{$notification->id }}</td>
@@ -31,6 +32,7 @@
                                 </td>
                             </tr>
                         @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>

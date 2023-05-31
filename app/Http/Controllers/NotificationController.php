@@ -70,7 +70,7 @@ class NotificationController extends Controller {
 
         toastr()->success( 'Notification removed' );
 
-        return view( 'admin.pages.notifications' );
+        return view( 'notifications' );
     }
 
     /**
@@ -100,7 +100,9 @@ class NotificationController extends Controller {
 
         toastr()->success( 'Notification removed' );
 
-        return view( 'admin.pages.notifications' );
+
+
+        return view( 'notifications' );
     }
 
     /**
@@ -108,9 +110,9 @@ class NotificationController extends Controller {
      *
      * @param int $id
      *
-     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function remove_notification_and_reports( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    public function remove_notification_and_reports( int $id ): \Illuminate\Http\RedirectResponse {
         $notification = Notification::find( $id );
 
         $compulsive_number = Config::where( 'property', 'compulsive_number' )->value( 'value' );
@@ -125,6 +127,6 @@ class NotificationController extends Controller {
 
         toastr()->success( 'Notification removed' );
 
-        return view( 'admin.pages.notifications' );
+        return redirect('/admin/pages/notifications');
     }
 }
