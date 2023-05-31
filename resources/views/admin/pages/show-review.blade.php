@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-xxl bg-white p-0">
+    <div class="container-xxl p-0">
         <div class="container">
             <div class="card ">
                 <div class="card-header ">

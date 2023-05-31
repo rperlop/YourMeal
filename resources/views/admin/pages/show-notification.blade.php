@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container-xxl bg-white p-0">
+    <div class="container-xxl p-0">
         @if($notification->type == 'reported_review')
             <div class="container">
                 <div class="card ">
