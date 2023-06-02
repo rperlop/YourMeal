@@ -47,10 +47,10 @@ class NotificationController extends Controller {
                              ->take( $compulsive_number )
                              ->get();
 
-            $reviewIds = $reports->pluck( 'review_id' );
+            $review_ids = $reports->pluck( 'review_id' );
 
             $reviews = Review::with( 'user', 'images', 'reports' )
-                             ->whereIn( 'id', $reviewIds )
+                             ->whereIn( 'id', $review_ids )
                              ->get();
 
             return view( 'admin.pages.show-notification', compact( 'reviews', 'notification', 'reports', 'compulsive_number' ) );

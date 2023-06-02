@@ -11,7 +11,8 @@
                         <div class="review-block">
                             <div class="row service-item p-3 mb-4">
                                 <div class="col-sm-2">
-                                    <div class="review-block-date mb-4"><strong>User #{{ $review->user_id }} reviewed the restaurant #{{ $review->restaurant_id }}:</strong>
+                                    <div class="review-block-date mb-4">
+                                        <strong>User #{{ $review->user_id }} reviewed the restaurant #{{ $review->restaurant_id }}:</strong>
                                     </div>
                                 </div>
                                 <div class="col-sm-10">
@@ -71,7 +72,8 @@
                                             <div class="review-block">
                                                 <div class="row service-item p-3 mb-4">
                                                     <div class="col-sm-2">
-                                                        <div class="review-block-date mb-4"><strong>User #{{ $report->user_id }} reports:</strong>
+                                                        <div class="review-block-date mb-4">
+                                                            <strong>User #{{ $report->user_id }} reports:</strong>
                                                         </div>
                                                         <div class="d-flex justify-content-between align-items-end">
                                                             {{ $report->created_at }}
@@ -111,22 +113,47 @@
                                     <div class="review">
                                         <div class="card ">
                                             <div class="card-header ">
-                                                 <h5> <strong>User #{{ $review->user->id }} on
-                                                    <a href="{{ url('admin/pages/show-review/') }}/{{ $review->id }}">review #{{ $review->id }}</a></strong>
+                                                <h5><strong>User #{{ $review->user->id }} on
+                                                        <a href="{{ url('admin/pages/show-review/') }}/{{ $review->id }}">review #{{ $review->id }}</a></strong>
                                                 </h5>
-                                                <p>           {{ $review->comment }}</p>
+                                                <div class="review-block-images">
+                                                    @foreach ($review->images as $image)
+                                                        <a href="#" data-toggle="modal" data-target="#image-modal-{{$image->id}}">
+                                                            <img class="img-thumbnail mb-2" src="{{ asset('storage/img/' . $image->name) }}"
+                                                                 alt="{{$image->name}}">
+                                                        </a>
+
+                                                        <!-- Image Modal -->
+                                                        <div class="modal fade" id="image-modal-{{$image->id}}" tabindex="-1" role="dialog" aria-labelledby="image-modal-title-{{$image->id}}" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="image-modal-title-{{$image->id}}">{{$image->name}}</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <img src="{{ asset('storage/img/' . $image->name) }}" class="img-fluid" alt="{{$image->name}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <p>{{ $review->comment }}</p>
                                                 <h5><strong>REPORTS:</strong></h5>
                                                 <ul>
-                                                    @php
-                                                        $latest_reports = $reports->take(5)->sortByDesc('created_at');                                                    @endphp
-                                                    @foreach ($latest_reports as $report)
+                                                    @foreach ($reports as $report)
                                                         @if ($report->review_id == $review->id)
-                                                            <p><strong>User #{{ $report->user_id }} reported at {{$report->created_at}}:</strong></p>
+                                                            <p>
+                                                                <strong>User #{{ $report->user_id }} reported at {{$report->created_at}}:</strong>
+                                                            </p>
                                                             <li>{{ $report->reason }}</li>
-                                                            <form id="dismissReportsForm" action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
+                                                            <form id="dismissReportsForm-{{ $report->id }}" action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="button" class="btn btn-danger deleteButton" data-form-id="dismissReportsForm" data-button-type="dismiss" data-toggle="modal" data-target="#delete-message">Dismiss</button>
+                                                                <button type="button" class="btn btn-danger deleteButton" data-form-id="dismissReportsForm-{{ $report->id }}" data-button-type="dismiss" data-toggle="modal" data-target="#delete-message">Dismiss</button>
                                                             </form>
                                                             <hr>
                                                         @endif
@@ -142,25 +169,25 @@
                         </div>
                     </div>
                     <div class="container">
-                            <form id="dismissReportsForm" action="{{ route('remove.notification.reports', ['id' => $notification->id]) }}" method="POST">
-                                @csrf
-                                @method('POST')
-                                <button type="button" data-button-type="delete" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Remove Notification and Reports</button>
-                            </form>
-                            <form id="dismissReportsStrikeForm" action="{{ route('remove.notification.reports.strike', ['id' => $notification->id]) }}" method="POST">
-                                @csrf
-                                @method('POST')
-                                <button type="button" data-button-type="deleteStrike" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsStrikeForm">Add Strike</button>
-                            </form>
-                            <form id="removeNotificationForm" action="{{ route('remove.notification', ['id' => $notification->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" data-button-type="dismissNotification" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="removeNotificationForm">Remove Notification</button>
-                            </form>
+                        <form id="dismissReportsForm" action="{{ route('remove.notification.reports', ['id' => $notification->id]) }}" method="POST">
+                            @csrf
+                            @method('POST')
+                            <button type="button" data-button-type="delete" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsForm">Remove Notification and Reports</button>
+                        </form>
+                        <form id="dismissReportsStrikeForm" action="{{ route('remove.notification.reports.strike', ['id' => $notification->id]) }}" method="POST">
+                            @csrf
+                            @method('POST')
+                            <button type="button" data-button-type="deleteStrike" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="dismissReportsStrikeForm">Add Strike</button>
+                        </form>
+                        <form id="removeNotificationForm" action="{{ route('remove.notification', ['id' => $notification->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" data-button-type="dismissNotification" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#delete-message" data-form-id="removeNotificationForm">Remove Notification</button>
+                        </form>
                     </div>
                 @endif
                 <div class="container">
-                <a href="{{ url('/admin/pages/notifications') }}" class="btn btn-success">Go Back</a>
+                    <a href="{{ url('/admin/pages/notifications') }}" class="btn btn-success">Go Back</a>
                 </div>
             </div>
 

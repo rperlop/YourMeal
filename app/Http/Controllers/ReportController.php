@@ -99,7 +99,7 @@ class ReportController extends Controller {
 
         $max_reports_per_user = Config::where( 'property', 'compulsive_number' )->value( 'value' );
 
-        if ( $user_reports_count == $max_reports_per_user + 1 ) {
+        if ( $user_reports_count == $max_reports_per_user ) {
             $notification          = new Notification();
             $notification->type    = 'compulsive_user';
             $notification->user_id = $report->user_id;
