@@ -120,10 +120,10 @@
                                                         @if($report->review_id == $review->id)
                                                         <p><strong>User #{{ $report->user_id }} reported at {{$report->created_at}}:</strong></p>
                                                         <li>{{ $report->reason }}</li>
-                                                        <form action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
+                                                        <form id="dismissReportsForm" action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger deleteButton" data-button-type="dismiss" data-toggle="modal" data-target="#dismiss-modal-{{ $report->id }}">Dismiss</button>
+                                                            <button type="button" class="btn btn-danger deleteButton" data-form-id="dismissReportsForm" data-button-type="dismiss" data-toggle="modal" data-target="#delete-message">Dismiss</button>
                                                         </form>
                                                         <hr>
                                                         @endif
