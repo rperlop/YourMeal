@@ -221,6 +221,7 @@
 
                     $('.deleteButtonModal').click(function () {
                         if (formId !== null) {
+                            event.preventDefault();
                             var deleteForm = document.querySelector('#' + formId);
                             deleteForm.submit();
                             $('#delete-message').modal('hide');
