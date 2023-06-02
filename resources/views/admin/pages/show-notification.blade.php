@@ -116,16 +116,19 @@
                                                 </h5>
                                                 <p>           {{ $review->comment }}</p>
                                                 <h5><strong>REPORTS:</strong></h5>
-                                                    @foreach ($reports as $report)
-                                                        @if($report->review_id == $review->id)
-                                                        <p><strong>User #{{ $report->user_id }} reported at {{$report->created_at}}:</strong></p>
-                                                        <li>{{ $report->reason }}</li>
-                                                        <form id="dismissReportsForm" action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-danger deleteButton" data-form-id="dismissReportsForm" data-button-type="dismiss" data-toggle="modal" data-target="#delete-message">Dismiss</button>
-                                                        </form>
-                                                        <hr>
+                                                <ul>
+                                                    @php
+                                                        $latest_reports = $reports->take(5)->sortByDesc('created_at');                                                    @endphp
+                                                    @foreach ($latest_reports as $report)
+                                                        @if ($report->review_id == $review->id)
+                                                            <p><strong>User #{{ $report->user_id }} reported at {{$report->created_at}}:</strong></p>
+                                                            <li>{{ $report->reason }}</li>
+                                                            <form id="dismissReportsForm" action="{{ route('reviews.dismiss_report', ['id' => $report->id]) }}" method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn btn-danger deleteButton" data-form-id="dismissReportsForm" data-button-type="dismiss" data-toggle="modal" data-target="#delete-message">Dismiss</button>
+                                                            </form>
+                                                            <hr>
                                                         @endif
                                                     @endforeach
                                                 </ul>
