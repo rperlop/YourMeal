@@ -80,44 +80,6 @@ p {
     line-height: 1.5;
 }
 
-h1 small,
-h2 small,
-h3 small,
-h4 small,
-h5 small,
-h6 small,
-.h1 small,
-.h2 small,
-.h3 small,
-.h4 small,
-.h5 small,
-.h6 small,
-h1 .small,
-h2 .small,
-h3 .small,
-h4 .small,
-h5 .small,
-h6 .small,
-.h1 .small,
-.h2 .small,
-.h3 .small,
-.h4 .small,
-.h5 .small,
-.h6 .small {
-    color: #9A9A9A;
-    font-weight: 300;
-    line-height: 1.5;
-}
-
-h1 small,
-h2 small,
-h3 small,
-h1 .small,
-h2 .small,
-h3 .small {
-    font-size: 60%;
-}
-
 h1 .subtitle {
     display: block;
     margin: 0 0 30px;
@@ -753,20 +715,6 @@ fieldset[disabled] .btn-danger.active {
 
 .btn-lg.btn-simple {
     padding: 16px 30px;
-}
-
-.btn-sm {
-    font-size: 12px;
-    border-radius: 3px;
-    padding: 5px 10px;
-}
-
-.btn-sm.btn-round {
-    padding: 6px 10px;
-}
-
-.btn-sm.btn-simple {
-    padding: 7px 10px;
 }
 
 .btn-xs {
@@ -1485,50 +1433,6 @@ fieldset[disabled] .btn-danger.active {
         position: relative !important;
     }
 
-    .nav-mobile-menu {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        margin-bottom: 15px;
-        padding-bottom: 15px;
-        padding-top: 5px;
-    }
-
-    .nav-mobile-menu .dropdown .dropdown-menu {
-        position: static !important;
-        float: none;
-        width: auto;
-        color: #FFFFFF;
-        margin-top: 0;
-        background-color: transparent;
-        border: 0;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        -moz-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        -o-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        -ms-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    }
-
-    .nav-mobile-menu .dropdown .dropdown-menu .dropdown-item {
-        margin: 5px 15px 0px 40px;
-        border-radius: 4px;
-        color: #FFFFFF;
-        opacity: .86;
-        padding: 8px 50px;
-    }
-
-    .nav-mobile-menu .dropdown .dropdown-menu .dropdown-item:hover {
-        background-color: rgba(255, 255, 255, 0.23);
-    }
-
-    .nav-mobile-menu .nav-item .nav-link span {
-        display: inline-block !important;
-    }
-
-    .nav-mobile-menu .nav-item .nav-link .no-icon {
-        padding-left: 50px;
-    }
-
     .main-panel {
         width: 100%;
     }
@@ -1564,69 +1468,6 @@ fieldset[disabled] .btn-danger.active {
         display: block;
     }
 
-    body > .navbar-collapse {
-        position: fixed;
-        display: block;
-        top: 0;
-        height: 100%;
-        right: 0;
-        left: auto;
-        z-index: 1032;
-        visibility: visible;
-        background-color: #999;
-        overflow-y: visible;
-        border-top: none;
-        text-align: left;
-        padding: 0;
-        -webkit-transform: translate3d(260px, 0, 0);
-        -moz-transform: translate3d(260px, 0, 0);
-        -o-transform: translate3d(260px, 0, 0);
-        -ms-transform: translate3d(260px, 0, 0);
-        transform: translate3d(260px, 0, 0);
-        -webkit-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        -moz-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        -o-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        -ms-transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-        transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    }
-
-    body > .navbar-collapse > ul {
-        position: relative;
-        z-index: 4;
-        overflow-y: scroll;
-        height: calc(100vh - 61px);
-        width: 100%;
-    }
-
-    body > .navbar-collapse::before {
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        background-color: #282828;
-        display: block;
-        content: "";
-        z-index: 1;
-    }
-
-    body > .navbar-collapse .logo {
-        position: relative;
-        z-index: 4;
-    }
-
-    body > .navbar-collapse .nav li > a {
-        padding: 10px 15px;
-    }
-
-    .nav-show .navbar-collapse {
-        -webkit-transform: translate3d(0px, 0, 0);
-        -moz-transform: translate3d(0px, 0, 0);
-        -o-transform: translate3d(0px, 0, 0);
-        -ms-transform: translate3d(0px, 0, 0);
-        transform: translate3d(0px, 0, 0);
-    }
-
     .nav-show .navbar .container {
         left: -250px;
     }
@@ -1656,57 +1497,6 @@ fieldset[disabled] .btn-danger.active {
         height: 40px;
     }
 
-    .bar1,
-    .bar2,
-    .bar3 {
-        outline: 1px solid transparent;
-    }
-
-    .bar1 {
-        -webkit-animation: topbar-back 500ms linear 0s;
-        -moz-animation: topbar-back 500ms linear 0s;
-        animation: topbar-back 500ms 0s;
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-    }
-
-    .bar2 {
-        opacity: 1;
-    }
-
-    .bar3 {
-        -webkit-animation: bottombar-back 500ms linear 0s;
-        -moz-animation: bottombar-back 500ms linear 0s;
-        animation: bottombar-back 500ms 0s;
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-    }
-
-    .toggled .bar1 {
-        top: 6px;
-        -webkit-animation: topbar-x 500ms linear 0s;
-        -moz-animation: topbar-x 500ms linear 0s;
-        animation: topbar-x 500ms 0s;
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-    }
-
-    .toggled .bar2 {
-        opacity: 0;
-    }
-
-    .toggled .bar3 {
-        bottom: 6px;
-        -webkit-animation: bottombar-x 500ms linear 0s;
-        -moz-animation: bottombar-x 500ms linear 0s;
-        animation: bottombar-x 500ms 0s;
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-    }
 
     .dropdown-menu .divider {
         background-color: rgba(229, 229, 229, 0.15);
@@ -1760,25 +1550,8 @@ fieldset[disabled] .btn-danger.active {
         border-top-color: white;
     }
 
-    .dropdown-menu {
-        display: none;
-    }
-
     .navbar-fixed-top {
         -webkit-backface-visibility: hidden;
-    }
-
-    #bodyClick {
-        height: 100%;
-        width: 100%;
-        position: fixed;
-        opacity: 0;
-        top: 0;
-        left: auto;
-        right: 250px;
-        content: "";
-        z-index: 9999;
-        overflow-x: hidden;
     }
 
     .form-control + .form-control-feedback {
@@ -1892,409 +1665,40 @@ License - nucleoapp.com/license/
 }
 
 
-/*------------------------
-	font icons
--------------------------*/
-
-.nc-air-baloon::before {
-    content: "\ea01";
-}
-
-.nc-album-2::before {
-    content: "\ea02";
-}
-
-.nc-alien-33::before {
-    content: "\ea03";
-}
-
-.nc-align-center::before {
-    content: "\ea04";
-}
-
-.nc-align-left-2::before {
-    content: "\ea05";
-}
-
-.nc-ambulance::before {
-    content: "\ea06";
-}
-
-.nc-android::before {
-    content: "\ea07";
-}
-
-.nc-app::before {
-    content: "\ea08";
-}
-
-.nc-apple::before {
-    content: "\ea09";
-}
-
-.nc-atom::before {
-    content: "\ea0a";
-}
-
-.nc-attach-87::before {
-    content: "\ea0b";
-}
-
-.nc-audio-92::before {
-    content: "\ea0c";
-}
-
-.nc-backpack::before {
-    content: "\ea0d";
-}
-
-.nc-badge::before {
-    content: "\ea0e";
-}
-
-.nc-bag::before {
-    content: "\ea0f";
-}
-
-.nc-bank::before {
-    content: "\ea10";
-}
-
-.nc-battery-81::before {
-    content: "\ea11";
-}
+/*-	font icons -*/
 
 .nc-bell-55::before {
     content: "\ea12";
-}
-
-.nc-bold::before {
-    content: "\ea13";
-}
-
-.nc-bulb-63::before {
-    content: "\ea14";
-}
-
-.nc-bullet-list-67::before {
-    content: "\ea15";
-}
-
-.nc-bus-front-12::before {
-    content: "\ea16";
-}
-
-.nc-button-pause::before {
-    content: "\ea17";
-}
-
-.nc-button-play::before {
-    content: "\ea18";
 }
 
 .nc-button-power::before {
     content: "\ea19";
 }
 
-.nc-camera-20::before {
-    content: "\ea1a";
-}
-
-.nc-caps-small::before {
-    content: "\ea1b";
-}
-
-.nc-cart-simple::before {
-    content: "\ea1c";
-}
-
-.nc-cctv::before {
-    content: "\ea1d";
-}
-
 .nc-chart-bar-32::before {
     content: "\ea1e";
-}
-
-.nc-chart-pie-35::before {
-    content: "\ea1f";
-}
-
-.nc-chart-pie-36::before {
-    content: "\ea20";
-}
-
-.nc-chart::before {
-    content: "\ea21";
-}
-
-.nc-chat-round::before {
-    content: "\ea22";
-}
-
-.nc-check-2::before {
-    content: "\ea23";
 }
 
 .nc-circle-09::before {
     content: "\ea24";
 }
 
-.nc-circle::before {
-    content: "\ea25";
-}
-
-.nc-cloud-download-93::before {
-    content: "\ea26";
-}
-
-.nc-cloud-upload-94::before {
-    content: "\ea27";
-}
-
-.nc-compass-05::before {
-    content: "\ea28";
-}
-
-.nc-controller-modern::before {
-    content: "\ea29";
-}
-
-.nc-credit-card::before {
-    content: "\ea2a";
-}
-
-.nc-delivery-fast::before {
-    content: "\ea2b";
-}
-
-.nc-email-83::before {
-    content: "\ea2c";
-}
-
-.nc-email-85::before {
-    content: "\ea2d";
-}
-
-.nc-explore-2::before {
-    content: "\ea2e";
-}
-
-.nc-fav-remove::before {
-    content: "\ea2f";
-}
-
-.nc-favourite-28::before {
-    content: "\ea30";
-}
-
-.nc-globe-2::before {
-    content: "\ea31";
-}
-
-.nc-grid-45::before {
-    content: "\ea32";
-}
-
-.nc-headphones-2::before {
-    content: "\ea33";
-}
-
-.nc-html5::before {
-    content: "\ea34";
-}
-
-.nc-istanbul::before {
-    content: "\ea35";
-}
-
-.nc-key-25::before {
-    content: "\ea36";
-}
-
-.nc-layers-3::before {
-    content: "\ea37";
-}
-
-.nc-light-3::before {
-    content: "\ea38";
-}
-
-.nc-lock-circle-open::before {
-    content: "\ea39";
-}
-
-.nc-map-big::before {
-    content: "\ea3a";
-}
-
-.nc-mobile::before {
-    content: "\ea3c";
-}
-
-.nc-money-coins::before {
-    content: "\ea3b";
-}
-
-.nc-note-03::before {
-    content: "\ea3d";
-}
-
 .nc-notes::before {
     content: "\ea3e";
-}
-
-.nc-notification-70::before {
-    content: "\ea3f";
-}
-
-.nc-palette::before {
-    content: "\ea40";
 }
 
 .nc-paper-2::before {
     content: "\ea41";
 }
 
-.nc-pin-3::before {
-    content: "\ea42";
-}
-
-.nc-planet::before {
-    content: "\ea43";
-}
-
-.nc-preferences-circle-rotate::before {
-    content: "\ea44";
-}
-
-.nc-puzzle-10::before {
-    content: "\ea45";
-}
-
-.nc-quote::before {
-    content: "\ea46";
-}
-
-.nc-refresh-02::before {
-    content: "\ea47";
-}
-
-.nc-ruler-pencil::before {
-    content: "\ea48";
-}
-
-.nc-satisfied::before {
-    content: "\ea49";
-}
-
-.nc-scissors::before {
-    content: "\ea4a";
-}
-
-.nc-send::before {
-    content: "\ea4b";
-}
-
-.nc-settings-90::before {
-    content: "\ea4c";
-}
-
 .nc-settings-gear-64::before {
     content: "\ea4d";
-}
-
-.nc-settings-tool-66::before {
-    content: "\ea4e";
-}
-
-.nc-simple-add::before {
-    content: "\ea4f";
-}
-
-.nc-simple-delete::before {
-    content: "\ea50";
-}
-
-.nc-simple-remove::before {
-    content: "\ea51";
-}
-
-.nc-single-02::before {
-    content: "\ea52";
-}
-
-.nc-single-copy-04::before {
-    content: "\ea53";
-}
-
-.nc-spaceship::before {
-    content: "\ea54";
-}
-
-.nc-square-pin::before {
-    content: "\ea55";
-}
-
-.nc-stre-down::before {
-    content: "\ea56";
-}
-
-.nc-stre-left::before {
-    content: "\ea57";
-}
-
-.nc-stre-right::before {
-    content: "\ea58";
-}
-
-.nc-stre-up::before {
-    content: "\ea59";
-}
-
-.nc-sun-fog-29::before {
-    content: "\ea5a";
-}
-
-.nc-support-17::before {
-    content: "\ea5b";
-}
-
-.nc-tablet-2::before {
-    content: "\ea5c";
-}
-
-.nc-tag-content::before {
-    content: "\ea5d";
 }
 
 .nc-tap-01::before {
     content: "\ea5e";
 }
 
-.nc-time-alarm::before {
-    content: "\ea5f";
-}
-
-.nc-tv-2::before {
-    content: "\ea60";
-}
-
-.nc-umbrella-13::before {
-    content: "\ea61";
-}
-
-.nc-vector::before {
-    content: "\ea62";
-}
-
-.nc-watch-time::before {
-    content: "\ea63";
-}
-
-.nc-zoom-split::before {
-    content: "\ea64";
-}
 
 /* all icon font classes list here */
 
@@ -2498,6 +1902,7 @@ License - nucleoapp.com/license/
     left: 0;
     width: 100%;
 }
+
 /* Restaurant card */
 
 /* Sidebar */

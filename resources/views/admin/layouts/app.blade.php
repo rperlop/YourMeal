@@ -50,8 +50,6 @@
 
 </body>
 
-<script src="{{ asset('assets/js/admin-panel.js') }}"></script>
-
 @stack('js')
 
 </html>
