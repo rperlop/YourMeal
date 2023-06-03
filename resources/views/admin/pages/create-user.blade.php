@@ -163,7 +163,7 @@
 
                                         <div class="row d-print-none mt-2">
                                             <div class="col-12 text-right">
-                                                <a class="btn btn-danger" href="{{route('admin.index.users')}}">
+                                                <a class="btn btn-success" href="{{route('admin.index.users')}}">
                                                     <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                                                     Go back
                                                 </a>
