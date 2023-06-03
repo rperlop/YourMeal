@@ -36,15 +36,20 @@ class AdminController extends Controller {
      * @return RedirectResponse
      */
     public function update_featured_restaurant(): RedirectResponse {
-        $restaurant = Restaurant::select( 'restaurants.*', DB::raw( 'COUNT(reviews.id) as review_count' ) )
-                                ->join( 'reviews', 'restaurants.id', '=', 'reviews.restaurant_id' )
-                                ->where( 'reviews.created_at', '>', Carbon::now()->subWeek() )
-                                ->groupBy( 'restaurants.id' )
-                                ->orderByDesc( 'review_count' )
+        $restaurant = Restaurant::select('restaurants.*', DB::raw('COUNT(reviews.id) as review_count'))
+                                ->join('reviews', 'restaurants.id', '=', 'reviews.restaurant_id')
+                                ->where('reviews.created_at', '>', Carbon::now()->subWeek())
+                                ->groupBy('restaurants.id')
+                                ->orderByDesc('review_count')
                                 ->first();
 
-        $restaurant?->update( [ 'featured_id' => $restaurant->id ] );
+        if ($restaurant) {
+            Restaurant::whereNotNull('featured_id')->where('id', '!=', $restaurant->id)->update(['featured_id' => null]);
+
+            $restaurant->update(['featured_id' => $restaurant->id]);
+        }
 
         return redirect()->back();
     }
+
 }
