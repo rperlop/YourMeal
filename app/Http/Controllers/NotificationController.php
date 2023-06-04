@@ -34,6 +34,10 @@ class NotificationController extends Controller {
     public function show_notification( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
         $notification = Notification::find( $id );
 
+        if( $notification == null ) {
+            return view( 'admin.dashboard');
+        }
+
         $review = Review::with( 'user', 'images', 'reports' )->find( $notification->review_id );
 
         if ( $notification->type == 'reported_review' ) {

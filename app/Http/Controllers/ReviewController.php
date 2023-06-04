@@ -119,10 +119,14 @@ class ReviewController extends Controller {
      *
      * @param integer $id
      *
-     * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application
+     * @return Factory|Application|View|RedirectResponse|\Illuminate\Contracts\Foundation\Application
      */
-    public function show_review( int $id ): Factory|Application|View|\Illuminate\Contracts\Foundation\Application {
+    public function show_review( int $id ): Factory|Application|View|RedirectResponse|\Illuminate\Contracts\Foundation\Application {
         $review = Review::with( 'user', 'images', 'reports' )->find( $id );
+
+        if ( $review == null ) {
+            return redirect()->back();
+        }
 
         return view( 'admin.pages.show-review', compact( 'review' ) );
     }
